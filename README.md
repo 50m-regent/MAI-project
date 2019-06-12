@@ -1,0 +1,2 @@
+# MAI-project
+new application
