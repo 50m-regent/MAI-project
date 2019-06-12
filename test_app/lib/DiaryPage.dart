@@ -16,7 +16,7 @@ class _DiaryState extends State<DiaryPage>{
       right: 40,
       child: IconButton(
         onPressed: () {
-          Navigator.pushReplacementNamed(context, "NewDiary");
+          Navigator.pushReplacementNamed(context, "NewDiaryPage");
         },
         icon: Icon(
           Icons.add,
