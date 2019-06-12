@@ -1,0 +1,29 @@
+name: test_app
+description: A new Flutter project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^0.1.2
+  location: ^1.4.1
+  image_picker: ^0.4.10
+  flutter_calendar_carousel: ^1.3.17
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  shared_preferences: ^0.4.3
+
+flutter:
+  fonts:
+    - family: PoetsenOne
+      fonts:
+        - asset: fonts/PoetsenOne-Regular.ttf
+    - family: MaterialIcons
+      fonts:
+        - asset: fonts/MaterialIcons-Regular.ttf
