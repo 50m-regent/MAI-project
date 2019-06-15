@@ -3,7 +3,7 @@ import 'items.dart';
 
 // カレンダー
 class CalendarPage extends StatefulWidget {
-  @override
+  @override//継承の役割らしい
   _CalendarPageState createState() {
     return _CalendarPageState();
   }
