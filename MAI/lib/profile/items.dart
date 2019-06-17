@@ -33,14 +33,63 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  Widget _birthday() {
+    return Positioned(
+      top: 210,
+      left: 50,
+      child: Text(
+        'Birthday: 7/19',
+        style: TextStyle(
+          fontSize: 20,
+        ),
+      ),
+    );
+  }
+
+  Widget _status() {
+    return Positioned(
+      top:250,
+      left: 40,
+      child: Column(
+        children: <Widget>[
+          Text(
+            "一言",
+            style: TextStyle(
+              fontSize: 30,
+            ),
+          ),
+          Text(
+            '仕事中',
+            style:TextStyle(
+              fontSize: 25,
+            ),
+          ),
+        ],
+        ),
+      );
+  }
+
+  Widget _sns() {
+    return Positioned(
+      top:30,
+      right: 30,
+      child: Icon(
+        Icons.account_circle,
+        size: 40,
+      ),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         _icon(),
         _name(),
-        //_birthday(),
-        //_status(),
+        _birthday(),
+        _status(),
+        _sns(),
         // TODO: 落書き
       ],
     );
