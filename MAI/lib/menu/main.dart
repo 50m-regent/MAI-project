@@ -7,7 +7,6 @@ List<BottomNavigationBarItem> menu() {
   return [
     home(),
     diary(),
-    weather(),
     calendar(),
     todo(),
     profile(),

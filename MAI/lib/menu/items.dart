@@ -46,18 +46,6 @@ BottomNavigationBarItem diary() {
   );
 }
 
-// 天気
-BottomNavigationBarItem weather() {
-  return _iconTemplate(
-    icon: Icons.cloud,
-    title: 'Weather',
-    color: MaterialColor(
-      0xFF536DFE,
-      <int, Color>{}
-    ), // Colors.indigoAccent[100]
-  );
-}
-
 // カレンダー
 BottomNavigationBarItem calendar() {
   return _iconTemplate(

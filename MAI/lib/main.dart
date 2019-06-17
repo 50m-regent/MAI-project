@@ -3,6 +3,7 @@ import 'menu/main.dart';
 import 'home/main.dart';
 import 'diary/main.dart';
 import 'calendar/main.dart';
+import 'todo/main.dart';
 
 // main
 void main() {
@@ -25,9 +26,8 @@ class _MyAppState extends State<MyApp> {
   final _pageList = [
     HomePage(),
     DiaryPage(),
-    Text('Weather'),
     CalendarPage(),
-    Text('Todo'),
+    TodoPage(),
     Text('Profile'),
     Text('Friends'),
     Text('NewDiary'),

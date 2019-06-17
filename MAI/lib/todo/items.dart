@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:mai/constants.dart';
-import 'new_diary/main.dart';
 
-Widget newDiaryIcon(BuildContext context) {
+Widget newTaskIcon(BuildContext context) {
     final Size _displaySize = MediaQuery.of(context).size;
     final double _iconSize = _displaySize.width / 12;
     return FloatingActionButton(
       onPressed: () {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return NewDiaryPage();
-          }
-        );
+        
       },
       child: Icon(
         Icons.add,
         color: Colors.white,
         size: _iconSize,
       ),
-      tooltip: "新しい日記",
+      tooltip: "新しいタスク",
       backgroundColor: ICON_COLOR,
     );
   }
+
+class TodoList extends StatefulWidget {
+  @override
+  _TodoListState createState() => _TodoListState();
+}
+
+class _TodoListState extends State<TodoList> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}

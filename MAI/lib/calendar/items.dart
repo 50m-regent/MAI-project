@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import "package:flutter_calendar_carousel/flutter_calendar_carousel.dart" show CalendarCarousel;
+import "package:flutter_calendar_carousel/flutter_calendar_carousel.dart";
+import "package:flutter_calendar_carousel/classes/event.dart";
+import "package:flutter_calendar_carousel/classes/event_list.dart";
 
 TextStyle _textStyle(double fontSize) {
   return TextStyle(
@@ -50,6 +52,22 @@ Widget _calendar() {
                 right: 200,
               ),
               showHeaderButton: false,
+              markedDateWidget: Positioned(
+                //bottom: 4.0,
+                //left: 18.0,
+                child: Container(
+                  height: 4.0,
+                  width: 4.0,
+                  color: MaterialColor(
+                    0xFF4FC3F7, // Colors.lightBlue[300];
+                    <int, Color>{//ColorDataに変換
+                    }
+                  ),
+                ),
+              ),
+              markedDates: [
+                DateTime.parse('2019-06-20'),
+              ],
               //onDayPressed: //TODO: 日付変更
             ),
           ),
@@ -73,14 +91,25 @@ Widget _schedule() {
         );
 }
 
-Widget calendar(BuildContext context) {//わからんこっから
-  final Size _displaySize = MediaQuery.of(context).size;
-  final double _margin = _displaySize.width / 12;
-  return Column(
-    children: <Widget>[
-      SizedBox(height: _margin),
-      _calendar(),
-      _schedule(),
-    ],
-  );
+class Calendar extends StatefulWidget {
+  @override
+  _CalendarState createState() => _CalendarState();
+}
+
+class _CalendarState extends State<Calendar> {
+  @override
+  Widget build(BuildContext context) {
+    final Size _displaySize = MediaQuery.of(context).size;
+    final double _margin = _displaySize.width / 12;
+
+    return Container(
+      child: Column(
+        children: <Widget>[
+          SizedBox(height: _margin),
+          _calendar(),
+          _schedule(),
+        ],
+      ),
+    );
+  }
 }
