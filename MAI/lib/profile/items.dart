@@ -9,7 +9,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   Widget _icon() {
     return Positioned(
-      top: 50,
+      top: 40,
       left: 30,
       child: Icon(
         Icons.account_circle,
@@ -22,12 +22,12 @@ class _ProfileState extends State<Profile> {
   Widget _name() {
     return Positioned(
       top: 100,
-      left: 200,
+      left: 180,
       child: Text(
         '名前',
         style: TextStyle(
-          fontSize: 40,
-        
+          fontSize: 35,
+
         ),
       ),
     );
@@ -35,7 +35,7 @@ class _ProfileState extends State<Profile> {
 
   Widget _birthday() {
     return Positioned(
-      top: 210,
+      top: 200,
       left: 50,
       child: Text(
         'Birthday: 7/19',
@@ -71,15 +71,41 @@ class _ProfileState extends State<Profile> {
 
   Widget _sns() {
     return Positioned(
-      top:30,
-      right: 30,
-      child: Icon(
-        Icons.account_circle,
-        size: 40,
-      ),
+      top:70,
+      right: 10,
+      child: Column(
+        children: <Widget>[
+          Icon(
+            Icons.account_circle,
+            size: 50,
+          ),
+          Icon(
+            Icons.account_circle,
+            size: 50,
+          ),
+
+        ],
+      )
     );
   }
 
+  Widget _graffiti() {
+    return Positioned(
+      top: 370,
+      left: 40,
+      child: Column(
+        children: <Widget>[
+          Text(
+            '落書き\nなんか書く',
+            style: TextStyle(
+              fontSize: 30,
+            ),
+          )
+
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +116,7 @@ class _ProfileState extends State<Profile> {
         _birthday(),
         _status(),
         _sns(),
-        // TODO: 落書き
+        _graffiti(),
       ],
     );
   }
