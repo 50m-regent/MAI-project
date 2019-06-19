@@ -27,6 +27,7 @@ class _ProfileState extends State<Profile> {
         '名前',
         style: TextStyle(
           fontSize: 35,
+          fontWeight: FontWeight.bold,
 
         ),
       ),
@@ -35,20 +36,32 @@ class _ProfileState extends State<Profile> {
 
   Widget _birthday() {
     return Positioned(
-      top: 200,
+      top: 190,
       left: 50,
-      child: Text(
-        'Birthday: 7/19',
-        style: TextStyle(
-          fontSize: 20,
-        ),
-      ),
+      child: Row(
+        children: <Widget>[
+          Text(
+            'Birthday:',
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            '7/19',
+            style: TextStyle(
+              fontSize: 25,
+            ),
+          )
+        ],
+      )
     );
   }
 
+
   Widget _status() {
     return Positioned(
-      top:250,
+      top:240,
       left: 40,
       child: Column(
         children: <Widget>[
@@ -56,6 +69,7 @@ class _ProfileState extends State<Profile> {
             "一言",
             style: TextStyle(
               fontSize: 30,
+              fontWeight: FontWeight.bold,
             ),
           ),
           Text(
@@ -76,12 +90,15 @@ class _ProfileState extends State<Profile> {
       child: Column(
         children: <Widget>[
           Icon(
-            Icons.account_circle,
+            Icons.alternate_email,
             size: 50,
+            color: Colors.blue,
           ),
           Icon(
-            Icons.account_circle,
+            Icons.alternate_email,
             size: 50,
+            color: Colors.purpleAccent,
+
           ),
 
         ],
@@ -91,14 +108,15 @@ class _ProfileState extends State<Profile> {
 
   Widget _graffiti() {
     return Positioned(
-      top: 370,
+      top: 380,
       left: 40,
       child: Column(
         children: <Widget>[
           Text(
-            '落書き\nなんか書く',
+            'フリースペース',
             style: TextStyle(
               fontSize: 30,
+              fontWeight: FontWeight.bold,
             ),
           )
 
