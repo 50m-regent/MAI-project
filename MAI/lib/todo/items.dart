@@ -21,11 +21,11 @@ Widget newTaskIcon(BuildContext context) {
   );
 }
 
-class _Task {
+class Task {
   String tag, title;
   int deadline, priority;
 
-  _Task({this.tag, this.title, this.deadline, this.priority});
+  Task({this.tag, this.title, this.deadline, this.priority});
 
   Map<String, dynamic> toJson() {
     return {
@@ -44,42 +44,32 @@ class TodoList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoList> {
-  File _jsonFile;
-  String _path;
   final String _fileName = 'todo_list.json';
   bool _fileExists = false;
   Map<String, dynamic> _todo;
 
   _getJSON() {
     getApplicationDocumentsDirectory().then( (Directory _dir) {
-      _path = _dir.path;
-      _jsonFile = File('$_path/$_fileName');
+      File _jsonFile = File(_dir.path + '/$_fileName');
       _fileExists = _jsonFile.existsSync();
-      if (_fileExists) {
-        setState(() {
+
+      setState(() {
+        if (_fileExists) {
           _todo = json.decode(_jsonFile.readAsStringSync());
-        });
-      } else {
-        setState(() {
+        } else {
           _jsonFile.createSync();
           _fileExists = true;
           _todo = {};
-        });
-      }
+        }
+      });
     });
   }
 
-  @override
-  initState() {
-    super.initState();
-    _getJSON();
-  }
-
-  List<_Task> _getTasks() {
-    List<_Task> _tasks = [];
+  List<Task> _getTasks() {
+    List<Task> _tasks = [];
     _todo.forEach((_tag, _t) {
       _t.forEach((_title, _v) {
-        _tasks.add(_Task(
+        _tasks.add(Task(
           tag: _tag,
           title: _title,
           deadline: _v['deadline'],
@@ -118,18 +108,18 @@ class _TodoListState extends State<TodoList> {
 
   Widget _deadline(int deadline) {
     return Positioned(
-            left: 200,
-            top: 50,
-            child: Text(
-              deadline.toString(),
-              style: TextStyle(
-                fontSize: 25,
-              ),
-            ),
-          );
+      left: 200,
+      top: 50,
+      child: Text(
+        deadline.toString(),
+        style: TextStyle(
+          fontSize: 25,
+        ),
+      ),
+    );
   }
 
-  Widget _task(_Task task) {
+  Widget _task(Task task) {
     var colors = [Colors.grey, Colors.yellow, Colors.orange, Colors.red];
     var color = colors[task.priority];
     return Container(
@@ -150,33 +140,37 @@ class _TodoListState extends State<TodoList> {
   }
 
   Widget _list() {
-    List<_Task> _tasks = _getTasks();
+    List<Task> _tasks = _getTasks();
     
-    return _fileExists ? Container(
+    return Container(
       padding: EdgeInsets.all(20.0),
       child: ListView.builder(
         itemCount: _tasks.length,
         itemBuilder: (BuildContext context, int index) {
-          if(_fileExists) {
-            return _task(_tasks[index]);
-          }
+          return _task(_tasks[index]);
         },
       )
-    ) : Center(
-      child: Text(
-        'タスク完了！偉い！',
-        style: TextStyle(
-          fontSize: 30,
-          color: ICON_COLOR,
-        ),
-      ),
     );
+  }
+
+  @override
+  void initState() {
+    _getJSON();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: _list(),
+      child: _fileExists ? _list() : Center(
+        child: Text(
+          'タスク完了！偉い！',
+          style: TextStyle(
+            fontSize: 30,
+            color: ICON_COLOR,
+          ),
+        ),
+      ),
     );
   }
 }
