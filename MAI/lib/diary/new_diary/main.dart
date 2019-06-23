@@ -58,40 +58,33 @@ class _NewDiaryState extends State<NewDiaryPage> {
     }
 
   Widget _selectPicture({double iconSize}){
-    return IconButton(
-        onPressed: _imageSelectorGallery,
-        tooltip: "写真を追加",
-        icon: Icon(
+    return Icon(
           Icons.add_a_photo,
           color: Colors.grey,
-          size: iconSize * 5,
-        )
+          size: iconSize * 3,
     );
   }
 
-  Widget _picture({double pictureSize}) {
+  Widget _picture({double pictureSize, double iconSize}) {
     return FutureBuilder<File>(
         future: _galleryFile,
         builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.data != null) {
             return FlatButton(
               onPressed: _imageSelectorGallery,
-              child: Image.file(
-                snapshot.data,
+              child: Container(
                 height: pictureSize,
+                child: snapshot.connectionState == ConnectionState.done &&
+                  snapshot.data != null ? Image.file(
+                    snapshot.data,
+                ) : _selectPicture(iconSize: iconSize),
               ),
             );
-          } else {
-            return Container();
-          }
         },
     );
   }
 
   Widget _textField() {
-    return Container(
-        height: 470,
+    return Expanded(
         child: TextField(
           keyboardType: TextInputType.multiline,
           maxLines: 100,
@@ -127,14 +120,20 @@ class _NewDiaryState extends State<NewDiaryPage> {
     final double _pictureSize = _displaySize.height * 0.25;
     return Scaffold(
         backgroundColor: BACKGROUND_COLOR,
-        body: Column(
-          children: <Widget>[
-            _lockAndPost(iconSize: _iconSize),
-            date(),
-            _selectPicture(iconSize: _iconSize),
-            _picture(pictureSize: _pictureSize),
-            _textField(),
-          ],
+        body: Container(
+          padding: EdgeInsets.all(_iconSize),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              _lockAndPost(iconSize: _iconSize),
+              date(),
+              _picture(
+                pictureSize: _pictureSize,
+                iconSize: _iconSize
+              ),
+              _textField(),
+            ],
+          ),
         ),
     ); 
   }

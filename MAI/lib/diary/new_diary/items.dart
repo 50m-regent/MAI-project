@@ -17,12 +17,16 @@ Widget postIcon({double iconSize}) {
 
 Widget date() {
     var date = DateFormat('MM月dd日(E)', "ja_JP").format( DateTime.now() );
-    return Text(
-        date,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 29,
-          fontWeight: FontWeight.bold,
+    return Row(
+      children: <Widget>[
+        Text(
+          date,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 29,
+            fontWeight: FontWeight.bold,
+          ),
         ),
+      ],
     );
   }
