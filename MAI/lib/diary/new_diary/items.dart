@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 Widget postIcon({double iconSize}) {
@@ -17,18 +16,13 @@ Widget postIcon({double iconSize}) {
   }
 
 Widget date() {
-    initializeDateFormatting("ja_JP");
     var date = DateFormat('MM月dd日(E)', "ja_JP").format( DateTime.now() );
-    return Positioned(
-      top: 120,
-      left: 43,
-      child: Text(
+    return Text(
         date,
         style: TextStyle(
           color: Colors.black,
           fontSize: 29,
           fontWeight: FontWeight.bold,
         ),
-      ),
     );
   }

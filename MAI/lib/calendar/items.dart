@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import "package:flutter_calendar_carousel/flutter_calendar_carousel.dart";
-import "package:flutter_calendar_carousel/classes/event.dart";
-import "package:flutter_calendar_carousel/classes/event_list.dart";
 
 TextStyle _textStyle(double fontSize) {
   return TextStyle(
@@ -68,7 +66,7 @@ Widget _calendar() {
               markedDates: [
                 DateTime.parse('2019-06-20'),
               ],
-              //onDayPressed: //TODO: 日付変更
+              //onDayPressed: //TODO: 日付変更 //TODO: もはやカレンダー作り直したい
             ),
           ),
   );

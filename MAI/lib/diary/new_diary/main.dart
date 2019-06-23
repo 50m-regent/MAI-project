@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mai/constants.dart';
 import 'dart:io';
@@ -41,17 +42,12 @@ class _NewDiaryState extends State<NewDiaryPage> {
   }
 
   Widget _lockAndPost({double iconSize}) {
-    return Positioned(
-        top: 50,
-        right: 40,
-        left: 40,
-        child: Row(
+    return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             _lockIcon(iconSize: iconSize),
             postIcon(iconSize: iconSize),
           ],
-        ),
       );
   }
 
@@ -62,28 +58,19 @@ class _NewDiaryState extends State<NewDiaryPage> {
     }
 
   Widget _selectPicture({double iconSize}){
-    return Positioned(
-      top: 200,
-      left: 10,
-      right: 10,
-      child: IconButton(
+    return IconButton(
         onPressed: _imageSelectorGallery,
         tooltip: "写真を追加",
         icon: Icon(
           Icons.add_a_photo,
           color: Colors.grey,
-          size: iconSize * 6,
+          size: iconSize * 5,
         )
-      ),
     );
   }
 
   Widget _picture({double pictureSize}) {
-    return Positioned(
-      top: 175,
-      left: 10,
-      right: 10,
-      child: FutureBuilder<File>(
+    return FutureBuilder<File>(
         future: _galleryFile,
         builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
@@ -96,19 +83,14 @@ class _NewDiaryState extends State<NewDiaryPage> {
               ),
             );
           } else {
-            return Text("");
+            return Container();
           }
         },
-      ),
     );
   }
 
   Widget _textField() {
-    return Positioned(
-      top: 370,
-      left: 40,
-      right: 40,
-      child: Container(
+    return Container(
         height: 470,
         child: TextField(
           keyboardType: TextInputType.multiline,
@@ -129,8 +111,13 @@ class _NewDiaryState extends State<NewDiaryPage> {
             _diary = text;
           },
         ),
-      ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initializeDateFormatting("ja_JP");
   }
 
   @override
@@ -138,13 +125,10 @@ class _NewDiaryState extends State<NewDiaryPage> {
     final Size _displaySize = MediaQuery.of(context).size;
     final double _iconSize = _displaySize.width / 12;
     final double _pictureSize = _displaySize.height * 0.25;
-    return Container(
-      height: _displaySize.height * 0.8,
-      width: _displaySize.width * 0.8,
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: BACKGROUND_COLOR,
-        body: Stack(
-          children: <Widget>[ // TODO: UIをColumnに直しましょう
+        body: Column(
+          children: <Widget>[
             _lockAndPost(iconSize: _iconSize),
             date(),
             _selectPicture(iconSize: _iconSize),
@@ -152,7 +136,6 @@ class _NewDiaryState extends State<NewDiaryPage> {
             _textField(),
           ],
         ),
-      ),
     ); 
   }
 }

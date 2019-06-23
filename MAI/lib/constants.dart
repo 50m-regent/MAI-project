@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// 背景色 TODO: 3Dにしたいね
+// 背景色 TODO: ARと背景切り替え可能かな
 const Color BACKGROUND_COLOR = MaterialColor(
   0xFFE0F7FA,
   <int, Color>{},
