@@ -133,6 +133,7 @@ class _NewDiaryState extends State<NewDiaryPage> {
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     final Size _displaySize = MediaQuery.of(context).size;
     final double _iconSize = _displaySize.width / 12;

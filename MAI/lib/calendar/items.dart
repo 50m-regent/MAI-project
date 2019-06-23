@@ -108,6 +108,7 @@ class _CalendarState extends State<Calendar> {
           SizedBox(height: _margin),
           _calendar(),
           _schedule(),
+          // なんか青の丸が見切れてますねえwww
         ],
       ),
     );
