@@ -50,6 +50,7 @@ class _TodoListState extends State<TodoList> {
 
   _getJSON() {
     getApplicationDocumentsDirectory().then( (Directory _dir) {
+      print(_dir.path);
       File _jsonFile = File(_dir.path + '/$_fileName');
       _fileExists = _jsonFile.existsSync();
 
@@ -65,40 +66,11 @@ class _TodoListState extends State<TodoList> {
     });
   }
 
-  List<Task> _getTasks() {
-    List<Task> _tasks = [];
-    _todo.forEach((_tag, _t) {
-      _t.forEach((_title, _v) {
-        _tasks.add(Task(
-          tag: _tag,
-          title: _title,
-          deadline: _v['deadline'],
-          priority: _v['priority'],
-        ));
-      });
-    });
-    return _tasks;
-  }
-
   Widget _title(String title) {
-    return Positioned(
-            left: 20,
-            top: 40,
+    return Container(
+            padding: EdgeInsets.all(20),
             child: Text(
               title,
-              style: TextStyle(
-                fontSize: 30,
-              ),
-            ),
-          );
-  }
-
-  Widget _tag(String tag) {
-    return Positioned(
-            left: 10,
-            top: 10,
-            child: Text(
-              tag,
               style: TextStyle(
                 fontSize: 25,
               ),
@@ -107,9 +79,8 @@ class _TodoListState extends State<TodoList> {
   }
 
   Widget _deadline(int deadline) {
-    return Positioned(
-      left: 200,
-      top: 50,
+    return Container(
+      padding: EdgeInsets.only(left: 20),
       child: Text(
         deadline.toString(),
         style: TextStyle(
@@ -123,31 +94,91 @@ class _TodoListState extends State<TodoList> {
     var colors = [Colors.grey, Colors.yellow, Colors.orange, Colors.red];
     var color = colors[task.priority];
     return Container(
-      height: 100,
-      margin: EdgeInsets.only(bottom: 16),
+      width: 200,
+      margin: EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(20.0)),
         color: color,
       ),
-      child: Stack(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _title(task.title),
-          _tag(task.tag),
           _deadline(task.deadline),
         ],
       ),
     );
   }
 
-  Widget _list() {
-    List<Task> _tasks = _getTasks();
-    
+  Widget _taskTag(String tag) {
+    return Row(
+      children: <Widget>[
+        Text(
+          tag,
+          style: TextStyle(
+            fontSize: 30,
+          ),
+        ),
+      ]
+    );
+  }
+
+   List<Map<String, dynamic>> _getTasks() {
+    List<Map<String, dynamic>> tasks = [];
+    _todo.forEach((_tag, _t) {
+      tasks.add({_tag: _t});
+    });
+    return tasks;
+  }
+
+  Widget _row(Map<String, dynamic> tasks) {
+    String tag;
+    List<Task> taskList = [];
+
+    tasks.forEach((_tag, _v) {
+      tag = _tag;
+      _v.forEach((_title, _t) {
+        taskList.add(
+          Task(
+            tag: _tag,
+            title: _title,
+            deadline: _t['deadline'],
+            priority: _t['priority'],
+          )
+        );
+      });
+    });
+
+    taskList.sort( (a, b) => a.priority.compareTo(b.priority) );
+
     return Container(
-      padding: EdgeInsets.all(20.0),
+      padding: EdgeInsets.only(top: 16),
+      height: 200,
+      child: Column(
+        children: <Widget>[
+          _taskTag(tag),
+          Expanded(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: taskList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return _task(taskList[index]);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _list() {
+    List<Map<String, dynamic>> _tasks = _getTasks();
+    return Container(
+      padding: EdgeInsets.only(right: 30, left: 30),
       child: ListView.builder(
-        itemCount: _tasks.length,
+        itemCount: _todo.length,
         itemBuilder: (BuildContext context, int index) {
-          return _task(_tasks[index]);
+          return _row(_tasks[index]);
         },
       )
     );
@@ -161,8 +192,7 @@ class _TodoListState extends State<TodoList> {
 
   @override
   Widget build(BuildContext context) {
-    return Container( //TODO: UI調節
-      child: _fileExists ? _list() : Center(
+    return _fileExists ? _list() : Center( //TODO: UI調節
         child: Text(
           'タスク完了！偉い！',
           style: TextStyle(
@@ -170,7 +200,6 @@ class _TodoListState extends State<TodoList> {
             color: ICON_COLOR,
           ),
         ),
-      ),
     );
   }
 }
