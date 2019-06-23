@@ -149,7 +149,7 @@ class _TodoListState extends State<TodoList> {
       });
     });
 
-    taskList.sort( (a, b) => a.priority.compareTo(b.priority) );
+    taskList.sort( (b, a) => a.priority.compareTo(b.priority) );
 
     return Container(
       padding: EdgeInsets.only(top: 16),
