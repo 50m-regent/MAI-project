@@ -41,12 +41,26 @@ class _NewDiaryState extends State<NewDiaryPage> {
     );
   }
 
+  Widget _postIcon({double iconSize}) {
+    return IconButton(
+      onPressed: () {
+        // TODO: 投稿
+      },
+      tooltip: "投稿",
+      icon: Icon(
+        Icons.library_books,
+        color: Colors.white,
+        size: iconSize,
+      )
+    );
+  }
+
   Widget _lockAndPost({double iconSize}) {
     return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             _lockIcon(iconSize: iconSize),
-            postIcon(iconSize: iconSize),
+            _postIcon(iconSize: iconSize),
           ],
       );
   }
