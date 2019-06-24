@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mai/constants.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class Profile extends StatefulWidget {
   @override
@@ -7,14 +9,42 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Widget _icon() {
+  var _profilleImage;
+
+  Widget _iconget() {
     return Positioned(
       top: 40,
       left: 30,
-      child: Icon(
-        Icons.account_circle,
-        size: 150,
-        color: ICON_COLOR,
+      child: IconButton(
+        onPressed: _imagepicker,
+        icon: Icon(
+          Icons.add_circle,
+          color: Colors.grey,
+        )
+      ),
+    );
+  }
+
+  Widget _imagepicker() {
+    setState(() {
+      _profilleImage = ImagePicker.pickImage(source: ImageSource.gallery);
+    });
+  }
+
+  Widget _iconprint() {
+    return Positioned(
+      top: 40,
+      left: 30,
+      child: Container(
+        width: 110.0,
+        height: 110.0,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage(_profilleImage)
+            )
+        ),
       ),
     );
   }
@@ -129,7 +159,8 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        _icon(),
+        _iconget(),
+        _iconprint(),
         _name(),
         _birthday(),
         _status(),
