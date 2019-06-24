@@ -1,7 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mai/constants.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
 class Profile extends StatefulWidget {
   @override
@@ -9,45 +10,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  var _profilleImage;
-
-  Widget _iconget() {
-    return Positioned(
-      top: 40,
-      left: 30,
-      child: IconButton(
-        onPressed: _imagepicker,
-        icon: Icon(
-          Icons.add_circle,
-          color: Colors.grey,
-        )
-      ),
-    );
-  }
-
-  Widget _imagepicker() {
-    setState(() {
-      _profilleImage = ImagePicker.pickImage(source: ImageSource.gallery);
-    });
-  }
-
-  Widget _iconprint() {
-    return Positioned(
-      top: 40,
-      left: 30,
-      child: Container(
-        width: 110.0,
-        height: 110.0,
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage(_profilleImage)
-            )
-        ),
-      ),
-    );
-  }
+  Future<File> _iconImage;
 
   Widget _name() {
     return Positioned(
@@ -58,7 +21,6 @@ class _ProfileState extends State<Profile> {
         style: TextStyle(
           fontSize: 35,
           fontWeight: FontWeight.bold,
-
         ),
       ),
     );
@@ -109,8 +71,8 @@ class _ProfileState extends State<Profile> {
             ),
           ),
         ],
-        ),
-      );
+      ),
+    );
   }
 
   Widget _sns() {
@@ -128,9 +90,7 @@ class _ProfileState extends State<Profile> {
             Icons.alternate_email,
             size: 50,
             color: Colors.purpleAccent,
-
           ),
-
         ],
       )
     );
@@ -149,18 +109,53 @@ class _ProfileState extends State<Profile> {
               fontWeight: FontWeight.bold,
             ),
           )
-
         ],
+      ),
+    );
+  }
+
+  _imageSelectorGallery() {
+    setState(() {
+      _iconImage = ImagePicker.pickImage(source: ImageSource.gallery);
+    });
+  }
+
+  Widget _defaultIcon({double size}) {
+    return Icon(
+      Icons.account_circle,
+      color: ICON_COLOR,
+      size: size,
+    );
+  }
+
+  Widget _icon({double size}) {
+    return Positioned(
+      top: 110,
+      child: FutureBuilder<File>(
+        future: _iconImage,
+        builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+          return FlatButton(
+            onPressed: _imageSelectorGallery,
+            child: Container(
+              height: size,
+              child: snapshot.connectionState == ConnectionState.done &&
+                snapshot.data != null ? Image.file(
+                  snapshot.data,
+              ) : _defaultIcon(size: size),
+            ),
+          );
+        },
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final Size _displaySize = MediaQuery.of(context).size;
+    final double _size = _displaySize.width / 3;
     return Stack(
       children: <Widget>[
-        _iconget(),
-        _iconprint(),
+        _icon(size: _size),
         _name(),
         _birthday(),
         _status(),
