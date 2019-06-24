@@ -39,11 +39,11 @@ class Task {
 
   Widget _title(String title) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(16),
       child: Text(
         title,
         style: TextStyle(
-          fontSize: 25,
+          fontSize: 20,
         ),
       ),
     );
@@ -61,12 +61,12 @@ class Task {
     );
   }
 
-  Widget widget({double width}) {
+  Widget widget({double margin, double width}) {
     var colors = [Colors.grey, Colors.yellow, Colors.orange, Colors.red];
     var color = colors[priority];
     return Container(
       width: width,
-      margin: EdgeInsets.only(right: 16),
+      margin: EdgeInsets.only(right: margin),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(20.0)),
         color: color,
@@ -75,7 +75,7 @@ class Task {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _title(title),
-          _deadline(deadline),
+          //_deadline(deadline), //TODO: 日付
         ],
       ),
     );
@@ -131,7 +131,10 @@ class TaskRow {
               scrollDirection: Axis.horizontal,
               itemCount: _taskList.length,
               itemBuilder: (BuildContext context, int index) {
-                return _taskList[index].widget(width: height);
+                return _taskList[index].widget(
+                  margin: margin,
+                  width: height
+                );
               },
             ),
           ),
@@ -208,7 +211,7 @@ class _TodoListState extends State<TodoList> {
   Widget build(BuildContext context) {
     final Size _displaySize = MediaQuery.of(context).size;
     final double _margin = _displaySize.width / 12;
-    final double _rowHeight = _displaySize.width / 2;
+    final double _rowHeight = _displaySize.width / 2.5;
     return _fileExists ? _list(
       margin: _margin,
       rowHeight: _rowHeight,
