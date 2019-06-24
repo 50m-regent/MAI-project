@@ -61,11 +61,11 @@ class Task {
     );
   }
 
-  Widget widget() {
+  Widget widget({double width}) {
     var colors = [Colors.grey, Colors.yellow, Colors.orange, Colors.red];
     var color = colors[priority];
     return Container(
-      width: 200,
+      width: width,
       margin: EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -100,7 +100,7 @@ class TaskRow {
     );
   }
 
-  Widget widget({double height}) {
+  Widget widget({double margin, double height}) {
     String _tag;
     List<Task> _taskList = [];
 
@@ -121,7 +121,7 @@ class TaskRow {
     _taskList.sort( (b, a) => a.priority.compareTo(b.priority) );
 
     return Container(
-      padding: EdgeInsets.only(top: 16),
+      padding: EdgeInsets.only(bottom: margin),
       height: height, 
       child: Column(
         children: <Widget>[
@@ -131,7 +131,7 @@ class TaskRow {
               scrollDirection: Axis.horizontal,
               itemCount: _taskList.length,
               itemBuilder: (BuildContext context, int index) {
-                return _taskList[index].widget();
+                return _taskList[index].widget(width: height);
               },
             ),
           ),
@@ -153,6 +153,7 @@ class _TodoListState extends State<TodoList> {
 
   _getJSON() {
     getApplicationDocumentsDirectory().then( (Directory _dir) {
+      print(_dir.path);
       File _jsonFile = File(_dir.path + '/$_fileName');
       _fileExists = _jsonFile.existsSync();
 
@@ -176,15 +177,22 @@ class _TodoListState extends State<TodoList> {
     return tasks;
   }
 
-  Widget _list({double rowHeight}) {
+  Widget _list({double margin, double rowHeight}) {
     List<Map<String, dynamic>> _tasks = _getTasks();
     return Container(
-      padding: EdgeInsets.only(right: 30, left: 30),
+      padding: EdgeInsets.only(
+        top: margin,
+        right: margin,
+        left: margin
+      ),
       child: ListView.builder(
         itemCount: _todo.length,
         itemBuilder: (BuildContext context, int index) {
           TaskRow _row = TaskRow(tasks: _tasks[index]);
-          return _row.widget(height: rowHeight);
+          return _row.widget(
+            margin: margin / 2,
+            height: rowHeight
+          );
         },
       )
     );
@@ -199,8 +207,12 @@ class _TodoListState extends State<TodoList> {
   @override
   Widget build(BuildContext context) {
     final Size _displaySize = MediaQuery.of(context).size;
+    final double _margin = _displaySize.width / 12;
     final double _rowHeight = _displaySize.width / 2;
-    return _fileExists ? _list(rowHeight: _rowHeight) : Center( //TODO: UI調節
+    return _fileExists ? _list(
+      margin: _margin,
+      rowHeight: _rowHeight,
+    ) : Center( //TODO: UI調節
       child: Text(
         'タスク完了！偉い！',
         style: TextStyle(
