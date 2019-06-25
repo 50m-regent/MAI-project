@@ -20,6 +20,7 @@ class _ProfileState extends State<Profile> {
         icon: Icon(
           Icons.add_circle,
           color: Colors.grey,
+          size: 130,
         )
       ),
     );
@@ -31,23 +32,36 @@ class _ProfileState extends State<Profile> {
     });
   }
 
-  Widget _iconprint() {
+  Widget _iconprint({double pictureSize}) {
     return Positioned(
-      top: 40,
+      top: 50,
       left: 30,
-      child: Container(
-        width: 110.0,
-        height: 110.0,
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage(_profilleImage)
-            )
-        ),
+      right: 180,
+      child: FutureBuilder<File>(
+        future: _profilleImage,
+        builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.data != null) {
+            return FlatButton(
+              onPressed: _imagepicker,
+              child: Container(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100.0),
+                  child: Image.file(
+                    snapshot.data,
+                    height: pictureSize,
+                ),
+              )
+              )
+            );
+          } else {
+            return Text("");
+          }
+        },
       ),
     );
   }
+
 
   Widget _name() {
     return Positioned(
