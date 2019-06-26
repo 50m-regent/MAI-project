@@ -79,7 +79,7 @@ class _WeekdayRow extends StatelessWidget {
     for (var i = firstDayOfWeek, count = 0;
     count < 7;
     i = (i + 1) % 7, count++) {
-      String weekDay = localeDate.dateSymbols.STANDALONEWEEKDAYS[i][0];
+      String weekDay = localeDate.dateSymbols.SHORTWEEKDAYS[i];
       list.add(_weekdayContainer(weekDay));
     }
     return list;
@@ -154,7 +154,7 @@ class _CalendarState extends State<Calendar> {
   @override
   initState() {
     super.initState();
-    initializeDateFormatting('ja_JP');
+    initializeDateFormatting();
     _localeDate = DateFormat.yMMM('ja_JP');
     _firstDayOfWeek = (_localeDate.dateSymbols.FIRSTDAYOFWEEK + 1) % 7;
     _setDate();
