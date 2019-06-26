@@ -11,12 +11,12 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   var _profileImage;
 
-  Widget _iconget() {
+  Widget _iconGet() {
     return Positioned(
       top: 40,
       left: 30,
       child: IconButton(
-        onPressed: _imagepicker,
+        onPressed: _imagePicker,
         icon: Icon(
           Icons.add_circle,
           color: Colors.grey,
@@ -26,13 +26,13 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget _imagepicker() {
+  _imagePicker() {
     setState(() {
       _profileImage = ImagePicker.pickImage(source: ImageSource.gallery);
     });
   }
 
-  Widget _iconprint({double pictureSize}) {
+  Widget _iconPrint({double pictureSize}) {
     return Positioned(
       top: 50,
       left: 20,
@@ -43,7 +43,7 @@ class _ProfileState extends State<Profile> {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.data != null) {
             return FlatButton(
-              onPressed: _imagepicker,
+              onPressed: _imagePicker,
               child: Container(
                 child: CircleAvatar(
                   radius: 70,
