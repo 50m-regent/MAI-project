@@ -79,7 +79,7 @@ class _WeekdayRow extends StatelessWidget {
     for (var i = firstDayOfWeek, count = 0;
     count < 7;
     i = (i + 1) % 7, count++) {
-      String weekDay = localeDate.dateSymbols.STANDALONEWEEKDAYS[i];
+      String weekDay = localeDate.dateSymbols.STANDALONEWEEKDAYS[i][0];
       list.add(_weekdayContainer(weekDay));
     }
     return list;
@@ -134,7 +134,7 @@ class _CalendarState extends State<Calendar> {
   DateTime _selectedDate = DateTime.now();
   int _startWeekday = 0;
   int _endWeekday = 0;
-  DateFormat _localeDate = DateFormat.yMMM('ja_JP');
+  DateFormat _localeDate;
   int _firstDayOfWeek;
   bool _isReloadSelectedDate = true;
   // final TextStyle selectedDayTextStyle;
@@ -155,7 +155,7 @@ class _CalendarState extends State<Calendar> {
   initState() {
     super.initState();
     initializeDateFormatting('ja_JP');
-
+    _localeDate = DateFormat.yMMM('ja_JP');
     _firstDayOfWeek = (_localeDate.dateSymbols.FIRSTDAYOFWEEK + 1) % 7;
     _setDate();
   }
@@ -285,7 +285,6 @@ class _CalendarState extends State<Calendar> {
 
                   DateTime _now = DateTime(year, month, 1);
                   TextStyle _textStyle;
-                  TextStyle _defaultTextStyle = _daysTextStyle;
                   if (_isPrevMonthDay) {
                     _now = _now.subtract(Duration(days: _startWeekday - index));
                     _textStyle = _otherDaysTextStyle;
@@ -356,8 +355,8 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
+    return Container(
+      padding: EdgeInsets.all(30),
         child: Column(
           children: <Widget>[
             _CalendarHeader(
@@ -386,7 +385,6 @@ class _CalendarState extends State<Calendar> {
             )),
           ],
         ),
-      ),
     );
   }
 }
