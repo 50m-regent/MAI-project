@@ -10,7 +10,66 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Future<File> _iconImage;
+  var _profileImage;
+
+  Widget _iconget() {
+    return Positioned(
+      top: 40,
+      left: 30,
+      child: IconButton(
+        onPressed: _imagepicker,
+        icon: Icon(
+          Icons.add_circle,
+          color: Colors.grey,
+          size: 130,
+        )
+      ),
+    );
+  }
+
+  Widget _imagepicker() {
+    setState(() {
+      _profileImage = ImagePicker.pickImage(source: ImageSource.gallery);
+    });
+  }
+
+  Widget _iconprint({double pictureSize}) {
+    return Positioned(
+      top: 50,
+      left: 20,
+      //right: 180,
+      child: FutureBuilder<File>(
+        future: _profileImage,
+        builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.data != null) {
+            return FlatButton(
+              onPressed: _imagepicker,
+              child: Container(
+                child: CircleAvatar(
+                  radius: 70,
+                  backgroundImage: FileImage(
+                    snapshot.data,
+                  ),
+                ),
+                /*
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100.0),
+                  child: Image.file(
+                    snapshot.data,
+                    height: pictureSize,
+                ),
+                */ //元のやつ
+              ),
+            );
+          } else {
+            return Text("");
+          }
+        },
+      ),
+    );
+  }
+
 
   Widget _name() {
     return Positioned(
@@ -33,7 +92,7 @@ class _ProfileState extends State<Profile> {
       child: Row(
         children: <Widget>[
           Text(
-            'Birthday:',
+            '誕生日:',
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
@@ -116,7 +175,7 @@ class _ProfileState extends State<Profile> {
 
   _imageSelectorGallery() {
     setState(() {
-      _iconImage = ImagePicker.pickImage(source: ImageSource.gallery);
+      _profileImage = ImagePicker.pickImage(source: ImageSource.gallery);
     });
   }
 
@@ -132,7 +191,7 @@ class _ProfileState extends State<Profile> {
     return Positioned(
       top: 110,
       child: FutureBuilder<File>(
-        future: _iconImage,
+        future: _profileImage,
         builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
           return FlatButton(
             onPressed: _imageSelectorGallery,
