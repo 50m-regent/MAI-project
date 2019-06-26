@@ -30,20 +30,11 @@ Widget _calendar() {
               todayTextStyle: _textStyle(20),//今日の記述
               todayButtonColor: MaterialColor(
                 0xFF4FC3F7, // Colors.lightBlue[300];
-                <int, Color>{//ColorDataに変換
-                }
+                <int, Color>{}
               ),
               nextDaysTextStyle: _textStyle(17),//次の日
-              weekdayTextStyle: TextStyle(//曜日の記述
-                color: Colors.black,
-                fontSize: 17,
-                fontWeight: FontWeight.bold,//boldは太字
-              ),
-              headerTextStyle: TextStyle(
-                color: Colors.black,
-                fontSize: 29,
-                fontWeight: FontWeight.bold,
-              ),
+              weekdayTextStyle: _textStyleWColor(color: Colors.black, fontSize: 17),
+              headerTextStyle: _textStyleWColor(color: Colors.black, fontSize: 29),
               headerMargin: EdgeInsets.only(
                 top: 16,
                 bottom: 16,
@@ -58,8 +49,7 @@ Widget _calendar() {
                   width: 4.0,
                   color: MaterialColor(
                     0xFF4FC3F7, // Colors.lightBlue[300];
-                    <int, Color>{//ColorDataに変換
-                    }
+                    <int, Color>{}
                   ),
                 ),
               ),
@@ -106,7 +96,6 @@ class _CalendarState extends State<Calendar> {
           SizedBox(height: _margin),
           _calendar(),
           _schedule(),
-          // TODO:なんか青の丸が見切れてますねえwww
         ],
       ),
     );

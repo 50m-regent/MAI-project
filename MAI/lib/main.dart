@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'menu/main.dart';
 import 'home/main.dart';
 import 'diary/main.dart';
-import 'calendar/main.dart';
+import 'new_calendar/main.dart';
 import 'todo/main.dart';
 import 'profile/main.dart';
 
