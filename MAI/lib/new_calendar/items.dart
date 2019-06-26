@@ -135,7 +135,6 @@ class _CalendarState extends State<Calendar> {
   int _endWeekday = 0;
   DateFormat _localeDate;
   int _firstDayOfWeek;
-  bool _isReloadSelectedDate = true;
   // final TextStyle selectedDayTextStyle;
   // final EventList<T> markedDatesMap;
   // final Function(DateTime, List<T>) onDayPressed;
@@ -185,17 +184,11 @@ class _CalendarState extends State<Calendar> {
       date1,
       date2,
     ];
-    this._weeks = [
-      week0,
-      week1,
-      week2,
-    ];
   }
 
   _setDate([int page = -1]) {
     if (page == -1) {
       setState(() {
-        _isReloadSelectedDate = false;
         _setDatesAndWeeks();
       });
     } else if (page == 1) {
@@ -215,7 +208,6 @@ class _CalendarState extends State<Calendar> {
       }
 
       setState(() {
-        _isReloadSelectedDate = false;
         _startWeekday = dates[page].weekday - _firstDayOfWeek;
         _endWeekday = dates[page + 1].weekday - _firstDayOfWeek;
         this._dates = dates;
