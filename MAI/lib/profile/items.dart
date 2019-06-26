@@ -73,7 +73,7 @@ class _ProfileState extends State<Profile> {
   Widget _name() {
     return Positioned(
       top: 100,
-      left: 180,
+      left: 150,
       child: Text(
         '名前',
         style: TextStyle(
@@ -188,7 +188,7 @@ class _ProfileState extends State<Profile> {
 
   Widget _icon({double size}) {
     return Positioned(
-      top: 110,
+      top: 60,
       child: FutureBuilder<File>(
         future: _profileImage,
         builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
@@ -196,9 +196,14 @@ class _ProfileState extends State<Profile> {
             onPressed: _imageSelectorGallery,
             child: Container(
               height: size,
+              width: size,
               child: snapshot.connectionState == ConnectionState.done &&
-                snapshot.data != null ? Image.file(
-                  snapshot.data,
+                snapshot.data != null ? Container(
+                child: CircleAvatar(
+                  backgroundImage: FileImage(
+                    snapshot.data,
+                  ),
+                ),
               ) : _defaultIcon(size: size),
             ),
           );
