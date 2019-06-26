@@ -5,6 +5,8 @@ import 'package:mai/constants.dart';
 import 'dart:io';
 import 'items.dart';
 
+// hgdhfhd
+
 class NewDiaryPage extends StatefulWidget {
   @override
   _NewDiaryState createState() => _NewDiaryState();
