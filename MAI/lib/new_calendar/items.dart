@@ -307,7 +307,11 @@ class _CalendarState extends State<Calendar> {
                               : Colors.transparent,
                       onPressed: () => (() {}), // _onDayPressed(now),
                       padding: EdgeInsets.all(_dayPadding),
-                      shape: CircleBorder(),
+                      shape: CircleBorder(
+                        side: BorderSide(
+                          color: _isToday ? _todayBorderColor : Colors.transparent,
+                        ),
+                      ),
                       child: Stack(
                         children: <Widget>[
                           Center(
