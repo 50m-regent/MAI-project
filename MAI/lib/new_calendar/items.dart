@@ -355,7 +355,8 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Expanded(
+      child: Container(
       padding: EdgeInsets.all(30),
         child: Column(
           children: <Widget>[
@@ -385,6 +386,21 @@ class _CalendarState extends State<Calendar> {
             )),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class Schedule extends StatefulWidget {
+  @override
+  _ScheduleState createState() => _ScheduleState();
+}
+
+class _ScheduleState extends State<Schedule> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        //height: 10,
     );
   }
 }
