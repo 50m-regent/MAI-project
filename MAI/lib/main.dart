@@ -6,11 +6,6 @@ import 'calendar/main.dart';
 import 'todo/main.dart';
 import 'profile/main.dart';
 
-// main
-void main() {
-  runApp(MyApp());
-}
-
 // アプリ本体
 class MyApp extends StatefulWidget {
   @override
@@ -31,7 +26,6 @@ class _MyAppState extends State<MyApp> {
     TodoPage(),
     ProfilePage(),
     Text('Friends'),
-    Text('NewDiary'),
   ];
 
   // 起動時に実行されるやつ
@@ -53,4 +47,9 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
+}
+
+// main
+void main() {
+  runApp(MyApp());
 }

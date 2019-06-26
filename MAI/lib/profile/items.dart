@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:mai/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -7,17 +9,66 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Widget _icon() {
+  var _profileImage;
+
+  Widget _iconGet() {
     return Positioned(
       top: 40,
       left: 30,
-      child: Icon(
-        Icons.account_circle,
-        size: 150,
-        color: ICON_COLOR,
+      child: IconButton(
+        onPressed: _imagePicker,
+        icon: Icon(
+          Icons.add_circle,
+          color: Colors.grey,
+          size: 130,
+        )
       ),
     );
   }
+
+  _imagePicker() {
+    setState(() {
+      _profileImage = ImagePicker.pickImage(source: ImageSource.gallery);
+    });
+  }
+
+  Widget _iconPrint({double pictureSize}) {
+    return Positioned(
+      top: 50,
+      left: 20,
+      //right: 180,
+      child: FutureBuilder<File>(
+        future: _profileImage,
+        builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.data != null) {
+            return FlatButton(
+              onPressed: _imagePicker,
+              child: Container(
+                child: CircleAvatar(
+                  radius: 70,
+                  backgroundImage: FileImage(
+                    snapshot.data,
+                  ),
+                ),
+                /*
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100.0),
+                  child: Image.file(
+                    snapshot.data,
+                    height: pictureSize,
+                ),
+                */ //元のやつ
+              ),
+            );
+          } else {
+            return Text("");
+          }
+        },
+      ),
+    );
+  }
+
 
   Widget _name() {
     return Positioned(
@@ -28,7 +79,6 @@ class _ProfileState extends State<Profile> {
         style: TextStyle(
           fontSize: 35,
           fontWeight: FontWeight.bold,
-
         ),
       ),
     );
@@ -41,7 +91,7 @@ class _ProfileState extends State<Profile> {
       child: Row(
         children: <Widget>[
           Text(
-            'Birthday:',
+            '誕生日:',
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
@@ -79,8 +129,8 @@ class _ProfileState extends State<Profile> {
             ),
           ),
         ],
-        ),
-      );
+      ),
+    );
   }
 
   Widget _sns() {
@@ -98,9 +148,7 @@ class _ProfileState extends State<Profile> {
             Icons.alternate_email,
             size: 50,
             color: Colors.purpleAccent,
-
           ),
-
         ],
       )
     );
@@ -119,17 +167,53 @@ class _ProfileState extends State<Profile> {
               fontWeight: FontWeight.bold,
             ),
           )
-
         ],
+      ),
+    );
+  }
+
+  _imageSelectorGallery() {
+    setState(() {
+      _profileImage = ImagePicker.pickImage(source: ImageSource.gallery);
+    });
+  }
+
+  Widget _defaultIcon({double size}) {
+    return Icon(
+      Icons.account_circle,
+      color: ICON_COLOR,
+      size: size,
+    );
+  }
+
+  Widget _icon({double size}) {
+    return Positioned(
+      top: 110,
+      child: FutureBuilder<File>(
+        future: _profileImage,
+        builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+          return FlatButton(
+            onPressed: _imageSelectorGallery,
+            child: Container(
+              height: size,
+              child: snapshot.connectionState == ConnectionState.done &&
+                snapshot.data != null ? Image.file(
+                  snapshot.data,
+              ) : _defaultIcon(size: size),
+            ),
+          );
+        },
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final Size _displaySize = MediaQuery.of(context).size;
+    final double _size = _displaySize.width / 3;
     return Stack(
       children: <Widget>[
-        _icon(),
+        _icon(size: _size),
         _name(),
         _birthday(),
         _status(),
