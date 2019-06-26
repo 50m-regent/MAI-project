@@ -130,7 +130,6 @@ class _CalendarState extends State<Calendar> {
     keepPage: true,
   );
   List<DateTime> _dates = List(3);
-  List<List<DateTime>> _weeks = List(3);
   DateTime _selectedDate = DateTime.now();
   int _startWeekday = 0;
   int _endWeekday = 0;
