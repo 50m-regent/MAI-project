@@ -108,7 +108,7 @@ class _CalendarState extends State<Calendar> {
     color: Colors.white,
   );
   final double _dayPadding = 2.0;
-  final Color _todayBorderColor = Colors.blue;
+  final Color _todayBorderColor = Colors.red[400];
   final Color _selectedDayButtonColor = MaterialColor(
     0xFF4FC3F7, // Colors.lightBlue[300];
     <int, Color>{}
@@ -230,6 +230,11 @@ class _CalendarState extends State<Calendar> {
     }
   }
 
+  _onDayPressed(DateTime date) {
+    _selectedDate = date;
+    _setDate();
+  }
+
   AnimatedBuilder _builder(int slideIndex) {
     double screenWidth = MediaQuery.of(context).size.width;
     int totalItemCount = DateTime(
@@ -305,7 +310,7 @@ class _CalendarState extends State<Calendar> {
                           _isSelectedDay && _selectedDayButtonColor != null
                               ? _selectedDayButtonColor
                               : Colors.transparent,
-                      onPressed: () => (() {}), // _onDayPressed(now),
+                      onPressed: () => _onDayPressed(_now),
                       padding: EdgeInsets.all(_dayPadding),
                       shape: CircleBorder(
                         side: BorderSide(
