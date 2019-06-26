@@ -35,8 +35,8 @@ class _ProfileState extends State<Profile> {
   Widget _iconprint({double pictureSize}) {
     return Positioned(
       top: 50,
-      left: 30,
-      right: 180,
+      left: 20,
+      //right: 180,
       child: FutureBuilder<File>(
         future: _profilleImage,
         builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
@@ -45,14 +45,21 @@ class _ProfileState extends State<Profile> {
             return FlatButton(
               onPressed: _imagepicker,
               child: Container(
+                child: CircleAvatar(
+                  radius: 70,
+                  backgroundImage: FileImage(
+                    snapshot.data,
+                  ),
+                ),
+                /*
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100.0),
                   child: Image.file(
                     snapshot.data,
                     height: pictureSize,
                 ),
-              )
-              )
+                */ //元のやつ
+              ),
             );
           } else {
             return Text("");
@@ -85,7 +92,7 @@ class _ProfileState extends State<Profile> {
       child: Row(
         children: <Widget>[
           Text(
-            'Birthday:',
+            '誕生日:',
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
