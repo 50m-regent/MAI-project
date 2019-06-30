@@ -5,9 +5,11 @@ import 'items.dart';
 class TodoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+     Widget _body = TodoList();
     return Scaffold(
-      floatingActionButton: newTaskIcon(context),
-      body: TodoList(),
+      body: _body,
+      floatingActionButton: newTagIcon(context, _body),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

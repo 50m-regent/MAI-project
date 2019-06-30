@@ -5,7 +5,7 @@ import 'new_diary/main.dart';
 Widget newDiaryIcon(BuildContext context) {
     final Size _displaySize = MediaQuery.of(context).size;
     final double _iconSize = _displaySize.width / 12;
-    return FloatingActionButton(
+    return FloatingActionButton.extended(
       onPressed: () {
         showDialog(
           context: context,
@@ -14,7 +14,13 @@ Widget newDiaryIcon(BuildContext context) {
           }
         );
       },
-      child: Icon(
+      label: Text(
+        '新しい日記を作成',
+        style: TextStyle(
+          fontSize: 20,
+        ),
+      ),
+      icon: Icon(
         Icons.add,
         color: Colors.white,
         size: _iconSize,
