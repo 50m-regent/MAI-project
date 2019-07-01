@@ -44,10 +44,11 @@ class Task {
           fontSize: 20,
         ),
         onChanged: (text) {
-          parent.parent._todo[parent.tag][text] = {'deadline': deadline, 'priority': priority};
-          parent.parent._todo[parent.tag].remove(title);
+          parent.parent._todo[tag][text] = {'deadline': deadline, 'priority': priority};
+          parent.parent._todo[tag].remove(title);
           parent.parent._file.writeAsStringSync(json.encode(parent.parent._todo));
           title = text;
+          parent.parent._getJSON();
         },
       ),
     );
@@ -77,8 +78,13 @@ class Task {
       ),
       child: FlatButton(
         onPressed: (() {
-          parent.parent._todo[tag][title]['priority'] = ++priority % 4;
-          parent.parent.setState(() {});
+          // print('元:${parent.parent._todo[tag][title]['priority']}');
+          priority = ++priority % 4;
+          parent.parent._todo[tag][title]['priority'] = priority;
+          parent.parent._file.writeAsStringSync(json.encode(parent.parent._todo));
+          parent.parent._getJSON();
+          // print('新:${parent.parent._todo[tag][title]['priority']}');
+          // TODO: そーとするとバグルお^^
         }),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,8 +108,8 @@ class TaskRow {
   _newTask() {
     tasks[tag]['新しいタスク'] = {'deadline': 190630, 'priority': 0};
     parent._todo[tag] = tasks[tag];
-    parent.setState(() {});
     parent._file.writeAsStringSync(json.encode(parent._todo));
+    parent._getJSON();
   }
 
   Widget _newTaskIcon(double size) {
@@ -167,7 +173,8 @@ class TaskRow {
       });
     });
 
-    _taskList.sort( (b, a) => a.priority.compareTo(b.priority) );
+    //_taskList.sort( (b, a) => a.priority.compareTo(b.priority) );
+    // TODO: ソーとするとバグルお^^
 
     return Container(
       padding: EdgeInsets.only(bottom: margin),
