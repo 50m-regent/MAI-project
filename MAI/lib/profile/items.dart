@@ -11,64 +11,45 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   var _profileImage;
 
-  Widget _iconGet() {
-    return Positioned(
-      top: 40,
-      left: 30,
-      child: IconButton(
-        onPressed: _imagePicker,
-        icon: Icon(
-          Icons.add_circle,
-          color: Colors.grey,
-          size: 130,
-        )
-      ),
-    );
-  }
-
-  _imagePicker() {
+  _imageSelectorGallery() {
     setState(() {
       _profileImage = ImagePicker.pickImage(source: ImageSource.gallery);
     });
   }
 
-  Widget _iconPrint({double pictureSize}) {
+  Widget _defaultIcon({double size}) {
+    return Icon(
+      Icons.account_circle,
+      color: ICON_COLOR,
+      size: size,
+    );
+  }
+
+  Widget _icon({double size}) {
     return Positioned(
-      top: 50,
-      left: 20,
-      //right: 180,
+      top: 60,
       child: FutureBuilder<File>(
         future: _profileImage,
         builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.data != null) {
-            return FlatButton(
-              onPressed: _imagePicker,
-              child: Container(
+          return FlatButton(
+            onPressed: _imageSelectorGallery,
+            child: Container(
+              height: size,
+              width: size,
+              child: snapshot.connectionState == ConnectionState.done &&
+                  snapshot.data != null ? Container(
                 child: CircleAvatar(
-                  radius: 70,
                   backgroundImage: FileImage(
                     snapshot.data,
                   ),
                 ),
-                /*
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100.0),
-                  child: Image.file(
-                    snapshot.data,
-                    height: pictureSize,
-                ),
-                */ //元のやつ
-              ),
-            );
-          } else {
-            return Text("");
-          }
+              ) : _defaultIcon(size: size),
+            ),
+          );
         },
       ),
     );
   }
-
 
   Widget _name() {
     return Positioned(
@@ -172,45 +153,42 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  _imageSelectorGallery() {
-    setState(() {
-      _profileImage = ImagePicker.pickImage(source: ImageSource.gallery);
-    });
-  }
-
-  Widget _defaultIcon({double size}) {
-    return Icon(
-      Icons.account_circle,
-      color: ICON_COLOR,
-      size: size,
-    );
-  }
-
-  Widget _icon({double size}) {
+  Widget _palette() {
     return Positioned(
-      top: 60,
-      child: FutureBuilder<File>(
-        future: _profileImage,
-        builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-          return FlatButton(
-            onPressed: _imageSelectorGallery,
-            child: Container(
-              height: size,
-              width: size,
-              child: snapshot.connectionState == ConnectionState.done &&
-                snapshot.data != null ? Container(
-                child: CircleAvatar(
-                  backgroundImage: FileImage(
-                    snapshot.data,
-                  ),
-                ),
-              ) : _defaultIcon(size: size),
-            ),
-          );
-        },
-      ),
+      top: 450,
+      child: _Palette(),
     );
   }
+
+
+  Widget _Palette() {
+    return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.filter_1,
+              color: Colors.pinkAccent,
+              size: 50,
+            ),
+            Icon(
+              Icons.filter_2,
+              color: Colors.orangeAccent,
+              size: 50,
+            ),
+            Icon(
+              Icons.filter_3,
+              color: Colors.lightGreenAccent,
+              size: 50,
+            ),
+            Icon(
+              Icons.filter_4,
+              color: Colors.lightBlueAccent,
+              size: 50,
+            ),
+          ],
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -224,6 +202,7 @@ class _ProfileState extends State<Profile> {
         _status(),
         _sns(),
         _graffiti(),
+        _palette(),
       ],
     );
   }
