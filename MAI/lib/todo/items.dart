@@ -213,9 +213,8 @@ class _TodoListState extends State<TodoList> {
   File _file;
   bool _fileExists = false;
   Map<String, dynamic> _todo;
-
+// TODO: タスク消せないかなーwwwやっぱりwwwww
   _newTag() {
-    print(_todo);
     _todo['新しいタグ'] = {
       "新しいタスク" : {
         "deadline": 201231,
