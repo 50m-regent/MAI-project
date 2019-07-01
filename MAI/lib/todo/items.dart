@@ -76,7 +76,10 @@ class Task {
         color: color,
       ),
       child: FlatButton(
-        onPressed: (() {}), //TODO: 色変え
+        onPressed: (() {
+          parent.parent._todo[tag][title]['priority'] = ++priority % 4;
+          parent.parent.setState(() {});
+        }),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -120,14 +123,28 @@ class TaskRow {
   Widget _taskTag(double size) {
     return Row(
       children: <Widget>[
-        Text(
-          tag,
-          style: TextStyle(
-            fontSize: 30,
+        Expanded(
+          child: TextField(
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: tag,
+              hintStyle: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+            style: TextStyle(
+              fontSize: 30,
+            ),
+            onChanged: ((text) {
+              parent._todo[text] = parent._todo[tag];
+              parent._todo.remove(tag);
+              parent._file.writeAsStringSync(json.encode(parent._todo));
+              tag = text;
+            }),
           ),
         ),
         _newTaskIcon(size),
-      ]
+      ],
     );
   }
 
@@ -259,7 +276,7 @@ class _TodoListState extends State<TodoList> {
   Widget build(BuildContext context) {
     final Size _displaySize = MediaQuery.of(context).size;
     final double _margin = _displaySize.width / 12;
-    final double _rowHeight = _displaySize.width / 2.5;
+    final double _rowHeight = _displaySize.width / 2.3;
     return _fileExists ? _list(
       margin: _margin,
       rowHeight: _rowHeight,
