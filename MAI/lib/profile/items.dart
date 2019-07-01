@@ -156,8 +156,8 @@ class _ProfileState extends State<Profile> {
   Widget _colorIcon(Color color) { // 色のアイコンのもと
     return FlatButton(
       child: Container(
-        width: 40,
-        height: 40,
+        width: 50,
+        height: 50,
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -170,8 +170,8 @@ class _ProfileState extends State<Profile> {
   Widget _palette() {
     return Positioned(
       top: 450,
-      left: 10,
-      right: 10,
+      left: 1,
+      right: 1,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
