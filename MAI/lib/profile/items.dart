@@ -153,42 +153,36 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  Widget _colorIcon(Color color) { // 色のアイコンのもと
+    return FlatButton(
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+      ),
+      onPressed: (() {}), //押した処理,
+    );
+  }
+
   Widget _palette() {
     return Positioned(
       top: 450,
-      child: _Palette(),
+      left: 10,
+      right: 10,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _colorIcon(Colors.pinkAccent),
+          _colorIcon(Colors.orangeAccent),
+          _colorIcon(Colors.lightGreenAccent),
+          _colorIcon(Colors.lightBlueAccent),
+        ],
+      ),
     );
   }
-
-
-  Widget _Palette() {
-    return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.filter_1,
-              color: Colors.pinkAccent,
-              size: 50,
-            ),
-            Icon(
-              Icons.filter_2,
-              color: Colors.orangeAccent,
-              size: 50,
-            ),
-            Icon(
-              Icons.filter_3,
-              color: Colors.lightGreenAccent,
-              size: 50,
-            ),
-            Icon(
-              Icons.filter_4,
-              color: Colors.lightBlueAccent,
-              size: 50,
-            ),
-          ],
-    );
-  }
-
 
   @override
   Widget build(BuildContext context) {
