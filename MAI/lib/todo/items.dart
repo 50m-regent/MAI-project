@@ -45,6 +45,7 @@ class Task {
         ),
         onChanged: (text) {
           parent.parent._todo[tag][text] = {'deadline': deadline, 'priority': priority};
+          print(text);
           parent.parent._todo[tag].remove(title);
           parent.parent._file.writeAsStringSync(json.encode(parent.parent._todo));
           title = text;
@@ -145,7 +146,7 @@ class TaskRow {
               parent._todo[text] = parent._todo[tag];
               parent._todo.remove(tag);
               parent._file.writeAsStringSync(json.encode(parent._todo));
-              tag = text;
+              parent._getJSON();
             }),
           ),
         ),
@@ -214,6 +215,7 @@ class _TodoListState extends State<TodoList> {
   Map<String, dynamic> _todo;
 
   _newTag() {
+    print(_todo);
     _todo['新しいタグ'] = {
       "新しいタスク" : {
         "deadline": 201231,
@@ -221,7 +223,7 @@ class _TodoListState extends State<TodoList> {
       }
     };
     _file.writeAsStringSync(json.encode(_todo));
-    setState(() {});
+    _getJSON();
   }
 
   _getJSON() {
@@ -257,7 +259,8 @@ class _TodoListState extends State<TodoList> {
       padding: EdgeInsets.only(
         top: margin,
         right: margin,
-        left: margin
+        left: margin,
+        bottom: margin * 2,
       ),
       child: ListView.builder(
         itemCount: _todo.length,
