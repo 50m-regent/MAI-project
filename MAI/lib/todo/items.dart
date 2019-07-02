@@ -291,7 +291,7 @@ class _TodoListState extends State<TodoList> {
           return _row.widget(
             this,
             margin: margin / 2,
-            height: rowHeight
+            height: rowHeight,
           );
         },
       ),
