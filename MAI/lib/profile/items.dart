@@ -104,6 +104,15 @@ class _ProfileState extends State<Profile> {
               fontWeight: FontWeight.bold,
             ),
           ),
+          Expanded(
+            child: TextField(
+            keyboardType: TextInputType.multiline,
+            maxLines: 100,
+            style: TextStyle(
+              fontSize: 22,
+              height: 1.3,
+            ),),
+          ),
         ],
       ),
     );
