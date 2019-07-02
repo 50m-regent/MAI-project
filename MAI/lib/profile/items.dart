@@ -90,7 +90,6 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-
   Widget _status() {
     return Positioned(
       top:240,
@@ -106,12 +105,11 @@ class _ProfileState extends State<Profile> {
           ),
           Expanded(
             child: TextField(
-            keyboardType: TextInputType.multiline,
-            maxLines: 100,
-            style: TextStyle(
-              fontSize: 22,
-              height: 1.3,
-            ),),
+              style: TextStyle(
+                fontSize: 22,
+                //height: 1.3,
+              ),
+            ),
           ),
         ],
       ),
