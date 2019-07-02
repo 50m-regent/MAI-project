@@ -10,70 +10,52 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   var _profileImage;
+  String _introduction;
 
-  Widget _iconGet() {
-    return Positioned(
-      top: 40,
-      left: 30,
-      child: IconButton(
-        onPressed: _imagePicker,
-        icon: Icon(
-          Icons.add_circle,
-          color: Colors.grey,
-          size: 130,
-        )
-      ),
-    );
-  }
-
-  _imagePicker() {
+  _imageSelectorGallery() {
     setState(() {
       _profileImage = ImagePicker.pickImage(source: ImageSource.gallery);
     });
   }
 
-  Widget _iconPrint({double pictureSize}) {
+  Widget _defaultIcon({double size}) {
+    return Icon(
+      Icons.account_circle,
+      color: ICON_COLOR,
+      size: size,
+    );
+  }
+
+  Widget _icon({double size}) {
     return Positioned(
-      top: 50,
-      left: 20,
-      //right: 180,
+      top: 60,
       child: FutureBuilder<File>(
         future: _profileImage,
         builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.data != null) {
-            return FlatButton(
-              onPressed: _imagePicker,
-              child: Container(
+          return FlatButton(
+            onPressed: _imageSelectorGallery,
+            child: Container(
+              height: size,
+              width: size,
+              child: snapshot.connectionState == ConnectionState.done &&
+                  snapshot.data != null ? Container(
                 child: CircleAvatar(
-                  radius: 70,
                   backgroundImage: FileImage(
                     snapshot.data,
                   ),
                 ),
-                /*
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100.0),
-                  child: Image.file(
-                    snapshot.data,
-                    height: pictureSize,
-                ),
-                */ //元のやつ
-              ),
-            );
-          } else {
-            return Text("");
-          }
+              ) : _defaultIcon(size: size),
+            ),
+          );
         },
       ),
     );
   }
 
-
   Widget _name() {
     return Positioned(
       top: 100,
-      left: 180,
+      left: 150,
       child: Text(
         '名前',
         style: TextStyle(
@@ -122,12 +104,6 @@ class _ProfileState extends State<Profile> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Text(
-            '仕事中',
-            style:TextStyle(
-              fontSize: 25,
-            ),
-          ),
         ],
       ),
     );
@@ -172,37 +148,33 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  _imageSelectorGallery() {
-    setState(() {
-      _profileImage = ImagePicker.pickImage(source: ImageSource.gallery);
-    });
-  }
-
-  Widget _defaultIcon({double size}) {
-    return Icon(
-      Icons.account_circle,
-      color: ICON_COLOR,
-      size: size,
+  Widget _colorIcon(Color color) { // 色のアイコンのもと
+    return FlatButton(
+      child: Container(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+      ),
+      onPressed: (() {}), //押した処理,
     );
   }
 
-  Widget _icon({double size}) {
+  Widget _palette() {
     return Positioned(
-      top: 110,
-      child: FutureBuilder<File>(
-        future: _profileImage,
-        builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-          return FlatButton(
-            onPressed: _imageSelectorGallery,
-            child: Container(
-              height: size,
-              child: snapshot.connectionState == ConnectionState.done &&
-                snapshot.data != null ? Image.file(
-                  snapshot.data,
-              ) : _defaultIcon(size: size),
-            ),
-          );
-        },
+      top: 450,
+      left: 1,
+      right: 1,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _colorIcon(Colors.pinkAccent),
+          _colorIcon(Colors.orangeAccent),
+          _colorIcon(Colors.lightGreenAccent),
+          _colorIcon(Colors.lightBlueAccent),
+        ],
       ),
     );
   }
@@ -219,6 +191,7 @@ class _ProfileState extends State<Profile> {
         _status(),
         _sns(),
         _graffiti(),
+        _palette(),
       ],
     );
   }
