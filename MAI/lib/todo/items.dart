@@ -27,29 +27,29 @@ class Task {
   TaskRow parent;
   String tag, title;
   int deadline, priority;
+  TextEditingController _titleController = TextEditingController();
 
   Task(this.parent, {this.tag, this.title, this.deadline, this.priority});
 
   Widget _title(String title) {
+    _titleController.text = title;
     return Container(
-      child: TextField(
+      child: TextFormField(
+        controller: _titleController,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: title,
-          hintStyle: TextStyle(
-            color: Colors.black,
-          ),
         ),
         style: TextStyle(
           fontSize: 20,
         ),
-        onChanged: (text) {
-          parent.parent._todo[tag][text] = {'deadline': deadline, 'priority': priority};
-          print(text);
+        onEditingComplete: () {
+          print('46: ${parent.parent._todo}');
+          parent.parent._todo[tag][_titleController.text] = {'deadline': deadline, 'priority': priority};
           parent.parent._todo[tag].remove(title);
+          print('49: ${parent.parent._todo}');
           parent.parent._file.writeAsStringSync(json.encode(parent.parent._todo));
-          title = text;
           parent.parent._getJSON();
+          print('52: ${parent.parent._todo}');
         },
       ),
     );
@@ -103,6 +103,7 @@ class TaskRow {
   _TodoListState parent;
   Map<String, dynamic> tasks;
   String tag;
+  TextEditingController _tagController = TextEditingController();
 
   TaskRow({this.tasks});
 
@@ -122,7 +123,29 @@ class TaskRow {
       onPressed: (() {
         _newTask();
       }),
-      tooltip: "新しいタスク",
+      tooltip: '新しいタスク',
+      iconSize: size * 2,
+    );
+  }
+
+  _deleteTag() {
+    print('132: ${parent._todo}');
+    parent._todo.remove(tag);
+    parent._file.writeAsStringSync(json.encode(parent._todo));
+    parent._getJSON();
+    print('136: ${parent._todo}');
+  }
+
+  Widget _deleteTagIcon(double size) {
+    return IconButton(
+      icon: Icon(
+        Icons.remove,
+        color: ICON_COLOR,
+      ),
+      onPressed: (() {
+        _deleteTag();
+      }),
+      tooltip: 'タグ削除',
       iconSize: size * 2,
     );
   }
@@ -131,19 +154,16 @@ class TaskRow {
     return Row(
       children: <Widget>[
         Expanded(
-          child: TextField(
+          child: TextFormField(
+            controller: _tagController,
             decoration: InputDecoration(
               border: InputBorder.none,
-              hintText: tag,
-              hintStyle: TextStyle(
-                color: Colors.black,
-              ),
             ),
             style: TextStyle(
               fontSize: 30,
             ),
-            onChanged: ((text) {
-              parent._todo[text] = parent._todo[tag];
+            onEditingComplete: (() {
+              parent._todo[_tagController.text] = parent._todo[tag];
               parent._todo.remove(tag);
               parent._file.writeAsStringSync(json.encode(parent._todo));
               parent._getJSON();
@@ -151,6 +171,7 @@ class TaskRow {
           ),
         ),
         _newTaskIcon(size),
+        _deleteTagIcon(size),
       ],
     );
   }
@@ -161,6 +182,7 @@ class TaskRow {
 
     tasks.forEach((_k, _v) {
       tag = _k;
+      _tagController.text = tag;
       _v.forEach((_title, _t) {
         _taskList.add(
           Task(
@@ -213,8 +235,9 @@ class _TodoListState extends State<TodoList> {
   File _file;
   bool _fileExists = false;
   Map<String, dynamic> _todo;
-// TODO: タスク消せないかなーwwwやっぱりwwwww
+
   _newTag() {
+    print('240: $_todo');
     _todo['新しいタグ'] = {
       "新しいタスク" : {
         "deadline": 201231,
@@ -227,7 +250,7 @@ class _TodoListState extends State<TodoList> {
 
   _getJSON() {
     getApplicationDocumentsDirectory().then( (Directory _dir) {
-      print(_dir.path);
+      // print(_dir.path);
       _file = File(_dir.path + '/$_fileName');
       _fileExists = _file.existsSync();
 
@@ -238,7 +261,7 @@ class _TodoListState extends State<TodoList> {
           _file.createSync();
           _fileExists = true;
           _todo = {};
-          _newTag();
+          _file.writeAsStringSync(json.encode(_todo));
         }
       });
     });
@@ -286,10 +309,10 @@ class _TodoListState extends State<TodoList> {
     final Size _displaySize = MediaQuery.of(context).size;
     final double _margin = _displaySize.width / 12;
     final double _rowHeight = _displaySize.width / 2.3;
-    return _fileExists ? _list(
+    return _fileExists && _todo.length != 0 ? _list(
       margin: _margin,
       rowHeight: _rowHeight,
-    ) : Center( //TODO: UI調節
+    ) : Center(
       child: Text(
         'タスク完了！偉い！',
         style: TextStyle(
