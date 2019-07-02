@@ -10,6 +10,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   var _profileImage;
+  String _introduction;
 
   _imageSelectorGallery() {
     setState(() {
@@ -101,12 +102,6 @@ class _ProfileState extends State<Profile> {
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            '仕事中',
-            style:TextStyle(
-              fontSize: 25,
             ),
           ),
         ],
