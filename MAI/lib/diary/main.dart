@@ -8,6 +8,7 @@ class DiaryPage extends StatelessWidget {
     // アイコンの大きさ
     return Scaffold(
       floatingActionButton: newDiaryIcon(context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: diaryList(),
     );
   }
