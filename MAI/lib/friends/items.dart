@@ -95,6 +95,8 @@ class _FriendsState extends State<Friends> {
     ),
   ];
 
+//TODO 親友の選択
+
   List<_Friend> _sortedFriendList = [];
 
   Widget _body() {
