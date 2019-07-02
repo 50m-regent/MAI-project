@@ -94,7 +94,8 @@ class _ProfileState extends State<Profile> {
     return Positioned(
       top:240,
       left: 40,
-      child: Column(
+      child: Container(
+        child: Column(
         children: <Widget>[
           Text(
             "一言",
@@ -107,11 +108,11 @@ class _ProfileState extends State<Profile> {
             child: TextField(
               style: TextStyle(
                 fontSize: 22,
-                //height: 1.3,
               ),
             ),
           ),
         ],
+      ),
       ),
     );
   }
