@@ -250,12 +250,14 @@ class _TodoListState extends State<TodoList> {
 
   _getJSON() {
     getApplicationDocumentsDirectory().then( (Directory _dir) {
-      // print(_dir.path);
+      print(_dir.path);
       _file = File(_dir.path + '/$_fileName');
       _fileExists = _file.existsSync();
 
+      print(_file.readAsStringSync());
+
       setState(() {
-        if (_fileExists) {
+        if (_fileExists && _todo != null) {
           _todo = json.decode(_file.readAsStringSync());
         } else {
           _file.createSync();
@@ -265,6 +267,7 @@ class _TodoListState extends State<TodoList> {
         }
       });
     });
+    print('268: $_todo');
   }
 
   List<Map<String, dynamic>> _getTasks() {
