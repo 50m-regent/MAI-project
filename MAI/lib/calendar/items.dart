@@ -122,7 +122,6 @@ class _CalendarState extends State<Calendar> {
   final EdgeInsets _headerMargin = EdgeInsets.only(
     top: 16,
     bottom: 16,
-    right: 200,
   );
   final EdgeInsets _weekDayMargin = EdgeInsets.only(bottom: 4.0);
   PageController _controller = PageController(
@@ -173,9 +172,6 @@ class _CalendarState extends State<Calendar> {
     DateTime date2 = DateTime(this._selectedDate.year, this._selectedDate.month + 1, 1);
 
     DateTime now = this._selectedDate;
-    List<DateTime> week0 = _getDaysInWeek(now.subtract(new Duration(days: 7)));
-    List<DateTime> week1 = _getDaysInWeek(now);
-    List<DateTime> week2 = _getDaysInWeek(now.add(new Duration(days: 7)));
 
     _startWeekday = date1.weekday - _firstDayOfWeek;
     _endWeekday = date2.weekday - _firstDayOfWeek;
