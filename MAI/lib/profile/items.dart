@@ -80,17 +80,20 @@ class _ProfileState extends State<Profile> {
 
   Widget _status() {
     return Expanded(
-            child: TextFormField(
-              maxLines: 5,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: '一言',
-              ),
-              style: TextStyle(
-                fontSize: 22,
-              ),
-            ),
-          );
+      child: TextFormField(
+        maxLines: 5,
+        decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: '一言',
+            labelStyle: TextStyle(
+              fontSize: 22,
+            )
+        ),
+        style: TextStyle(
+          fontSize: 22,
+        ),
+      ),
+    );
   }
 
 
@@ -109,26 +112,34 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _palette() {
-    return Column(
-      children:[
-        Text(
+    List<Widget> _colors = [
+      _colorIcon(Colors.pinkAccent),
+      _colorIcon(Colors.orangeAccent),
+      _colorIcon(Colors.lightGreenAccent),
+      _colorIcon(Colors.lightBlueAccent),
+    ];
+    return Container(
+      height: 100,
+      child: Column(
+        children:[
+          Text(
           'パレット',
           style: TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _colorIcon(Colors.pinkAccent),
-            _colorIcon(Colors.orangeAccent),
-            _colorIcon(Colors.lightGreenAccent),
-            _colorIcon(Colors.lightBlueAccent),
-          ],
+        Expanded(
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: _colors.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _colors[index];
+            },
+          ),
         ),
       ],
-    );
+    ),);
   }
 
   @override
