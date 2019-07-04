@@ -79,42 +79,20 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _status() {
-    return Container(
-        child: Column(
-        children: <Widget>[
-          Text(
-            "一言",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          /*Expanded(
-            child: TextField(
+    return Expanded(
+            child: TextFormField(
+              maxLines: 5,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '一言',
+              ),
               style: TextStyle(
                 fontSize: 22,
               ),
             ),
-          ),*/
-        ],
-      ),
-    );
+          );
   }
 
-
-  Widget _graffiti() {
-    return Column(
-        children: <Widget>[
-          Text(
-            'フリースペース',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          )
-        ],
-    );
-  }
 
   Widget _colorIcon(Color color) { // 色のアイコンのもと
     return FlatButton(
