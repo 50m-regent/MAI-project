@@ -10,7 +10,6 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   var _profileImage;
-  String _introduction;
 
   _imageSelectorGallery() {
     setState(() {
@@ -27,9 +26,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _icon({double size}) {
-    return Positioned(
-      top: 60,
-      child: FutureBuilder<File>(
+    return FutureBuilder<File>(
         future: _profileImage,
         builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
           return FlatButton(
@@ -48,29 +45,21 @@ class _ProfileState extends State<Profile> {
             ),
           );
         },
-      ),
     );
   }
 
   Widget _name() {
-    return Positioned(
-      top: 100,
-      left: 150,
-      child: Text(
+    return Text(
         '名前',
         style: TextStyle(
           fontSize: 35,
           fontWeight: FontWeight.bold,
         ),
-      ),
     );
   }
 
   Widget _birthday() {
-    return Positioned(
-      top: 190,
-      left: 50,
-      child: Row(
+    return Row(
         children: <Widget>[
           Text(
             '誕生日:',
@@ -86,67 +75,27 @@ class _ProfileState extends State<Profile> {
             ),
           )
         ],
-      )
     );
   }
-
 
   Widget _status() {
-    return Positioned(
-      top:240,
-      left: 40,
-      child: Column(
-        children: <Widget>[
-          Text(
-            "一言",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
+    return Expanded(
+      child: TextFormField(
+        maxLines: 5,
+        decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: '一言',
+            labelStyle: TextStyle(
+              fontSize: 22,
+            )
+        ),
+        style: TextStyle(
+          fontSize: 22,
+        ),
       ),
     );
   }
 
-  Widget _sns() {
-    return Positioned(
-      top:70,
-      right: 10,
-      child: Column(
-        children: <Widget>[
-          Icon(
-            Icons.alternate_email,
-            size: 50,
-            color: Colors.blue,
-          ),
-          Icon(
-            Icons.alternate_email,
-            size: 50,
-            color: Colors.purpleAccent,
-          ),
-        ],
-      )
-    );
-  }
-
-  Widget _graffiti() {
-    return Positioned(
-      top: 380,
-      left: 40,
-      child: Column(
-        children: <Widget>[
-          Text(
-            'フリースペース',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          )
-        ],
-      ),
-    );
-  }
 
   Widget _colorIcon(Color color) { // 色のアイコンのもと
     return FlatButton(
@@ -163,36 +112,61 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _palette() {
-    return Positioned(
-      top: 450,
-      left: 1,
-      right: 1,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _colorIcon(Colors.pinkAccent),
-          _colorIcon(Colors.orangeAccent),
-          _colorIcon(Colors.lightGreenAccent),
-          _colorIcon(Colors.lightBlueAccent),
-        ],
-      ),
-    );
+    List<Widget> _colors = [
+      _colorIcon(Colors.pinkAccent),
+      _colorIcon(Colors.orangeAccent),
+      _colorIcon(Colors.lightGreenAccent),
+      _colorIcon(Colors.lightBlueAccent),
+    ];
+    return Container(
+      height: 100,
+      child: Column(
+        children:[
+          Text(
+          'パレット',
+          style: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: _colors.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _colors[index];
+            },
+          ),
+        ),
+      ],
+    ),);
   }
 
   @override
   Widget build(BuildContext context) {
     final Size _displaySize = MediaQuery.of(context).size;
+    final double _margin = _displaySize.width / 12;
     final double _size = _displaySize.width / 3;
-    return Stack(
+    return Container(
+      margin: EdgeInsets.all(_margin),
+      child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        _icon(size: _size),
-        _name(),
-        _birthday(),
+        Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                _icon(size: _size,),
+                _name(),
+              ],
+            ),
+            _birthday(),
+          ],
+        ),
         _status(),
-        _sns(),
-        _graffiti(),
         _palette(),
       ],
+    ),
     );
   }
 }
