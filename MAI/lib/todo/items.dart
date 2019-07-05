@@ -231,10 +231,29 @@ class TodoList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoList> {
-  final String _fileName = 'todo_list.json';
   File _file;
   bool _fileExists = false;
   Map<String, dynamic> _todo;
+
+  _getJSON() {
+    getApplicationDocumentsDirectory().then( (Directory _dir) {
+      print(_dir.path);
+      try {
+        _file = File(_dir.path + '/todo_list.json');
+      } catch(e) {
+        print('AAAAAAAAAAAAAAAAAAAAAAAA');
+        _file.createSync();
+        _todo = {};
+        _file.writeAsStringSync(json.encode(_todo));
+      }
+      
+      _fileExists = _file.existsSync();
+      _todo = json.decode(_file.readAsStringSync());
+
+      setState(() {});
+    });
+    print('268: $_todo');
+  }
 
   _newTag() {
     print('240: $_todo');
@@ -246,25 +265,6 @@ class _TodoListState extends State<TodoList> {
     };
     _file.writeAsStringSync(json.encode(_todo));
     _getJSON();
-  }
-
-  _getJSON() {
-    getApplicationDocumentsDirectory().then( (Directory _dir) {
-      // print(_dir.path);
-      _file = File(_dir.path + '/$_fileName');
-      _fileExists = _file.existsSync();
-
-      setState(() {
-        if (_fileExists) {
-          _todo = json.decode(_file.readAsStringSync());
-        } else {
-          _file.createSync();
-          _fileExists = true;
-          _todo = {};
-          _file.writeAsStringSync(json.encode(_todo));
-        }
-      });
-    });
   }
 
   List<Map<String, dynamic>> _getTasks() {
