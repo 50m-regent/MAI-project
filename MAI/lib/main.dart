@@ -6,6 +6,7 @@ import 'diary/main.dart';
 import 'calendar/main.dart';
 import 'todo/main.dart';
 import 'profile/main.dart';
+import 'package:flutter_twitter_login/flutter_twitter_login.dart';
 
 // アプリ本体
 class MyApp extends StatefulWidget {
