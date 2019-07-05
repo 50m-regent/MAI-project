@@ -9,7 +9,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  var _profileImage;
+  Future<File> _profileImage;
 
   _imageSelectorGallery() {
     setState(() {
@@ -17,23 +17,25 @@ class _ProfileState extends State<Profile> {
     });
   }
 
-  Widget _defaultIcon({double size}) {
-    return Icon(
-      Icons.account_circle,
-      color: ICON_COLOR,
-      size: size,
+  Widget _defaultIcon() {
+    return Center(
+      child: Icon(
+        Icons.account_circle,
+        color: ICON_COLOR,
+        size: ICON_SIZE * 4,
+      ),
     );
   }
 
-  Widget _icon({double size}) {
+  Widget _icon() {
     return FutureBuilder<File>(
         future: _profileImage,
         builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-          return FlatButton(
-            onPressed: _imageSelectorGallery,
-            child: Container(
-              height: size,
-              width: size,
+          return Container(
+            height: ICON_SIZE * 4,
+            width: ICON_SIZE * 4,
+            child: FlatButton(
+              onPressed: _imageSelectorGallery,
               child: snapshot.connectionState == ConnectionState.done &&
                   snapshot.data != null ? Container(
                 child: CircleAvatar(
@@ -41,7 +43,7 @@ class _ProfileState extends State<Profile> {
                     snapshot.data,
                   ),
                 ),
-              ) : _defaultIcon(size: size),
+              ) : _defaultIcon(),
             ),
           );
         },
@@ -62,16 +64,16 @@ class _ProfileState extends State<Profile> {
     return Row(
         children: <Widget>[
           Text(
-            '誕生日:',
+            '誕生日: ',
             style: TextStyle(
-              fontSize: 25,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
             '7/19',
             style: TextStyle(
-              fontSize: 25,
+              fontSize: 20,
             ),
           )
         ],
@@ -79,15 +81,16 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _status() {
-    return Expanded(
+    return Container(
+      height: DISPLAY_SIZE.height / 4,
       child: TextFormField(
         maxLines: 5,
         decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: '一言',
-            labelStyle: TextStyle(
-              fontSize: 22,
-            )
+          border: OutlineInputBorder(),
+          labelText: 'ステータスメッセージ',
+          labelStyle: TextStyle(
+            fontSize: 22,
+          ),
         ),
         style: TextStyle(
           fontSize: 22,
@@ -105,6 +108,13 @@ class _ProfileState extends State<Profile> {
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.all(Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black45,
+              offset: Offset(5, 5),
+              blurRadius: 5,
+            ),
+          ],
         ),
       ),
       onPressed: (() {}), //押した処理,
@@ -119,48 +129,54 @@ class _ProfileState extends State<Profile> {
       _colorIcon(Colors.lightBlueAccent),
     ];
     return Container(
-      height: 100,
+      height: DISPLAY_SIZE.height / 5,
       child: Column(
-        children:[
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
           Text(
-          'パレット',
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
+            'カラー',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: _colors.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _colors[index];
-            },
+          Expanded(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: _colors.length,
+              itemBuilder: (BuildContext context, int index) {
+                return _colors[index];
+              },
+            ),
           ),
-        ),
-      ],
-    ),);
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final Size _displaySize = MediaQuery.of(context).size;
-    final double _margin = _displaySize.width / 12;
-    final double _size = _displaySize.width / 3;
     return Container(
-      margin: EdgeInsets.all(_margin),
+      margin: EdgeInsets.only(
+        top: MARGIN * 2,
+        bottom: MARGIN,
+        left: MARGIN,
+        right: MARGIN,
+      ),
       child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Column(
+        Row(
           children: <Widget>[
-            Row(
+            _icon(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                _icon(size: _size,),
                 _name(),
+                _birthday(),
               ],
             ),
-            _birthday(),
           ],
         ),
         _status(),

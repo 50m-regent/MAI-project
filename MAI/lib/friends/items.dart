@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+
 class _Friend {
   String name, status;
   File iconImage;
@@ -15,12 +17,23 @@ class _Friend {
 
   Widget _widget(){
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
+      margin: EdgeInsets.only(
+        bottom: MARGIN,
+        left: MARGIN,
+        right: MARGIN,
+      ),
       padding: EdgeInsets.all(16),
       height: 100,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: isTomodaTimpo ? Colors.yellow : Colors.grey,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black45,
+            offset: Offset(5, 5),
+            blurRadius: 5,
+          ),
+        ],
       ),
       child: Row(
         children: <Widget>[
@@ -121,10 +134,8 @@ class _FriendsState extends State<Friends> {
 
   @override
   Widget build(BuildContext context) {
-    final Size _displaySize = MediaQuery.of(context).size;
-    final double _margin = _displaySize.width / 12;
     return Container(
-      padding: EdgeInsets.all(_margin),
+      padding: EdgeInsets.symmetric(vertical: MARGIN),
       child: _body(),
     );
   }
