@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: isLogged ? Scaffold(
+      home: /*isLogged ?*/ Scaffold(
         backgroundColor: Colors.white, // TODO: 背景3D
         body: _pageList[_now], // アプリの画面
         bottomNavigationBar: BottomNavigationBar(
@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
           },
           items: menu(),
         ), // 下のメニュー
-      ) : Scaffold(
+      )/* : Scaffold(
         backgroundColor: Colors.white,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ],
         ), 
-      ),
+      )*/,
     );
   }
 }
