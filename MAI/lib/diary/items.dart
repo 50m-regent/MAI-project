@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:mai/constants.dart';
+import '../constants.dart';
 import 'new_diary/main.dart';
 
 Widget newDiaryIcon(BuildContext context) {
-  final Size _displaySize = MediaQuery.of(context).size;
-  final double _iconSize = _displaySize.width / 12;
   return FloatingActionButton.extended(
     onPressed: () {
       showDialog(
@@ -24,7 +22,7 @@ Widget newDiaryIcon(BuildContext context) {
     icon: Icon(
       Icons.add,
       color: Colors.white,
-      size: _iconSize,
+      size: ICON_SIZE,
     ),
     tooltip: "新しい日記",
     backgroundColor: ICON_COLOR,
@@ -62,10 +60,12 @@ class _Diary{
 
   Widget widget(){
     return Container(
+      margin: EdgeInsets.only(right: MARGIN),
       padding: EdgeInsets.all(16),
       width: 300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: Colors.grey,
       ),
       child: Row(
         children: <Widget>[
@@ -102,8 +102,10 @@ class _DailyDiaries {
 
   Widget widget(){
     return Container(
-      height: 200,
+      margin: EdgeInsets.only(bottom: MARGIN),
+      height: 150,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             list[0].date.toString(),
@@ -173,6 +175,7 @@ Widget diaryList(){
   _nnewList = _nnewList.reversed.toList();
 
   return Container(
+    margin: EdgeInsets.all(MARGIN),
     child: ListView.builder(
       reverse: true,
       itemCount: _nnewList.length,

@@ -157,12 +157,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
-        top: MARGIN * 2,
-        bottom: MARGIN,
-        left: MARGIN,
-        right: MARGIN,
-      ),
+      margin: EdgeInsets.all(MARGIN),
       child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[

@@ -6,13 +6,13 @@ import '../constants.dart';
 class _Friend {
   String name, status;
   File iconImage;
-  bool isTomodaTimpo;
+  bool isBestFriend;
 
   _Friend({
     this.name,
     this.status,
     this.iconImage,
-    this.isTomodaTimpo: false,
+    this.isBestFriend,
   });
 
   Widget _widget(){
@@ -26,7 +26,7 @@ class _Friend {
       height: 100,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
-        color: isTomodaTimpo ? Colors.yellow : Colors.grey,
+        color: isBestFriend ? Colors.yellow : Colors.grey,
         boxShadow: [
           BoxShadow(
             color: Colors.black45,
@@ -73,38 +73,43 @@ class _FriendsState extends State<Friends> {
       name: 'aiueo',
       status: 'aeiou',
       iconImage: null,
+      isBestFriend: false,
     ),
     _Friend(
       name: 'たかし',
       status: 'あじ',
       iconImage: null,
-      isTomodaTimpo: true,
+      isBestFriend: true,
     ),
     _Friend(
       name: 'なめこ',
       status: 'バーカ',
       iconImage: null,
+      isBestFriend: false,
     ),
     _Friend(
       name: '佐田',
       status: '佐田です',
       iconImage: null,
+      isBestFriend: false,
     ),
     _Friend(
       name: 'アーメン',
       status: 'あーめんどくせー',
       iconImage: null,
+      isBestFriend: false,
     ),
         _Friend(
       name: 'ジーメン',
       status: 'じーめんどくせー',
       iconImage: null,
+      isBestFriend: false,
     ),
         _Friend(
       name: 'ダーメン',
       status: 'だーめんどくせー',
       iconImage: null,
-      isTomodaTimpo: true,
+      isBestFriend: true,
     ),
   ];
 
@@ -114,12 +119,12 @@ class _FriendsState extends State<Friends> {
 
   Widget _body() {
     _friendList.forEach((_f) {
-      if(_f.isTomodaTimpo){
+      if(_f.isBestFriend){
         _sortedFriendList.add(_f);
       }
     });
     _friendList.forEach((_f) {
-      if(!_f.isTomodaTimpo){
+      if(!_f.isBestFriend){
         _sortedFriendList.add(_f);
       }
     });

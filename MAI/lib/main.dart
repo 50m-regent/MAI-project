@@ -75,6 +75,15 @@ class _MyAppState extends State<MyApp> {
     FriendsPage(),
   ];
 
+  final _titleList = [
+    'ホーム',
+    '日記',
+    'カレンダー',
+    'Todoリスト',
+    'プロフィール',
+    '友達',
+  ];
+
   // 起動時に実行されるやつ
   @override
   Widget build(BuildContext context) {
@@ -82,6 +91,15 @@ class _MyAppState extends State<MyApp> {
       home: /*isLogged ?*/ Scaffold(
         backgroundColor: Colors.white, // TODO: 背景3D
         body: _pageList[_now], // アプリの画面
+        appBar: AppBar(
+          title: Text(
+            _titleList[_now],
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+          backgroundColor: Colors.white,
+        ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _now,
           onTap: (int index) {
