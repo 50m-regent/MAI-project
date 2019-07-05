@@ -51,13 +51,11 @@ class _CalendarHeader extends StatelessWidget {
 }
 
 class _WeekdayRow extends StatelessWidget {
-  _WeekdayRow(
-    this.firstDayOfWeek, {
+  _WeekdayRow({
     @required this.localeDate,
   });
 
   final DateFormat localeDate;
-  final int firstDayOfWeek;
 
   Widget _weekdayContainer(String weekDay) => Expanded(
     child: Container(
@@ -78,7 +76,7 @@ class _WeekdayRow extends StatelessWidget {
     List<Widget> list = [];
 
     /// because of number of days in a week is 7, so it would be easier to count it til 7.
-    for (var i = firstDayOfWeek, count = 0;
+    for (var i = 0, count = 0;
     count < 7;
     i = (i + 1) % 7, count++) {
       String weekDay = localeDate.dateSymbols.SHORTWEEKDAYS[i];
@@ -344,7 +342,6 @@ class _CalendarState extends State<Calendar> {
               headerTitle: '${_localeDate.format(this._dates[1])}',
             ),
             _WeekdayRow(
-              _firstDayOfWeek,
               localeDate: _localeDate,
             ),
             Expanded(
