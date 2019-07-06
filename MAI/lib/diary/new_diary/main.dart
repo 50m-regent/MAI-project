@@ -133,7 +133,7 @@ class _NewDiaryState extends State<NewDiaryPage> {
     final double _iconSize = _displaySize.width / 12;
     final double _pictureSize = _displaySize.height * 0.25;
     return Scaffold(
-        backgroundColor: BACKGROUND_COLOR,
+        backgroundColor: MyColors.background,
         body: Container(
           padding: EdgeInsets.all(_iconSize),
           child: Column(

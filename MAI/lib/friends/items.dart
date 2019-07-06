@@ -26,14 +26,8 @@ class _Friend {
       height: 100,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
-        color: isBestFriend ? Colors.yellow : Colors.grey,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black45,
-            offset: Offset(5, 5),
-            blurRadius: 5,
-          ),
-        ],
+        color: isBestFriend ? Colors.yellow : MyColors.box,
+        boxShadow: [SHADOW],
       ),
       child: Row(
         children: <Widget>[

@@ -21,7 +21,7 @@ class _ProfileState extends State<Profile> {
     return Center(
       child: Icon(
         Icons.account_circle,
-        color: ICON_COLOR,
+        color: MyColors.icon,
         size: ICON_SIZE * 4,
       ),
     );
@@ -65,16 +65,11 @@ class _ProfileState extends State<Profile> {
         children: <Widget>[
           Text(
             '誕生日: ',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle().normalBold(),
           ),
           Text(
             '7/19',
-            style: TextStyle(
-              fontSize: 20,
-            ),
+            style: MyTextStyle().normal(),
           )
         ],
     );

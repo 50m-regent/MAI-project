@@ -89,16 +89,14 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: /*isLogged ?*/ Scaffold(
-        backgroundColor: Colors.white, // TODO: 背景3D
+        backgroundColor: MyColors.background, // TODO: 背景3D
         body: _pageList[_now], // アプリの画面
         appBar: AppBar(
           title: Text(
             _titleList[_now],
-            style: TextStyle(
-              color: Colors.black,
-            ),
+            style: MyTextStyle().bigBold(),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: MyColors.background,
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _now,

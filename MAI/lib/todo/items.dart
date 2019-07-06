@@ -9,12 +9,10 @@ Widget newTagIcon(BuildContext context, TodoList parent) {
   final double _iconSize = _displaySize.width / 12;
   return FloatingActionButton.extended(
     onPressed: parent._state._newTag,
-    backgroundColor: ICON_COLOR,
+    backgroundColor: MyColors.icon,
     label: Text(
       '新しいタグを作成',
-      style: TextStyle(
-        fontSize: 20,
-      ),
+      style: MyTextStyle(color: Colors.white).normalBold(),
     ),
     icon: Icon(
       Icons.add,
@@ -39,7 +37,7 @@ class Task {
         decoration: InputDecoration(
           border: InputBorder.none,
         ),
-        style: TextStyle(
+        style: TextStyle( //TODO: text style整理
           fontSize: 20,
         ),
         onEditingComplete: () {
@@ -68,14 +66,15 @@ class Task {
   }
 
   Widget widget({double margin, double width}) {
-    var colors = [Colors.grey, Colors.yellow, Colors.orange, Colors.red];
+    var colors = [MyColors.box, Colors.yellow, Colors.orange, Colors.red];
     var color = colors[priority];
     return Container(
       width: width,
-      margin: EdgeInsets.only(right: margin),
+      margin: EdgeInsets.only(right: margin), //TODO: padding
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
         color: color,
+        boxShadow: [SHADOW],
       ),
       child: FlatButton(
         onPressed: (() {
@@ -118,7 +117,7 @@ class TaskRow {
     return IconButton(
       icon: Icon(
         Icons.add,
-        color: ICON_COLOR,
+        color: MyColors.icon,
       ),
       onPressed: (() {
         _newTask();
@@ -140,7 +139,7 @@ class TaskRow {
     return IconButton(
       icon: Icon(
         Icons.remove,
-        color: ICON_COLOR,
+        color: MyColors.icon,
       ),
       onPressed: (() {
         _deleteTag();
@@ -317,7 +316,7 @@ class _TodoListState extends State<TodoList> {
         'タスク完了！偉い！',
         style: TextStyle(
           fontSize: 30,
-          color: ICON_COLOR,
+          color: MyColors.icon,
         ),
       ),
     );

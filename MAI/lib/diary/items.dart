@@ -15,9 +15,7 @@ Widget newDiaryIcon(BuildContext context) {
     },
     label: Text(
       '新しい日記を作成',
-      style: TextStyle(
-        fontSize: 20,
-      ),
+      style: MyTextStyle(color: Colors.white).normalBold(),
     ),
     icon: Icon(
       Icons.add,
@@ -25,7 +23,7 @@ Widget newDiaryIcon(BuildContext context) {
       size: ICON_SIZE,
     ),
     tooltip: "新しい日記",
-    backgroundColor: ICON_COLOR,
+    backgroundColor: MyColors.icon,
   );
 }
 
@@ -44,6 +42,7 @@ class _Diary{
   Widget _name(){
     return Text(
       name,
+      style: MyTextStyle().normalBold(),
     );
   }
 
@@ -55,17 +54,19 @@ class _Diary{
     _prefix += '...';
     return Text(
       _prefix,
+      style: MyTextStyle().mini(),
     );
   }
 
   Widget widget(){
     return Container(
-      margin: EdgeInsets.only(right: MARGIN),
-      padding: EdgeInsets.all(16),
+      margin: EdgeInsets.only(right: MARGIN, bottom: MARGIN),
+      padding: EdgeInsets.only(left: 16),
       width: 300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
-        color: Colors.grey,
+        color: MyColors.box,
+        boxShadow: [SHADOW],
       ),
       child: Row(
         children: <Widget>[
@@ -102,13 +103,13 @@ class _DailyDiaries {
 
   Widget widget(){
     return Container(
-      margin: EdgeInsets.only(bottom: MARGIN),
       height: 150,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             list[0].date.toString(),
+            style: MyTextStyle().bigBold(),
           ),
           _diaries(),
         ],
@@ -133,7 +134,7 @@ Widget diaryList(){
     ),
     _Diary(
       name: '平田',
-      date: 190706,
+      date: 190703,
       image: null,
       text: '今日は楽しかったさだまさしあdふぁ',
     ),
@@ -166,21 +167,21 @@ Widget diaryList(){
     _newList[_d.date].add(_d);
   });
 
-  List<_DailyDiaries> _nnewList = [];
+  List<_DailyDiaries> _sortedList = [];
 
   _newList.forEach((_date, _l) {
-    _nnewList.add(_DailyDiaries(list: _l));
+    _sortedList.add(_DailyDiaries(list: _l));
   });
 
-  _nnewList = _nnewList.reversed.toList();
+  _sortedList = _sortedList.reversed.toList();
 
   return Container(
     margin: EdgeInsets.all(MARGIN),
     child: ListView.builder(
       reverse: true,
-      itemCount: _nnewList.length,
+      itemCount: _sortedList.length,
       itemBuilder: (BuildContext context, int index){
-        return _nnewList[index].widget();
+        return _sortedList[index].widget();
       },
     ),
   );

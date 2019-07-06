@@ -9,7 +9,7 @@ TextStyle _textStyle({double fontSize, Color color = Colors.black}) {
     fontSize: fontSize,
     fontWeight: FontWeight.bold,
     color: color,
-  );
+  ); //TODO: こいつとかファイルごとの定数整理
 }
 
 Widget _markList() {
@@ -40,10 +40,7 @@ class _CalendarHeader extends StatelessWidget {
       children: <Widget>[
         Text(
           headerTitle,
-          style: TextStyle(
-            fontSize: 29,
-            fontWeight: FontWeight.bold,
-          ),
+          style: MyTextStyle().bigBold(),
         ),
       ]
     ),
@@ -63,10 +60,7 @@ class _WeekdayRow extends StatelessWidget {
       child: Center(
         child: Text(
           weekDay,
-          style: TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
-          ),
+          style: MyTextStyle().miniBold(),
         ),
       ),
     ),
