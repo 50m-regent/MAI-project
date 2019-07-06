@@ -177,11 +177,12 @@ Widget diaryList(){
   _newList.forEach((_date, _l) {
     _sortedList.add(_DailyDiaries(list: _l));
   });
+  
+  _sortedList = _sortedList.reversed.toList();
 
   return Container(
     margin: EdgeInsets.all(MARGIN),
     child: ListView.builder(
-      reverse: true,
       itemCount: _sortedList.length,
       itemBuilder: (BuildContext context, int index){
         return _sortedList[index].widget();

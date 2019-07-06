@@ -60,7 +60,7 @@ class _WeekdayRow extends StatelessWidget {
       child: Center(
         child: Text(
           weekDay,
-          style: MyTextStyle().miniBold(),
+          style: MyTextStyle().normalBold(),
         ),
       ),
     ),
