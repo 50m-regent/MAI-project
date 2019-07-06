@@ -11,8 +11,9 @@ class MyColors {
     <int, Color>{},
   );
   */
-  static final Color background = Colors.white;
+  static final Color background = Colors.blueGrey[300];
   static final Color icon = Colors.grey;
+  static final Color darkIcon = Colors.grey[600];
   static final Color box = Colors.grey[350];
 }
 
@@ -25,6 +26,17 @@ const BoxShadow SHADOW = BoxShadow(
 class MyTextStyle {
   final Color color;
   MyTextStyle({this.color: Colors.black});
+
+  TextStyle hugeBold() => TextStyle(
+    color: this.color,
+    fontSize: 40,
+    fontWeight: FontWeight.bold,
+  );
+
+  TextStyle huge() => TextStyle(
+    color: this.color,
+    fontSize: 40,
+  );
 
   TextStyle bigBold() => TextStyle(
     color: this.color,

@@ -21,7 +21,7 @@ Widget newTagIcon(BuildContext context, TodoList parent) {
   );
 }
 
-class Task {
+class Task { //TODO: WIdgetにしろ
   TaskRow parent;
   String tag, title;
   int deadline, priority;

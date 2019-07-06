@@ -138,7 +138,7 @@ class _CalendarState extends State<Calendar> {
   @override
   initState() {
     super.initState();
-    initializeDateFormatting();
+    initializeDateFormatting('ja_JP');
     _localeDate = DateFormat.yMMM('ja_JP');
     _firstDayOfWeek = (_localeDate.dateSymbols.FIRSTDAYOFWEEK + 1) % 7;
     _setDate();
