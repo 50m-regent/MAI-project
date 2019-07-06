@@ -13,7 +13,7 @@ class MyColors {
   */
   static final Color background = Colors.white;
   static final Color icon = Colors.grey;
-  static final Color box = Colors.grey;
+  static final Color box = Colors.grey[350];
 }
 
 const BoxShadow SHADOW = BoxShadow(
@@ -56,7 +56,7 @@ class MyTextStyle {
 
   TextStyle mini() => TextStyle(
     color: this.color,
-    fontSize: 20,
+    fontSize: 17,
   );
 }
 

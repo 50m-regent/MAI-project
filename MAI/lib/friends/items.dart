@@ -22,8 +22,8 @@ class _Friend {
         left: MARGIN,
         right: MARGIN,
       ),
-      padding: EdgeInsets.all(16),
-      height: 100,
+      padding: EdgeInsets.only(left: 16),
+      height: 80,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: isBestFriend ? Colors.yellow : MyColors.box,
@@ -38,15 +38,11 @@ class _Friend {
             children: <Widget>[
               Text(
                 name,
-                style: TextStyle(
-                  fontSize: 25,
-                ),
+                style: MyTextStyle().normalBold(),
               ),
               Text(
                 status,
-                style: TextStyle(
-                  fontSize: 18,
-                ),
+                style: MyTextStyle().mini(),
               ),
             ],
           ),

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../constants.dart';
 import 'new_diary/main.dart';
 
@@ -61,24 +62,26 @@ class _Diary{
   Widget widget(){
     return Container(
       margin: EdgeInsets.only(right: MARGIN, bottom: MARGIN),
-      padding: EdgeInsets.only(left: 16),
       width: 300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: MyColors.box,
         boxShadow: [SHADOW],
       ),
-      child: Row(
-        children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _name(),
-              _prefix(),
-            ],
-          ),
-        ],
+      child: FlatButton(
+        onPressed: (() {}), //TODO: 日記展開
+        child: Row(
+          children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _name(),
+                _prefix(),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -108,7 +111,9 @@ class _DailyDiaries {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            list[0].date.toString(),
+            DateFormat('M/d').format(
+              DateTime.parse(list[0].date.toString())
+            ).toString(),
             style: MyTextStyle().bigBold(),
           ),
           _diaries(),
@@ -122,37 +127,37 @@ Widget diaryList(){
   List<_Diary> _list = [
     _Diary(
       name: '篠田',
-      date: 190702,
+      date: 20190702,
       image: null,
       text: '今日は楽しかったさだまさし',
     ),
     _Diary(
       name: '山田',
-      date: 190703,
+      date: 20190703,
       image: null,
       text: '今日は楽しかったさだまさしああdfはkdfはd',
     ),
     _Diary(
       name: '平田',
-      date: 190703,
+      date: 20190703,
       image: null,
       text: '今日は楽しかったさだまさしあdふぁ',
     ),
     _Diary(
       name: '福田',
-      date: 190702,
+      date: 20190702,
       image: null,
       text: '今日は楽しかったさだまさしふぁ',
     ),
     _Diary(
       name: '福田',
-      date: 190708,
+      date: 20190708,
       image: null,
       text: '今日は人を殺した楽しかった',
     ),
     _Diary(
       name: '福田',
-      date: 190710,
+      date: 20190710,
       image: null,
       text: '今日はチンチンを露出した楽しかった',
     ),
