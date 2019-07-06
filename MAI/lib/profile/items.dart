@@ -18,12 +18,10 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _defaultIcon() {
-    return Center(
-      child: Icon(
-        Icons.account_circle,
-        color: MyColors.icon,
-        size: ICON_SIZE * 4,
-      ),
+    return Icon(
+      Icons.account_circle,
+      color: MyColors.icon,
+      size: ICON_SIZE * 3,
     );
   }
 

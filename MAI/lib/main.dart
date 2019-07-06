@@ -94,7 +94,11 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text(
             _titleList[_now],
-            style: MyTextStyle().bigBold(),
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           backgroundColor: MyColors.background,
         ),

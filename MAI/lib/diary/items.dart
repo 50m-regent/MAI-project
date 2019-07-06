@@ -178,8 +178,6 @@ Widget diaryList(){
     _sortedList.add(_DailyDiaries(list: _l));
   });
 
-  _sortedList = _sortedList.reversed.toList();
-
   return Container(
     margin: EdgeInsets.all(MARGIN),
     child: ListView.builder(
