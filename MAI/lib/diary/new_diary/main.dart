@@ -22,7 +22,7 @@ class _NewDiaryState extends State<NewDiaryPage> {
   }
 
   Widget _lockIcon({double iconSize}) {
-    Color _lockColor = Colors.white;
+    Color _lockColor = Colors.grey;
     String _lockTooltip = "公開";
     IconData _lockIcon = LOCK_ICON_OFF;
     if(_lockFlag == 1){
@@ -49,7 +49,7 @@ class _NewDiaryState extends State<NewDiaryPage> {
       tooltip: "投稿",
       icon: Icon(
         Icons.library_books,
-        color: Colors.white,
+        color: Colors.grey,
         size: iconSize,
       )
     );
