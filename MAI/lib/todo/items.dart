@@ -21,7 +21,7 @@ Widget newTagIcon(BuildContext context, TodoList parent) {
   );
 }
 
-class Task { //TODO: WIdgetにしろ
+class Task { //TODO: WIdgetにしろ そもそもtodo全体の構造整理
   TaskRow parent;
   String tag, title;
   int deadline, priority;
@@ -29,7 +29,7 @@ class Task { //TODO: WIdgetにしろ
 
   Task(this.parent, {this.tag, this.title, this.deadline, this.priority});
 
-  Widget _title(String title) {
+  Widget _title() {
     _titleController.text = title;
     return Container(
       child: TextFormField(
@@ -37,7 +37,7 @@ class Task { //TODO: WIdgetにしろ
         decoration: InputDecoration(
           border: InputBorder.none,
         ),
-        style: TextStyle( //TODO: text style整理
+        style: TextStyle(
           fontSize: 20,
         ),
         onEditingComplete: () {
@@ -53,7 +53,7 @@ class Task { //TODO: WIdgetにしろ
     );
   }
 
-  Widget _deadline(int deadline) {
+  Widget _deadline() {
     return Container(
       padding: EdgeInsets.only(left: 20),
       child: Text(
@@ -84,13 +84,12 @@ class Task { //TODO: WIdgetにしろ
           parent.parent._file.writeAsStringSync(json.encode(parent.parent._todo));
           parent.parent._getJSON();
           // print('新:${parent.parent._todo[tag][title]['priority']}');
-          // TODO: そーとするとバグルお^^
         }),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _title(title),
-            //_deadline(deadline), //TODO: 日付
+            _title(),
+            //_deadline(),
           ],
         ),
       ),
@@ -314,10 +313,7 @@ class _TodoListState extends State<TodoList> {
     ) : Center(
       child: Text(
         'タスク完了！偉い！',
-        style: TextStyle(
-          fontSize: 30,
-          color: MyColors.icon,
-        ),
+        style: MyTextStyle(color: MyColors.darkIcon).bigBold()
       ),
     );
   }
