@@ -6,7 +6,7 @@ import 'dart:io';
 import 'items.dart';
 
 class NewDiaryPage extends StatefulWidget {
-  @override
+  @override //TODO: ここもpopup
   _NewDiaryState createState() => _NewDiaryState();
 }
 

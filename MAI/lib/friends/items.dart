@@ -4,16 +4,25 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class _Friend {
+  _FriendsState parent;
   String name, status;
   File iconImage;
   bool isBestFriend;
 
-  _Friend({
-    this.name,
+  _Friend(
+    this.parent,
+    {this.name,
     this.status,
     this.iconImage,
     this.isBestFriend,
   });
+
+  _bestFriendSwitch() {
+    parent.setState(() {
+      isBestFriend = isBestFriend ? false : true;
+      //TODO: 鯖への更新
+    });
+  }
 
   Widget _widget(){
     return Container(
@@ -29,24 +38,27 @@ class _Friend {
         color: isBestFriend ? Colors.yellow : MyColors.box,
         boxShadow: [SHADOW],
       ),
-      child: Row(
-        children: <Widget>[
-          //iconImage, TODO: あとでやるで（あいこんやで）
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                name,
-                style: MyTextStyle().normalBold(),
-              ),
-              Text(
-                status,
-                style: MyTextStyle().mini(),
-              ),
-            ],
-          ),
-        ],
+      child: FlatButton(
+        onPressed: _bestFriendSwitch,
+        child: Row(
+          children: <Widget>[
+            //iconImage, TODO: あとでやるで（あいこんやで）
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  name,
+                  style: MyTextStyle().normalBold(),
+                ),
+                Text(
+                  status,
+                  style: MyTextStyle().mini(),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -58,52 +70,62 @@ class Friends extends StatefulWidget {
 }
 
 class _FriendsState extends State<Friends> {
-  List<_Friend> _friendList = [
-    _Friend(
-      name: 'aiueo',
-      status: 'aeiou',
-      iconImage: null,
-      isBestFriend: false,
-    ),
-    _Friend(
-      name: 'たかし',
-      status: 'あじ',
-      iconImage: null,
-      isBestFriend: true,
-    ),
-    _Friend(
-      name: 'なめこ',
-      status: 'バーカ',
-      iconImage: null,
-      isBestFriend: false,
-    ),
-    _Friend(
-      name: '佐田',
-      status: '佐田です',
-      iconImage: null,
-      isBestFriend: false,
-    ),
-    _Friend(
-      name: 'アーメン',
-      status: 'あーめんどくせー',
-      iconImage: null,
-      isBestFriend: false,
-    ),
-        _Friend(
-      name: 'ジーメン',
-      status: 'じーめんどくせー',
-      iconImage: null,
-      isBestFriend: false,
-    ),
-        _Friend(
-      name: 'ダーメン',
-      status: 'だーめんどくせー',
-      iconImage: null,
-      isBestFriend: true,
-    ),
-  ];
-
-//TODO 親友の選択
+  List<_Friend> _friendList;
+  @override
+  initState() {
+    super.initState();
+    _friendList = [
+      _Friend(
+        this,
+        name: 'aiueo',
+        status: 'aeiou',
+        iconImage: null,
+        isBestFriend: false,
+      ),
+      _Friend(
+        this,
+        name: 'たかし',
+        status: 'あじ',
+        iconImage: null,
+        isBestFriend: true,
+      ),
+      _Friend(
+        this,
+        name: 'なめこ',
+        status: 'バーカ',
+        iconImage: null,
+        isBestFriend: false,
+      ),
+      _Friend(
+        this,
+        name: '佐田',
+        status: '佐田です',
+        iconImage: null,
+        isBestFriend: false,
+      ),
+      _Friend(
+        this,
+        name: 'アーメン',
+        status: 'あーめんどくせー',
+        iconImage: null,
+        isBestFriend: false,
+      ),
+      _Friend(
+        this,
+        name: 'ジーメン',
+        status: 'じーめんどくせー',
+        iconImage: null,
+        isBestFriend: false,
+      ),
+      _Friend(
+        this,
+        name: 'ダーメン',
+        status: 'だーめんどくせー',
+        iconImage: null,
+        isBestFriend: true,
+      ),
+    ];
+  }
 
   List<_Friend> _sortedFriendList = [];
 
@@ -120,10 +142,10 @@ class _FriendsState extends State<Friends> {
     });
 
     return ListView.builder(
+      itemCount: _friendList.length,
       itemBuilder: ((BuildContext context, int index) {
         return _sortedFriendList[index]._widget();
       }),
-      itemCount: _friendList.length,
     );
   }
 

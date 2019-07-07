@@ -326,7 +326,7 @@ class _CalendarState extends State<Calendar> {
   }
 
   @override
-  Widget build(BuildContext context) { //TODO: 引数調節
+  Widget build(BuildContext context) {
     return Expanded(
       child: Container(
       padding: EdgeInsets.all(MARGIN),
@@ -346,7 +346,7 @@ class _CalendarState extends State<Calendar> {
                   this._setDate(index);
                 },
                 controller: _controller,
-                itemBuilder: (context, index) {
+                itemBuilder: (BuildContext context, int index) {
                   return _builder(index);
                 },
                 pageSnapping: false,
