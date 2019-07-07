@@ -17,6 +17,7 @@ class _HomePageState extends State<HomePage> {
     MARGIN = DISPLAY_SIZE.width / 12;
     ICON_SIZE = DISPLAY_SIZE.width / 12;
     return Scaffold(
+      backgroundColor: MyColors.background,
       body: Home(),
     );
   }

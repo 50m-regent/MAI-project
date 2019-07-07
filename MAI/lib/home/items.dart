@@ -45,6 +45,7 @@ class _HomeState extends State<Home> {
   );
   Widget _arMode = IconButton(
     onPressed: (() {}), //TODO: AR MODE
+    tooltip: 'ARモード',
     icon: Icon(
       Icons.camera_alt,
       color: MyColors.darkIcon,
@@ -59,7 +60,8 @@ class _HomeState extends State<Home> {
   }
 
   Widget _showUI() => IconButton(
-    onPressed: _switchUI, //TODO: UIチラ見せ
+    onPressed: _switchUI,
+    tooltip: _isUIVisible ? 'UI非表示' : 'UI表示',
     icon: Icon(
       Icons.chat,
       color: _isUIVisible ? MyColors.darkIcon : Colors.red[400],
@@ -77,10 +79,8 @@ class _HomeState extends State<Home> {
 
   Widget build(BuildContext context) {
     return Container(
-      color: MyColors.background,
-      child: Container(
         margin: EdgeInsets.all(MARGIN),
-        child: Stack(
+        child: _isUIVisible ? Stack(
           children: <Widget>[
             _scheduleNotice,
             _diaryNotice,
@@ -102,8 +102,16 @@ class _HomeState extends State<Home> {
 
             _maiTemp,
           ],
+        ) : Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.bottomRight,
+              child: _showUI(),
+            ),
+
+            _maiTemp,
+          ],
         ),
-      ),
     );
   }
 }
