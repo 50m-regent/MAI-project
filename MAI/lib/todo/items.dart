@@ -9,12 +9,10 @@ Widget newTagIcon(BuildContext context, TodoList parent) {
   final double _iconSize = _displaySize.width / 12;
   return FloatingActionButton.extended(
     onPressed: parent._state._newTag,
-    backgroundColor: ICON_COLOR,
+    backgroundColor: MyColors.icon,
     label: Text(
       '新しいタグを作成',
-      style: TextStyle(
-        fontSize: 20,
-      ),
+      style: MyTextStyle(color: Colors.white).normalBold(),
     ),
     icon: Icon(
       Icons.add,
@@ -23,7 +21,7 @@ Widget newTagIcon(BuildContext context, TodoList parent) {
   );
 }
 
-class Task {
+class Task { //TODO: WIdgetにしろ そもそもtodo全体の構造整理
   TaskRow parent;
   String tag, title;
   int deadline, priority;
@@ -31,7 +29,7 @@ class Task {
 
   Task(this.parent, {this.tag, this.title, this.deadline, this.priority});
 
-  Widget _title(String title) {
+  Widget _title() {
     _titleController.text = title;
     return Container(
       child: TextFormField(
@@ -55,7 +53,7 @@ class Task {
     );
   }
 
-  Widget _deadline(int deadline) {
+  Widget _deadline() {
     return Container(
       padding: EdgeInsets.only(left: 20),
       child: Text(
@@ -68,14 +66,15 @@ class Task {
   }
 
   Widget widget({double margin, double width}) {
-    var colors = [Colors.grey, Colors.yellow, Colors.orange, Colors.red];
+    var colors = [MyColors.box, Colors.yellow, Colors.orange, Colors.red];
     var color = colors[priority];
     return Container(
       width: width,
-      margin: EdgeInsets.only(right: margin),
+      margin: EdgeInsets.only(right: margin), //TODO: padding
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
         color: color,
+        boxShadow: [SHADOW],
       ),
       child: FlatButton(
         onPressed: (() {
@@ -85,13 +84,12 @@ class Task {
           parent.parent._file.writeAsStringSync(json.encode(parent.parent._todo));
           parent.parent._getJSON();
           // print('新:${parent.parent._todo[tag][title]['priority']}');
-          // TODO: そーとするとバグルお^^
         }),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _title(title),
-            //_deadline(deadline), //TODO: 日付
+            _title(),
+            //_deadline(),
           ],
         ),
       ),
@@ -118,7 +116,7 @@ class TaskRow {
     return IconButton(
       icon: Icon(
         Icons.add,
-        color: ICON_COLOR,
+        color: MyColors.icon,
       ),
       onPressed: (() {
         _newTask();
@@ -140,7 +138,7 @@ class TaskRow {
     return IconButton(
       icon: Icon(
         Icons.remove,
-        color: ICON_COLOR,
+        color: MyColors.icon,
       ),
       onPressed: (() {
         _deleteTag();
@@ -231,10 +229,29 @@ class TodoList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoList> {
-  final String _fileName = 'todo_list.json';
   File _file;
   bool _fileExists = false;
   Map<String, dynamic> _todo;
+
+  _getJSON() {
+    getApplicationDocumentsDirectory().then( (Directory _dir) {
+      print(_dir.path);
+      try {
+        _file = File(_dir.path + '/todo_list.json');
+      } catch(e) {
+        print('AAAAAAAAAAAAAAAAAAAAAAAA');
+        _file.createSync();
+        _todo = {};
+        _file.writeAsStringSync(json.encode(_todo));
+      }
+      
+      _fileExists = _file.existsSync();
+      _todo = json.decode(_file.readAsStringSync());
+
+      setState(() {});
+    });
+    print('268: $_todo');
+  }
 
   _newTag() {
     print('240: $_todo');
@@ -246,25 +263,6 @@ class _TodoListState extends State<TodoList> {
     };
     _file.writeAsStringSync(json.encode(_todo));
     _getJSON();
-  }
-
-  _getJSON() {
-    getApplicationDocumentsDirectory().then( (Directory _dir) {
-      // print(_dir.path);
-      _file = File(_dir.path + '/$_fileName');
-      _fileExists = _file.existsSync();
-
-      setState(() {
-        if (_fileExists) {
-          _todo = json.decode(_file.readAsStringSync());
-        } else {
-          _file.createSync();
-          _fileExists = true;
-          _todo = {};
-          _file.writeAsStringSync(json.encode(_todo));
-        }
-      });
-    });
   }
 
   List<Map<String, dynamic>> _getTasks() {
@@ -315,10 +313,7 @@ class _TodoListState extends State<TodoList> {
     ) : Center(
       child: Text(
         'タスク完了！偉い！',
-        style: TextStyle(
-          fontSize: 30,
-          color: ICON_COLOR,
-        ),
+        style: MyTextStyle(color: MyColors.darkIcon).bigBold()
       ),
     );
   }

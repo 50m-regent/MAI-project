@@ -10,7 +10,7 @@ BottomNavigationBarItem _iconTemplate({
   return BottomNavigationBarItem(
     icon: Icon(
       icon,
-      color: ICON_COLOR,
+      color: MyColors.icon,
     ), // アイコン
     activeIcon: Icon(
       icon,
@@ -19,7 +19,7 @@ BottomNavigationBarItem _iconTemplate({
     title: Text(
       title,
       style: TextStyle(
-        color: ICON_COLOR,
+        color: MyColors.icon,
       ),
     ), // 下の文字
   );

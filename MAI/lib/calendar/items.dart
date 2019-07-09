@@ -1,14 +1,15 @@
-import 'package:date_utils/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+
+import '../constants.dart';
 
 TextStyle _textStyle({double fontSize, Color color = Colors.black}) {
   return TextStyle(
     fontSize: fontSize,
     fontWeight: FontWeight.bold,
     color: color,
-  );
+  ); //TODO: こいつとかファイルごとの定数整理
 }
 
 Widget _markList() {
@@ -28,45 +29,38 @@ Widget _mark(Color color) {
 class _CalendarHeader extends StatelessWidget {
   _CalendarHeader({
     @required this.headerTitle,
-    this.headerMargin,
-    @required this.textStyle,
   });
 
   final String headerTitle;
-  final EdgeInsetsGeometry headerMargin;
-  final TextStyle textStyle;
 
   @override
   Widget build(BuildContext context) => Container(
-    margin: headerMargin,
+    margin: EdgeInsets.only(bottom: 16),
     child: Row(
       children: <Widget>[
-        Text(headerTitle, style: textStyle),
+        Text(
+          headerTitle,
+          style: MyTextStyle().bigBold(),
+        ),
       ]
     ),
   );
 }
 
 class _WeekdayRow extends StatelessWidget {
-  _WeekdayRow(
-    this.firstDayOfWeek, {
-    @required this.weekdayMargin,
-    @required this.weekdayTextStyle,
+  _WeekdayRow({
     @required this.localeDate,
   });
 
-  final EdgeInsets weekdayMargin;
-  final TextStyle weekdayTextStyle;
   final DateFormat localeDate;
-  final int firstDayOfWeek;
 
   Widget _weekdayContainer(String weekDay) => Expanded(
     child: Container(
-      margin: weekdayMargin,
+      margin: EdgeInsets.only(bottom: 4),
       child: Center(
         child: Text(
           weekDay,
-          style: weekdayTextStyle,
+          style: MyTextStyle().normalBold(),
         ),
       ),
     ),
@@ -76,7 +70,7 @@ class _WeekdayRow extends StatelessWidget {
     List<Widget> list = [];
 
     /// because of number of days in a week is 7, so it would be easier to count it til 7.
-    for (var i = firstDayOfWeek, count = 0;
+    for (var i = 0, count = 0;
     count < 7;
     i = (i + 1) % 7, count++) {
       String weekDay = localeDate.dateSymbols.SHORTWEEKDAYS[i];
@@ -113,18 +107,10 @@ class _CalendarState extends State<Calendar> {
     0xFF4FC3F7, // Colors.lightBlue[300];
     <int, Color>{}
   );
-  final TextStyle _weekdayTextStyle = _textStyle(fontSize: 17);
-  final TextStyle _headerTextStyle = _textStyle(fontSize: 29);
   final TextStyle _weekendTextStyle = _textStyle(
     fontSize: 20,
     color: Colors.red[400],
   );
-  final EdgeInsets _headerMargin = EdgeInsets.only(
-    top: 16,
-    bottom: 16,
-    right: 200,
-  );
-  final EdgeInsets _weekDayMargin = EdgeInsets.only(bottom: 4.0);
   PageController _controller = PageController(
     initialPage: 1,
     keepPage: true,
@@ -152,30 +138,16 @@ class _CalendarState extends State<Calendar> {
   @override
   initState() {
     super.initState();
-    initializeDateFormatting();
+    initializeDateFormatting('ja_JP');
     _localeDate = DateFormat.yMMM('ja_JP');
     _firstDayOfWeek = (_localeDate.dateSymbols.FIRSTDAYOFWEEK + 1) % 7;
     _setDate();
-  }
-
-  List<DateTime> _getDaysInWeek([DateTime selectedDate]) {
-    if (selectedDate == null) selectedDate = new DateTime.now();
-
-    var _firstDayOfCurrentWeek = Utils.firstDayOfWeek(selectedDate);
-    var _lastDayOfCurrentWeek = Utils.lastDayOfWeek(selectedDate);
-
-    return Utils.daysInRange(_firstDayOfCurrentWeek, _lastDayOfCurrentWeek).toList();
   }
 
   _setDatesAndWeeks() {
     DateTime date0 = DateTime(this._selectedDate.year, this._selectedDate.month - 1, 1);
     DateTime date1 = DateTime(this._selectedDate.year, this._selectedDate.month, 1);
     DateTime date2 = DateTime(this._selectedDate.year, this._selectedDate.month + 1, 1);
-
-    DateTime now = this._selectedDate;
-    List<DateTime> week0 = _getDaysInWeek(now.subtract(new Duration(days: 7)));
-    List<DateTime> week1 = _getDaysInWeek(now);
-    List<DateTime> week2 = _getDaysInWeek(now.add(new Duration(days: 7)));
 
     _startWeekday = date1.weekday - _firstDayOfWeek;
     _endWeekday = date2.weekday - _firstDayOfWeek;
@@ -357,18 +329,13 @@ class _CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-      padding: EdgeInsets.all(30),
+      padding: EdgeInsets.all(MARGIN),
         child: Column(
           children: <Widget>[
             _CalendarHeader(
-              headerMargin: _headerMargin,
               headerTitle: '${_localeDate.format(this._dates[1])}',
-              textStyle: _headerTextStyle,
             ),
             _WeekdayRow(
-              _firstDayOfWeek,
-              weekdayMargin: _weekDayMargin,
-              weekdayTextStyle: _weekdayTextStyle,
               localeDate: _localeDate,
             ),
             Expanded(
@@ -379,7 +346,7 @@ class _CalendarState extends State<Calendar> {
                   this._setDate(index);
                 },
                 controller: _controller,
-                itemBuilder: (context, index) {
+                itemBuilder: (BuildContext context, int index) {
                   return _builder(index);
                 },
                 pageSnapping: false,

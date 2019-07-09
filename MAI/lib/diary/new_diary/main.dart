@@ -6,7 +6,7 @@ import 'dart:io';
 import 'items.dart';
 
 class NewDiaryPage extends StatefulWidget {
-  @override
+  @override //TODO: ここもpopup
   _NewDiaryState createState() => _NewDiaryState();
 }
 
@@ -21,8 +21,8 @@ class _NewDiaryState extends State<NewDiaryPage> {
     });
   }
 
-  Widget _lockIcon({double iconSize}) {
-    Color _lockColor = Colors.white;
+  Widget _lockIcon() {
+    Color _lockColor = MyColors.darkIcon;
     String _lockTooltip = "公開";
     IconData _lockIcon = LOCK_ICON_OFF;
     if(_lockFlag == 1){
@@ -36,12 +36,12 @@ class _NewDiaryState extends State<NewDiaryPage> {
       icon: Icon(
         _lockIcon,
         color: _lockColor,
-        size: iconSize,
+        size: ICON_SIZE,
       ),
     );
   }
 
-  Widget _postIcon({double iconSize}) {
+  Widget _postIcon() {
     return IconButton(
       onPressed: () {
         // TODO: 投稿
@@ -49,18 +49,18 @@ class _NewDiaryState extends State<NewDiaryPage> {
       tooltip: "投稿",
       icon: Icon(
         Icons.library_books,
-        color: Colors.white,
-        size: iconSize,
+        color: MyColors.darkIcon,
+        size: ICON_SIZE,
       )
     );
   }
 
-  Widget _lockAndPost({double iconSize}) {
+  Widget _lockAndPost() {
     return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            _lockIcon(iconSize: iconSize),
-            _postIcon(iconSize: iconSize),
+            _lockIcon(),
+            _postIcon(),
           ],
       );
   }
@@ -71,26 +71,26 @@ class _NewDiaryState extends State<NewDiaryPage> {
       });
     }
 
-  Widget _selectPicture({double iconSize}){
+  Widget _selectPicture(){
     return Icon(
-          Icons.add_a_photo,
-          color: Colors.grey,
-          size: iconSize * 3,
+      Icons.add_a_photo,
+      color: MyColors.darkIcon,
+      size: ICON_SIZE * 3,
     );
   }
 
-  Widget _picture({double pictureSize, double iconSize}) {
+  Widget _picture() {
     return FutureBuilder<File>(
         future: _galleryFile,
         builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
             return FlatButton(
               onPressed: _imageSelectorGallery,
               child: Container(
-                height: pictureSize,
+                height: DISPLAY_SIZE.height / 4,
                 child: snapshot.connectionState == ConnectionState.done &&
                   snapshot.data != null ? Image.file(
                     snapshot.data,
-                ) : _selectPicture(iconSize: iconSize),
+                ) : _selectPicture(),
               ),
             );
         },
@@ -129,22 +129,16 @@ class _NewDiaryState extends State<NewDiaryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Size _displaySize = MediaQuery.of(context).size;
-    final double _iconSize = _displaySize.width / 12;
-    final double _pictureSize = _displaySize.height * 0.25;
     return Scaffold(
-        backgroundColor: BACKGROUND_COLOR,
+        backgroundColor: MyColors.background,
         body: Container(
-          padding: EdgeInsets.all(_iconSize),
+          padding: EdgeInsets.all(MARGIN),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              _lockAndPost(iconSize: _iconSize),
+              _lockAndPost(),
               date(),
-              _picture(
-                pictureSize: _pictureSize,
-                iconSize: _iconSize
-              ),
+              _picture(),
               _textField(),
             ],
           ),

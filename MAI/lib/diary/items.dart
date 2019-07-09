@@ -1,11 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:mai/constants.dart';
+import 'package:intl/intl.dart';
+import '../constants.dart';
 import 'new_diary/main.dart';
 
 Widget newDiaryIcon(BuildContext context) {
-  final Size _displaySize = MediaQuery.of(context).size;
-  final double _iconSize = _displaySize.width / 12;
   return FloatingActionButton.extended(
     onPressed: () {
       showDialog(
@@ -17,17 +16,15 @@ Widget newDiaryIcon(BuildContext context) {
     },
     label: Text(
       '新しい日記を作成',
-      style: TextStyle(
-        fontSize: 20,
-      ),
+      style: MyTextStyle(color: Colors.white).normalBold(),
     ),
     icon: Icon(
       Icons.add,
       color: Colors.white,
-      size: _iconSize,
+      size: ICON_SIZE,
     ),
     tooltip: "新しい日記",
-    backgroundColor: ICON_COLOR,
+    backgroundColor: MyColors.icon,
   );
 }
 
@@ -46,6 +43,7 @@ class _Diary{
   Widget _name(){
     return Text(
       name,
+      style: MyTextStyle().normalBold(),
     );
   }
 
@@ -57,27 +55,33 @@ class _Diary{
     _prefix += '...';
     return Text(
       _prefix,
+      style: MyTextStyle().mini(),
     );
   }
 
   Widget widget(){
     return Container(
-      padding: EdgeInsets.all(16),
+      margin: EdgeInsets.only(right: MARGIN, bottom: MARGIN),
       width: 300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: MyColors.box,
+        boxShadow: [SHADOW],
       ),
-      child: Row(
-        children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _name(),
-              _prefix(),
-            ],
-          ),
-        ],
+      child: FlatButton(
+        onPressed: (() {}), //TODO: 日記展開
+        child: Row(
+          children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _name(),
+                _prefix(),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -102,11 +106,15 @@ class _DailyDiaries {
 
   Widget widget(){
     return Container(
-      height: 200,
+      height: 150,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            list[0].date.toString(),
+            DateFormat('M/d').format(
+              DateTime.parse(list[0].date.toString())
+            ).toString(),
+            style: MyTextStyle().bigBold(),
           ),
           _diaries(),
         ],
@@ -119,37 +127,37 @@ Widget diaryList(){
   List<_Diary> _list = [
     _Diary(
       name: '篠田',
-      date: 190702,
+      date: 20190702,
       image: null,
       text: '今日は楽しかったさだまさし',
     ),
     _Diary(
       name: '山田',
-      date: 190703,
+      date: 20190703,
       image: null,
       text: '今日は楽しかったさだまさしああdfはkdfはd',
     ),
     _Diary(
       name: '平田',
-      date: 190706,
+      date: 20190703,
       image: null,
       text: '今日は楽しかったさだまさしあdふぁ',
     ),
     _Diary(
       name: '福田',
-      date: 190702,
+      date: 20190702,
       image: null,
       text: '今日は楽しかったさだまさしふぁ',
     ),
     _Diary(
       name: '福田',
-      date: 190708,
+      date: 20190708,
       image: null,
       text: '今日は人を殺した楽しかった',
     ),
     _Diary(
       name: '福田',
-      date: 190710,
+      date: 20190710,
       image: null,
       text: '今日はチンチンを露出した楽しかった',
     ),
@@ -164,20 +172,20 @@ Widget diaryList(){
     _newList[_d.date].add(_d);
   });
 
-  List<_DailyDiaries> _nnewList = [];
+  List<_DailyDiaries> _sortedList = [];
 
   _newList.forEach((_date, _l) {
-    _nnewList.add(_DailyDiaries(list: _l));
+    _sortedList.add(_DailyDiaries(list: _l));
   });
-
-  _nnewList = _nnewList.reversed.toList();
+  
+  _sortedList = _sortedList.reversed.toList();
 
   return Container(
+    margin: EdgeInsets.all(MARGIN),
     child: ListView.builder(
-      reverse: true,
-      itemCount: _nnewList.length,
+      itemCount: _sortedList.length,
       itemBuilder: (BuildContext context, int index){
-        return _nnewList[index].widget();
+        return _sortedList[index].widget();
       },
     ),
   );
