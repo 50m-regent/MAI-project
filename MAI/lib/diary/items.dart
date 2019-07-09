@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../constants.dart';
+import 'package:mai/constants.dart';
 import 'new_diary/main.dart';
 
 Widget newDiaryIcon(BuildContext context) {
@@ -153,13 +153,13 @@ Widget diaryList(){
       name: '福田',
       date: 20190708,
       image: null,
-      text: '今日は人を殺した楽しかった',
+      text: '今日楽しかasdfasfasった',
     ),
     _Diary(
       name: '福田',
       date: 20190710,
       image: null,
-      text: '今日はチンチンを露出した楽しかった',
+      text: 'dfaasdsafasfdaしかった',
     ),
   ];
 

@@ -19,7 +19,7 @@ class _DateState extends State<Date> {
         style: MyTextStyle(color: Colors.white).hugeBold(),
       );
       _time = Text(
-        DateFormat('H:m:s').format(DateTime.now()),
+        DateFormat('HH:mm:ss').format(DateTime.now()),
         style: MyTextStyle(color: Colors.white).hugeBold(),
       );
     });
