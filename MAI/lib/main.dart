@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'friends/main.dart';
 import 'menu/main.dart';
 import 'home/main.dart';
 import 'diary/main.dart';
@@ -25,7 +26,7 @@ class _MyAppState extends State<MyApp> {
     CalendarPage(),
     TodoPage(),
     ProfilePage(),
-    Text('Friends'),
+    FriendsPage(),
   ];
 
   // 起動時に実行されるやつ
@@ -50,6 +51,6 @@ class _MyAppState extends State<MyApp> {
 }
 
 // main
-void main() {
+main() {
   runApp(MyApp());
 }

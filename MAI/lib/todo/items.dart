@@ -4,47 +4,53 @@ import 'package:flutter/material.dart';
 import 'package:mai/constants.dart';
 import 'package:path_provider/path_provider.dart';
 
-Widget newTaskIcon(BuildContext context) {
+Widget newTagIcon(BuildContext context, TodoList parent) {
   final Size _displaySize = MediaQuery.of(context).size;
   final double _iconSize = _displaySize.width / 12;
-  return FloatingActionButton(
-    onPressed: () { //TODO: 新しいタスク
-        
-    },
-    child: Icon(
+  return FloatingActionButton.extended(
+    onPressed: parent._state._newTag,
+    backgroundColor: ICON_COLOR,
+    label: Text(
+      '新しいタグを作成',
+      style: TextStyle(
+        fontSize: 20,
+      ),
+    ),
+    icon: Icon(
       Icons.add,
-      color: Colors.white,
       size: _iconSize,
     ),
-    tooltip: "新しいタスク",
-    backgroundColor: ICON_COLOR,
   );
 }
 
 class Task {
+  TaskRow parent;
   String tag, title;
   int deadline, priority;
+  TextEditingController _titleController = TextEditingController();
 
-  Task({this.tag, this.title, this.deadline, this.priority});
-
-  Map<String, dynamic> toJson() {
-    return {
-      tag: {
-        'title': title,
-        'deadline': deadline,
-        'priority': priority
-      }
-    };
-  }
+  Task(this.parent, {this.tag, this.title, this.deadline, this.priority});
 
   Widget _title(String title) {
+    _titleController.text = title;
     return Container(
-      padding: EdgeInsets.all(16),
-      child: Text(
-        title,
+      child: TextFormField(
+        controller: _titleController,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+        ),
         style: TextStyle(
           fontSize: 20,
         ),
+        onEditingComplete: () {
+          print('46: ${parent.parent._todo}');
+          parent.parent._todo[tag][_titleController.text] = {'deadline': deadline, 'priority': priority};
+          parent.parent._todo[tag].remove(title);
+          print('49: ${parent.parent._todo}');
+          parent.parent._file.writeAsStringSync(json.encode(parent.parent._todo));
+          parent.parent._getJSON();
+          print('52: ${parent.parent._todo}');
+        },
       ),
     );
   }
@@ -71,44 +77,116 @@ class Task {
         borderRadius: BorderRadius.all(Radius.circular(20.0)),
         color: color,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _title(title),
-          //_deadline(deadline), //TODO: 日付
-        ],
+      child: FlatButton(
+        onPressed: (() {
+          // print('元:${parent.parent._todo[tag][title]['priority']}');
+          priority = ++priority % 4;
+          parent.parent._todo[tag][title]['priority'] = priority;
+          parent.parent._file.writeAsStringSync(json.encode(parent.parent._todo));
+          parent.parent._getJSON();
+          // print('新:${parent.parent._todo[tag][title]['priority']}');
+          // TODO: そーとするとバグルお^^
+        }),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _title(title),
+            //_deadline(deadline), //TODO: 日付
+          ],
+        ),
       ),
     );
   }
 }
 
 class TaskRow {
+  _TodoListState parent;
   Map<String, dynamic> tasks;
+  String tag;
+  TextEditingController _tagController = TextEditingController();
 
   TaskRow({this.tasks});
 
-  Widget _taskTag(String tag) {
-    return Row(
-      children: <Widget>[
-        Text(
-          tag,
-          style: TextStyle(
-            fontSize: 30,
-          ),
-        ),
-      ]
+  _newTask() {
+    tasks[tag]['新しいタスク'] = {'deadline': 190630, 'priority': 0};
+    parent._todo[tag] = tasks[tag];
+    parent._file.writeAsStringSync(json.encode(parent._todo));
+    parent._getJSON();
+  }
+
+  Widget _newTaskIcon(double size) {
+    return IconButton(
+      icon: Icon(
+        Icons.add,
+        color: ICON_COLOR,
+      ),
+      onPressed: (() {
+        _newTask();
+      }),
+      tooltip: '新しいタスク',
+      iconSize: size * 2,
     );
   }
 
-  Widget widget({double margin, double height}) {
-    String _tag;
+  _deleteTag() {
+    print('132: ${parent._todo}');
+    parent._todo.remove(tag);
+    parent._file.writeAsStringSync(json.encode(parent._todo));
+    parent._getJSON();
+    print('136: ${parent._todo}');
+  }
+
+  Widget _deleteTagIcon(double size) {
+    return IconButton(
+      icon: Icon(
+        Icons.remove,
+        color: ICON_COLOR,
+      ),
+      onPressed: (() {
+        _deleteTag();
+      }),
+      tooltip: 'タグ削除',
+      iconSize: size * 2,
+    );
+  }
+
+  Widget _taskTag(double size) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: TextFormField(
+            controller: _tagController,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+            ),
+            style: TextStyle(
+              fontSize: 30,
+            ),
+            onEditingComplete: (() {
+              parent._todo[_tagController.text] = parent._todo[tag];
+              parent._todo.remove(tag);
+              parent._file.writeAsStringSync(json.encode(parent._todo));
+              parent._getJSON();
+            }),
+          ),
+        ),
+        _newTaskIcon(size),
+        _deleteTagIcon(size),
+      ],
+    );
+  }
+
+  Widget widget(_TodoListState parent, {double margin, double height}) {
     List<Task> _taskList = [];
+    this.parent = parent;
 
     tasks.forEach((_k, _v) {
-      _tag = _k;
+      tag = _k;
+      _tagController.text = tag;
       _v.forEach((_title, _t) {
         _taskList.add(
           Task(
+            this,
             tag: _k,
             title: _title,
             deadline: _t['deadline'],
@@ -118,14 +196,15 @@ class TaskRow {
       });
     });
 
-    _taskList.sort( (b, a) => a.priority.compareTo(b.priority) );
+    //_taskList.sort( (b, a) => a.priority.compareTo(b.priority) );
+    // TODO: ソーとするとバグルお^^
 
     return Container(
       padding: EdgeInsets.only(bottom: margin),
       height: height, 
       child: Column(
         children: <Widget>[
-          _taskTag(_tag),
+          _taskTag(margin),
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -145,28 +224,44 @@ class TaskRow {
 }
 
 class TodoList extends StatefulWidget {
+  final _TodoListState _state = _TodoListState();
+
   @override
-  _TodoListState createState() => _TodoListState();
+  _TodoListState createState() => _state;
 }
 
 class _TodoListState extends State<TodoList> {
   final String _fileName = 'todo_list.json';
+  File _file;
   bool _fileExists = false;
   Map<String, dynamic> _todo;
 
+  _newTag() {
+    print('240: $_todo');
+    _todo['新しいタグ'] = {
+      "新しいタスク" : {
+        "deadline": 201231,
+        "priority": 0
+      }
+    };
+    _file.writeAsStringSync(json.encode(_todo));
+    _getJSON();
+  }
+
   _getJSON() {
     getApplicationDocumentsDirectory().then( (Directory _dir) {
-      print(_dir.path);
-      File _jsonFile = File(_dir.path + '/$_fileName');
-      _fileExists = _jsonFile.existsSync();
+      // print(_dir.path);
+      _file = File(_dir.path + '/$_fileName');
+      _fileExists = _file.existsSync();
 
       setState(() {
         if (_fileExists) {
-          _todo = json.decode(_jsonFile.readAsStringSync());
+          _todo = json.decode(_file.readAsStringSync());
         } else {
-          _jsonFile.createSync();
+          _file.createSync();
           _fileExists = true;
           _todo = {};
+          _file.writeAsStringSync(json.encode(_todo));
         }
       });
     });
@@ -186,18 +281,20 @@ class _TodoListState extends State<TodoList> {
       padding: EdgeInsets.only(
         top: margin,
         right: margin,
-        left: margin
+        left: margin,
+        bottom: margin * 2,
       ),
       child: ListView.builder(
         itemCount: _todo.length,
         itemBuilder: (BuildContext context, int index) {
           TaskRow _row = TaskRow(tasks: _tasks[index]);
           return _row.widget(
+            this,
             margin: margin / 2,
-            height: rowHeight
+            height: rowHeight,
           );
         },
-      )
+      ),
     );
   }
 
@@ -211,11 +308,11 @@ class _TodoListState extends State<TodoList> {
   Widget build(BuildContext context) {
     final Size _displaySize = MediaQuery.of(context).size;
     final double _margin = _displaySize.width / 12;
-    final double _rowHeight = _displaySize.width / 2.5;
-    return _fileExists ? _list(
+    final double _rowHeight = _displaySize.width / 2.3;
+    return _fileExists && _todo.length != 0 ? _list(
       margin: _margin,
       rowHeight: _rowHeight,
-    ) : Center( //TODO: UI調節
+    ) : Center(
       child: Text(
         'タスク完了！偉い！',
         style: TextStyle(

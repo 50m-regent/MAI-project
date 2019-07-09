@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'items.dart';
 
-// todoリスト
-class TodoPage extends StatelessWidget {
+// 日記
+class DiaryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-     Widget _body = TodoList();
+    // アイコンの大きさ
     return Scaffold(
-      body: _body,
-      floatingActionButton: newTagIcon(context, _body),
+      floatingActionButton: newDiaryIcon(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: diaryList(),
     );
   }
 }
