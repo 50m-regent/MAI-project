@@ -9,7 +9,7 @@ class DiaryPage extends StatelessWidget {
     return Scaffold(
       floatingActionButton: newDiaryIcon(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: diaryList(),
+      body: diaryList(context),
     );
   }
 }

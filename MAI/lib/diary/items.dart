@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../constants.dart';
 import 'new_diary/main.dart';
+import 'opened_diary/main.dart';
 
 Widget newDiaryIcon(BuildContext context) {
   return FloatingActionButton.extended(
@@ -59,7 +60,7 @@ class _Diary{
     );
   }
 
-  Widget widget(){
+  Widget widget(BuildContext context){
     return Container(
       margin: EdgeInsets.only(right: MARGIN, bottom: MARGIN),
       width: 300,
@@ -69,7 +70,14 @@ class _Diary{
         boxShadow: [SHADOW],
       ),
       child: FlatButton(
-        onPressed: (() {}), //TODO: 日記展開
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return OpenDiary();
+          }
+          );
+        },
         child: Row(
           children: <Widget>[
             Column(
@@ -92,19 +100,19 @@ class _DailyDiaries {
 
   _DailyDiaries({this.list});
 
-  Widget _diaries() {
+  Widget _diaries(BuildContext context) {
     return Expanded(
       child: ListView.builder(
         itemCount: list.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
-          return list[index].widget();
+          return list[index].widget(context);
         },
       ),
     );
   }
 
-  Widget widget(){
+  Widget widget(BuildContext context) {
     return Container(
       height: 150,
       child: Column(
@@ -116,14 +124,14 @@ class _DailyDiaries {
             ).toString(),
             style: MyTextStyle().bigBold(),
           ),
-          _diaries(),
+          _diaries(context),
         ],
       ),
     );
   }
 }
 
-Widget diaryList(){
+Widget diaryList(BuildContext context){ //TODO: StatefulWidgetにする
   List<_Diary> _list = [
     _Diary(
       name: '篠田',
@@ -184,7 +192,7 @@ Widget diaryList(){
       reverse: true,
       itemCount: _sortedList.length,
       itemBuilder: (BuildContext context, int index){
-        return _sortedList[index].widget();
+        return _sortedList[index].widget(context);
       },
     ),
   );
