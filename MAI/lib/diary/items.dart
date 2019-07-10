@@ -29,12 +29,12 @@ Widget newDiaryIcon(BuildContext context) {
   );
 }
 
-class _Diary{
+class Diary{
   int date;
   File image;
   String name,text;
 
-  _Diary({
+  Diary({
     this.date,
     this.image,
     this.text,
@@ -74,8 +74,8 @@ class _Diary{
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return OpenDiary();
-          }
+              return OpenDiary(this);
+            }
           );
         },
         child: Row(
@@ -96,7 +96,7 @@ class _Diary{
 }
 
 class _DailyDiaries {
-  List<_Diary> list;
+  List<Diary> list;
 
   _DailyDiaries({this.list});
 
@@ -132,38 +132,38 @@ class _DailyDiaries {
 }
 
 Widget diaryList(BuildContext context){ //TODO: StatefulWidgetにする
-  List<_Diary> _list = [
-    _Diary(
+  List<Diary> _list = [
+    Diary(
       name: '篠田',
       date: 20190702,
       image: null,
       text: '今日は楽しかったさだまさし',
     ),
-    _Diary(
+    Diary(
       name: '山田',
       date: 20190703,
       image: null,
       text: '今日は楽しかったさだまさしああdfはkdfはd',
     ),
-    _Diary(
+    Diary(
       name: '平田',
       date: 20190703,
       image: null,
       text: '今日は楽しかったさだまさしあdふぁ',
     ),
-    _Diary(
+    Diary(
       name: '福田',
       date: 20190702,
       image: null,
       text: '今日は楽しかったさだまさしふぁ',
     ),
-    _Diary(
+    Diary(
       name: '福田',
       date: 20190708,
       image: null,
       text: '今日楽しかasdfasfasった',
     ),
-    _Diary(
+    Diary(
       name: '福田',
       date: 20190710,
       image: null,
@@ -171,7 +171,7 @@ Widget diaryList(BuildContext context){ //TODO: StatefulWidgetにする
     ),
   ];
 
-  Map<int, List<_Diary>> _newList = {};
+  Map<int, List<Diary>> _newList = {};
 
   _list.forEach((_d) {
     if(_newList[_d.date] == null) {
