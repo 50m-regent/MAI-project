@@ -18,8 +18,15 @@ class _OpenDiaryState extends State<OpenDiary> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('日記')
+      ),
       body: Container(
-        child: Text('tt'),
+        child: Column(
+          children: <Widget>[
+            Text(diary.name),
+          ],
+        ),
       ),
     );
   }
