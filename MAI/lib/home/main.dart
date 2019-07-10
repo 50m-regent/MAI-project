@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../constants.dart';
+import 'package:mai/constants.dart';
+import 'items.dart';
 
 // ホーム
 class HomePage extends StatefulWidget {
@@ -15,7 +16,9 @@ class _HomePageState extends State<HomePage> {
     DISPLAY_SIZE = MediaQuery.of(context).size;
     MARGIN = DISPLAY_SIZE.width / 12;
     ICON_SIZE = DISPLAY_SIZE.width / 12;
-    return Text('TTT');
-    //return Scaffold(); // TODO: なんか実装する
+    return Scaffold(
+      backgroundColor: MyColors.background,
+      body: Home(),
+    );
   }
 }

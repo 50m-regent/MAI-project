@@ -92,6 +92,7 @@ class _MyAppState extends State<MyApp> {
         backgroundColor: MyColors.background, // TODO: 背景3D
         body: _pageList[_now], // アプリの画面
         appBar: AppBar(
+          backgroundColor: MyColors.box,
           title: Text(
             _titleList[_now],
             style: TextStyle(
@@ -100,16 +101,16 @@ class _MyAppState extends State<MyApp> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          backgroundColor: MyColors.background,
         ),
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: MyColors.box,
           currentIndex: _now,
+          items: buttons(),
           onTap: (int index) {
             setState(() {
               _now = index;
             });
           },
-          items: menu(),
         ), // 下のメニュー
       )/* : Scaffold(
         backgroundColor: Colors.white,

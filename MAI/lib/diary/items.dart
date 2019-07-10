@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../constants.dart';
+import 'package:mai/constants.dart';
 import 'new_diary/main.dart';
 import 'opened_diary/main.dart';
 
@@ -161,13 +161,13 @@ Widget diaryList(BuildContext context){ //TODO: StatefulWidgetにする
       name: '福田',
       date: 20190708,
       image: null,
-      text: '今日は人を殺した楽しかった',
+      text: '今日楽しかasdfasfasった',
     ),
     _Diary(
       name: '福田',
       date: 20190710,
       image: null,
-      text: '今日はチンチンを露出した楽しかった',
+      text: 'dfaasdsafasfdaしかった',
     ),
   ];
 
@@ -185,11 +185,12 @@ Widget diaryList(BuildContext context){ //TODO: StatefulWidgetにする
   _newList.forEach((_date, _l) {
     _sortedList.add(_DailyDiaries(list: _l));
   });
+  
+  _sortedList = _sortedList.reversed.toList();
 
   return Container(
     margin: EdgeInsets.all(MARGIN),
     child: ListView.builder(
-      reverse: true,
       itemCount: _sortedList.length,
       itemBuilder: (BuildContext context, int index){
         return _sortedList[index].widget(context);
