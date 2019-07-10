@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mai/diary/items.dart';
+import 'package:mai/constants.dart';
 
 class OpenDiary extends StatefulWidget {
   final Diary diary;
@@ -19,14 +20,29 @@ class _OpenDiaryState extends State<OpenDiary> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('日記')
+        title: Text(diary.name,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+              color: Colors.black
+          ),
+        ),
+        backgroundColor: MyColors.box,
       ),
       body: Container(
-        child: Column(
-          children: <Widget>[
-            Text(diary.name),
-          ],
+        margin: EdgeInsets.only(top: 10),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Text("${diary.date}",
+                style: TextStyle(
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Image()
+            ],
         ),
+      ),
       ),
     );
   }
