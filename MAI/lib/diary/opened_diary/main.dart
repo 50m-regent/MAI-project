@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mai/diary/items.dart';
+import 'package:mai/constants.dart';
+
 class OpenDiary extends StatefulWidget {
   final Diary diary;
 
@@ -11,7 +13,8 @@ class OpenDiary extends StatefulWidget {
 
 class _OpenDiaryState extends State<OpenDiary> {
   final Diary diary;
-
+  final _diarywidth = DISPLAY_SIZE.width/7;
+  final _diaryheight = DISPLAY_SIZE.height/2.5;
   _OpenDiaryState(this.diary);
 
   @override
@@ -24,23 +27,36 @@ class _OpenDiaryState extends State<OpenDiary> {
               color: Colors.black
           ),
         ),
-        backgroundColor: Colors.grey,
+        backgroundColor: MyColors.box,
       ),
       body: Container(
         margin: EdgeInsets.only(top: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text("${diary.date}",
-                style: TextStyle(
-                  fontSize: 50,
-                  fontWeight: FontWeight.bold,
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text("${diary.date}",
+                  style: TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              Image.file(diary.image),
-              Text("${diary.text}",
-                style: TextStyle(
-                  fontSize: 25,
+              Container(
+                margin: EdgeInsets.only(left: _diarywidth,right: _diarywidth),
+                child:Column(
+                  children: <Widget>[
+                    //Image.file(diary.image),
+                    Container(
+                      height: _diaryheight,
+                      child: Text("${diary.text}",
+                        style: TextStyle(
+                          fontSize: 25,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
