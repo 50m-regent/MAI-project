@@ -50,9 +50,13 @@ class _OpenDiaryState extends State<OpenDiary> {
                     //Image.file(diary.image),
                     Container(
                       height: _diaryheight,
-                      child: Text("${diary.text}",
-                        style: TextStyle(
-                          fontSize: 25,
+                      child: ListView.builder(
+                        itemCount: 1,
+                        scrollDirection: Axis.vertical,
+                        return: Text("${diary.text}",
+                          style: TextStyle(
+                            fontSize: 25,
+                          ),
                         ),
                       ),
                     ),
