@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mai/diary/items.dart';
 import 'package:mai/constants.dart';
 
@@ -21,11 +22,13 @@ class _OpenDiaryState extends State<OpenDiary> {
     return Scaffold(
       backgroundColor: MyColors.background,
       appBar: AppBar(
+        backgroundColor: MyColors.box,
         title: Text(
           diary.name,
           style: TextStyle(
+            color: Colors.black,
+            fontSize: 25,
             fontWeight: FontWeight.bold,
-              color: Colors.black
           ),
         ),
       ),
@@ -36,11 +39,11 @@ class _OpenDiaryState extends State<OpenDiary> {
             children: <Widget>[
               Align(
                 alignment: Alignment.topLeft,
-                child: Text("${diary.date}",
-                  style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Text(
+                  DateFormat('M月d日').format(
+                    DateTime.parse(diary.date.toString())
+                  ).toString(),
+                  style: MyTextStyle().bigBold(),
                 ),
               ),
               Container(
@@ -54,9 +57,7 @@ class _OpenDiaryState extends State<OpenDiary> {
                         itemBuilder: (BuildContext context, int index) {
                           return Text(
                             "${diary.text}",
-                            style: TextStyle(
-                              fontSize: 25,
-                            ),
+                            style: MyTextStyle().normal(),
                           );
                         },
                       ),
