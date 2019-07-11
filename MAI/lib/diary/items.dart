@@ -143,7 +143,7 @@ Widget diaryList(BuildContext context){ //TODO: StatefulWidgetにする
       name: '山田',
       date: 20190703,
       image: null,
-      text: '今日は楽しかったさだまさしああdfはkdfはd',
+      text: '今日は楽しかったさだまさしああdfはkdfはdともとととととととととああはdふぁfあだあfだふぁdfあふぁsふぁfだfだfだふぁふぁっfだおいrtんvcいをw',
     ),
     Diary(
       name: '平田',

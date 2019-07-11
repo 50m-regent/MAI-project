@@ -52,12 +52,14 @@ class _OpenDiaryState extends State<OpenDiary> {
                       height: _diaryheight,
                       child: ListView.builder(
                         itemCount: 1,
-                        scrollDirection: Axis.vertical,
-                        return: Text("${diary.text}",
-                          style: TextStyle(
-                            fontSize: 25,
-                          ),
-                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Text(
+                            "${diary.text}",
+                            style: TextStyle(
+                              fontSize: 25,
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
