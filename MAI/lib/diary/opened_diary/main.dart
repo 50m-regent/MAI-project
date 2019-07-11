@@ -13,24 +13,24 @@ class OpenDiary extends StatefulWidget {
 
 class _OpenDiaryState extends State<OpenDiary> {
   final Diary diary;
-  final _diarywidth = DISPLAY_SIZE.width/7;
   final _diaryheight = DISPLAY_SIZE.height/2.5;
   _OpenDiaryState(this.diary);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyColors.background,
       appBar: AppBar(
-        title: Text(diary.name,
+        title: Text(
+          diary.name,
           style: TextStyle(
             fontWeight: FontWeight.bold,
               color: Colors.black
           ),
         ),
-        backgroundColor: MyColors.box,
       ),
       body: Container(
-        margin: EdgeInsets.only(top: 10),
+        margin: EdgeInsets.all(MARGIN),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -44,7 +44,6 @@ class _OpenDiaryState extends State<OpenDiary> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: _diarywidth,right: _diarywidth),
                 child:Column(
                   children: <Widget>[
                     //Image.file(diary.image),
