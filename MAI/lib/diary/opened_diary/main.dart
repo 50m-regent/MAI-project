@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mai/diary/items.dart';
-import 'package:mai/constants.dart';
-
 class OpenDiary extends StatefulWidget {
   final Diary diary;
 
@@ -26,12 +24,12 @@ class _OpenDiaryState extends State<OpenDiary> {
               color: Colors.black
           ),
         ),
-        backgroundColor: MyColors.box,
+        backgroundColor: Colors.grey,
       ),
       body: Container(
         margin: EdgeInsets.only(top: 10),
-        child: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text("${diary.date}",
                 style: TextStyle(
@@ -39,10 +37,14 @@ class _OpenDiaryState extends State<OpenDiary> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Image()
+              Image.file(diary.image),
+              Text("${diary.text}",
+                style: TextStyle(
+                  fontSize: 25,
+                ),
+              ),
             ],
-        ),
-      ),
+          ),
       ),
     );
   }
