@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mai/constants.dart';
+import 'diary_list.dart';
 import 'items.dart';
 
-// 日記
 class DiaryPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    // アイコンの大きさ
-    return Scaffold(
-      backgroundColor: MyColors.background,
-      floatingActionButton: newDiaryIcon(context),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: diaryList(context),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+    body: DiaryList(),
+    floatingActionButton: NewDiaryIcon(),
+    floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+  );
 }

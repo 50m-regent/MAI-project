@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 
-Size DISPLAY_SIZE;
-double ICON_SIZE;
-double MARGIN;
+Size displaySize;
+double iconSize;
+double margin;
 
 class MyColors {
-  /*
-  static final Color background = MaterialColor(
-    0xFFE0F7FA,
-    <int, Color>{},
-  );
-  */
   static final Color background = Colors.blueGrey[300];
   static final Color icon = Colors.grey;
   static final Color darkIcon = Colors.grey[600];
   static final Color box = Colors.grey[350];
 }
 
-const BoxShadow SHADOW = BoxShadow(
+BoxShadow shadow = BoxShadow(
   color: Colors.black45,
   offset: Offset(5, 5),
   blurRadius: 5,
@@ -38,6 +32,17 @@ class MyTextStyle {
     fontSize: 40,
   );
 
+  TextStyle veryBigBold() => TextStyle(
+    color: this.color,
+    fontSize: 35,
+    fontWeight: FontWeight.bold,
+  );
+
+  TextStyle veryBig() => TextStyle(
+    color: this.color,
+    fontSize: 35,
+  );
+
   TextStyle bigBold() => TextStyle(
     color: this.color,
     fontSize: 29,
@@ -47,6 +52,17 @@ class MyTextStyle {
   TextStyle big() => TextStyle(
     color: this.color,
     fontSize: 29,
+  );
+
+  TextStyle largeBold() => TextStyle(
+    color: this.color,
+    fontSize: 25,
+    fontWeight: FontWeight.bold,
+  );
+
+  TextStyle large() => TextStyle(
+    color: this.color,
+    fontSize: 25,
   );
 
   TextStyle normalBold() => TextStyle(
@@ -71,7 +87,3 @@ class MyTextStyle {
     fontSize: 17,
   );
 }
-
-// 鍵アイコン
-const IconData LOCK_ICON_ON = Icons.lock_outline;
-const IconData LOCK_ICON_OFF = Icons.lock_open;

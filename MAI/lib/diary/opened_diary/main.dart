@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:mai/diary/items.dart';
+import '../diary.dart';
 
-class OpenDiary extends StatefulWidget {
+class OpenedDiary extends StatefulWidget {
   final Diary diary;
 
-  OpenDiary(this.diary);
+  OpenedDiary(this.diary);
 
   @override
-  State<OpenDiary> createState() => _OpenDiaryState(diary);
+  State<OpenedDiary> createState() => _OpenedDiaryState(diary);
 }
 
-class _OpenDiaryState extends State<OpenDiary> {
+class _OpenedDiaryState extends State<OpenedDiary> {
   final Diary diary;
 
-  _OpenDiaryState(this.diary);
+  _OpenedDiaryState(this.diary);
 
   @override
   Widget build(BuildContext context) {

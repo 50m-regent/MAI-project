@@ -1,31 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:mai/constants.dart';
+import '../constants.dart';
 
-// 下のメニューのアイコンのテンプレ
 BottomNavigationBarItem _iconTemplate({
-    IconData icon, // アイコン
-    String title, // タイトル
-    Color color, // 選択時の色
+    IconData icon,
+    String title,
+    Color color,
   }) {
   return BottomNavigationBarItem(
     icon: Icon(
       icon,
       color: MyColors.icon,
-    ), // アイコン
+    ),
     activeIcon: Icon(
       icon,
       color: color,
-    ), // 選択時のアイコン
+    ),
     title: Text(
       title,
       style: TextStyle(
         color: MyColors.icon,
       ),
-    ), // 下の文字
+    ),
   );
 }
 
-// ホーム
 BottomNavigationBarItem home() {
   return _iconTemplate(
     icon: Icons.home,
@@ -34,7 +32,6 @@ BottomNavigationBarItem home() {
   );
 }
 
-// 日記
 BottomNavigationBarItem diary() {
   return _iconTemplate(
     icon: Icons.book,
@@ -42,11 +39,10 @@ BottomNavigationBarItem diary() {
     color: MaterialColor(
       0xFFF48FB1,
       <int, Color>{}
-    ), // Colors.pink[200]
+    ),
   );
 }
 
-// カレンダー
 BottomNavigationBarItem calendar() {
   return _iconTemplate(
     icon: Icons.today,
@@ -58,7 +54,6 @@ BottomNavigationBarItem calendar() {
   );
 }
 
-// とぅどぅ
 BottomNavigationBarItem todo() {
   return _iconTemplate(
     icon: Icons.assignment,
@@ -70,7 +65,6 @@ BottomNavigationBarItem todo() {
   );
 }
 
-// プロフィール
 BottomNavigationBarItem profile() {
   return _iconTemplate(
     icon: Icons.account_circle,
@@ -82,7 +76,6 @@ BottomNavigationBarItem profile() {
   );
 }
 
-// フレンド
 BottomNavigationBarItem friends() {
   return _iconTemplate(
     icon: Icons.group,
@@ -93,3 +86,12 @@ BottomNavigationBarItem friends() {
     ), // Colors.green[400]
   );
 }
+
+List<BottomNavigationBarItem> buttons = [
+  home(),
+  diary(),
+  calendar(),
+  todo(),
+  profile(),
+  friends(),
+];
