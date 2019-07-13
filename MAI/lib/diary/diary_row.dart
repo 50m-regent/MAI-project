@@ -16,7 +16,7 @@ class DiaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    height: displaySize.height / 4,
+    height: displaySize.height / 4.5,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[

@@ -30,7 +30,7 @@ class Diary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    margin: EdgeInsets.only(right: margin),
+    margin: EdgeInsets.only(right: margin, bottom: margin),
     width: displaySize.width / 2,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(10)),
