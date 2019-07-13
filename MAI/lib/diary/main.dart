@@ -8,5 +8,6 @@ class DiaryPage extends StatelessWidget {
     body: DiaryList(),
     floatingActionButton: NewDiaryIcon(),
     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    backgroundColor: Colors.transparent,
   );
 }

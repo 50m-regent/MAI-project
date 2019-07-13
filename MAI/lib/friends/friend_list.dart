@@ -67,7 +67,7 @@ class _FriendListState extends State {
   @override
   Widget build(BuildContext context) => Container(
     color: Colors.transparent,
-    padding: EdgeInsets.all(margin),
+    margin: EdgeInsets.symmetric(vertical: margin),
     child: ListView.builder(
       itemCount: _friendList.length,
       itemBuilder: ((BuildContext context, int index) => _sortedFriendList[index]),

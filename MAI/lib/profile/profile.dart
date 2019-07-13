@@ -13,7 +13,7 @@ class _ProfileState extends State {
 
   final _profile = {
     'name': 'りーぜんと',
-    'birthday': 1118,
+    'birthday': '1118',
     'message': '最近進捗が生えすぎるﾄﾎﾎギス'
   };
 
@@ -23,7 +23,7 @@ class _ProfileState extends State {
 
   Widget _defaultIcon = Icon(
     Icons.account_circle,
-    color: MyColors.icon,
+    color: MyColors.darkIcon,
     size: iconSize * 3,
   );
 
@@ -57,7 +57,7 @@ class _ProfileState extends State {
         style: MyTextStyle().normalBold(),
       ),
       Text(
-        '${int.parse(_profile['birthday']) / 100}/${int.parse(_profile['birthday']) % 100}',
+        '${_profile['birthday'][0] + _profile['birthday'][1]}/${_profile['birthday'][2] + _profile['birthday'][3]}',
         style: MyTextStyle().normal(),
       )
     ],

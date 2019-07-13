@@ -27,7 +27,7 @@ class _DateState extends State {
   void initState() {
     super.initState();
     _getTime();
-    Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
+    //Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
   }
   
   @override

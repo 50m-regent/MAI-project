@@ -10,12 +10,12 @@ class Todo extends StatefulWidget {
 }
 
 class _TodoState extends State {
-  Map<String, dynamic> _todo = {};
+  Map<String, dynamic> todo = {};
 
   FloatingActionButton newTagIcon() => FloatingActionButton.extended(
-    onPressed: () => setState(() => _todo['新しいタグ'] = {
+    onPressed: () => setState(() => todo['新しいタグ'] = {
       "新しいタスク" : {
-        "deadline": 201231,
+        "deadline": 20201231,
         "priority": 0
       }
     }),
@@ -32,7 +32,7 @@ class _TodoState extends State {
 
   List<Map<String, dynamic>> _getTasks() {
     List<Map<String, dynamic>> tasks = [];
-    _todo.forEach((_tag, _t) => tasks.add({_tag: _t}));
+    todo.forEach((_tag, _t) => tasks.add({_tag: _t}));
     return tasks;
   }
 
@@ -47,14 +47,14 @@ class _TodoState extends State {
         bottom: margin * 2,
       ),
       child: ListView.builder(
-        itemCount: _todo.length,
+        itemCount: todo.length,
         itemBuilder: (BuildContext context, int index) => TaskRow(this, _tasks[index]),
       ),
     );
   }
 
   @override
-  Widget build(BuildContext context) => _todo.length == 0 ? Center(
+  Widget build(BuildContext context) => todo.length == 0 ? Center(
     child: Text(
       'タスク完了！偉い！',
       style: MyTextStyle(color: MyColors.darkIcon).bigBold()

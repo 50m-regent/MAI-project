@@ -36,7 +36,7 @@ class _MyAppState extends State {
     backgroundColor: MyColors.box,
     title: Text(
       _titleList[_now],
-      style: MyTextStyle().large(),
+      style: MyTextStyle().largeBold(),
     ),
   );
 
