@@ -47,11 +47,11 @@ class _FriendState extends State<Friend> {
             children: <Widget>[
               Text(
                 widget.name,
-                style: MyTextStyle().normalBold(),
+                style: MyTextStyle().normalBold,
               ),
               Text(
                 widget.message,
-                style: MyTextStyle().mini(),
+                style: MyTextStyle().mini,
               ),
             ],
           ),

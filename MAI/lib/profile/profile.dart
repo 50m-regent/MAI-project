@@ -17,10 +17,6 @@ class _ProfileState extends State {
     'message': '最近進捗が生えすぎるﾄﾎﾎギス'
   };
 
-  _imageSelectorGallery() => setState(() {
-    _profileImage = ImagePicker.pickImage(source: ImageSource.gallery);
-  });
-
   Widget _defaultIcon = Icon(
     Icons.account_circle,
     color: MyColors.darkIcon,
@@ -33,7 +29,9 @@ class _ProfileState extends State {
       height: iconSize * 4,
       width: iconSize * 4,
       child: FlatButton(
-        onPressed: _imageSelectorGallery,
+        onPressed: () => setState(() {
+          _profileImage = ImagePicker.pickImage(source: ImageSource.gallery);
+        }),
         child: snapshot.connectionState == ConnectionState.done && snapshot.data != null ? Container(
           child: CircleAvatar(
             backgroundImage: FileImage(
@@ -47,18 +45,18 @@ class _ProfileState extends State {
 
   Widget _name() => Text(
     _profile['name'],
-    style: MyTextStyle().veryBigBold(),
+    style: MyTextStyle().veryBigBold,
   );
 
   Widget _birthday() => Row(
     children: <Widget>[
       Text(
         '誕生日: ',
-        style: MyTextStyle().normalBold(),
+        style: MyTextStyle().normalBold,
       ),
       Text(
         '${_profile['birthday'][0] + _profile['birthday'][1]}/${_profile['birthday'][2] + _profile['birthday'][3]}',
-        style: MyTextStyle().normal(),
+        style: MyTextStyle().normal,
       )
     ],
   );
@@ -70,7 +68,7 @@ class _ProfileState extends State {
       decoration: InputDecoration(
         border: OutlineInputBorder(),
       ),
-      style: MyTextStyle().normal(),
+      style: MyTextStyle().normal,
     ),
   );
 
@@ -104,10 +102,7 @@ class _ProfileState extends State {
         children: <Widget>[
           Text(
             'パレッチュ',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle().bigBold,
           ),
           Expanded(
             child: ListView.builder(

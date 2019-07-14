@@ -8,7 +8,7 @@ Widget scheduleNotice = Align(
     color: MyColors.box,
     child: Text(
       '今日は〇〇時から\n〇〇の予定です！',
-      style: MyTextStyle().normalBold(),
+      style: MyTextStyle().normalBold,
     ),
   ),
 );
@@ -20,7 +20,7 @@ Widget diaryNotice = Align(
     color: MyColors.box,
     child: Text(
       '今日の日記を\n書いてみよう！',
-      style: MyTextStyle().normalBold(),
+      style: MyTextStyle().normalBold,
     ),
   ),
 );
@@ -32,7 +32,7 @@ Widget todoNotice = Align(
     color: MyColors.box,
     child: Text(
       '〇〇をしよう！',
-      style: MyTextStyle().normalBold(),
+      style: MyTextStyle().normalBold,
     ),
   ),
 );

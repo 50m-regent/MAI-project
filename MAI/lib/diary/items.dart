@@ -13,7 +13,7 @@ class NewDiaryIcon extends StatelessWidget {
     },
     label: Text(
       '新しい日記を作成',
-      style: MyTextStyle(color: Colors.white).normalBold(),
+      style: MyTextStyle(color: Colors.white).normalBold,
     ),
     icon: Icon(
       Icons.add,

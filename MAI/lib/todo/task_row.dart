@@ -69,7 +69,7 @@ class _TaskRowState extends State<TaskRow> {
           decoration: InputDecoration(
             border: InputBorder.none,
           ),
-          style: MyTextStyle().bigBold(),
+          style: MyTextStyle().bigBold,
           onEditingComplete: () => setState(() {
             widget.todoList._todo[_tagController.text] = widget.todoList._todo[tag];
             widget.todoList._todo.remove(tag);

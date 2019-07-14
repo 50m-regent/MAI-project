@@ -29,7 +29,7 @@ class _CalendarHeader extends StatelessWidget {
       children: <Widget>[
         Text(
           '${localDate.format(dates[1])}',
-          style: MyTextStyle().bigBold(),
+          style: MyTextStyle().bigBold,
         ),
       ]
     ),
@@ -46,7 +46,7 @@ class _WeekdayRow extends StatelessWidget {
       child: Center(
         child: Text(
           weekDay,
-          style: MyTextStyle().normalBold(),
+          style: MyTextStyle().normalBold,
         ),
       ),
     ),

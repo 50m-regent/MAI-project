@@ -15,6 +15,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State {
   int _now = 0;
+  // アプリのページ一覧
   final _pageList = [
     HomePage(),
     DiaryPage(),
@@ -29,14 +30,14 @@ class _MyAppState extends State {
     'カレンダー',
     'Todoリスト',
     'プロフィール',
-    '友達',
+    'フレンド',
   ];
 
   AppBar _appBar() => AppBar(
     backgroundColor: MyColors.box,
     title: Text(
       _titleList[_now],
-      style: MyTextStyle().largeBold(),
+      style: MyTextStyle().largeBold,
     ),
   );
 

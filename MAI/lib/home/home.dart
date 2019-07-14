@@ -41,7 +41,7 @@ class _HomeState extends State {
     alignment: Alignment(0, -0.3),
     child: Text(
       'MAIさん(仮)',
-      style: MyTextStyle(color: Colors.white). bigBold(),
+      style: MyTextStyle(color: Colors.white). bigBold,
     ),
   );
 

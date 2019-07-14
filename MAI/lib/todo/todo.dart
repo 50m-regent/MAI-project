@@ -22,7 +22,7 @@ class _TodoState extends State {
     backgroundColor: MyColors.icon,
     label: Text(
       '新しいタグを作成',
-      style: MyTextStyle(color: Colors.white).normalBold(),
+      style: MyTextStyle(color: Colors.white).normalBold,
     ),
     icon: Icon(
       Icons.add,
@@ -57,7 +57,7 @@ class _TodoState extends State {
   Widget build(BuildContext context) => todo.length == 0 ? Center(
     child: Text(
       'タスク完了！偉い！',
-      style: MyTextStyle(color: MyColors.darkIcon).bigBold()
+      style: MyTextStyle(color: MyColors.darkIcon).bigBold,
     ),
   ) : _todoList();
 }

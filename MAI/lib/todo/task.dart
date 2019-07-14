@@ -24,7 +24,7 @@ class _TaskState extends State<Task> {
         decoration: InputDecoration(
           border: InputBorder.none,
         ),
-        style: MyTextStyle().largeBold(),
+        style: MyTextStyle().largeBold,
         onEditingComplete: () => setState(() {
           widget.taskRow.widget.todoList._todo[widget.tag][_titleController.text] = {'deadline': widget.deadline, 'priority': widget.priority};
           widget.taskRow.widget.todoList._todo[widget.tag].remove(widget.title);
@@ -40,11 +40,11 @@ class _TaskState extends State<Task> {
           DateFormat('M/d').format(
             DateTime.parse(widget.deadline.toString())
           ).toString(),
-          style: MyTextStyle().large(),
+          style: MyTextStyle().large,
         ),
         Text(
           'まで',
-          style: MyTextStyle().normal(),
+          style: MyTextStyle().normal,
         ),
       ],
     );

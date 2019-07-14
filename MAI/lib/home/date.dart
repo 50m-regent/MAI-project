@@ -15,11 +15,11 @@ class _DateState extends State {
   _getTime() => setState(() {
     _date = Text(
       DateFormat('M月d日(E)').format(DateTime.now()),
-      style: MyTextStyle(color: Colors.white).hugeBold(),
+      style: MyTextStyle(color: Colors.white).hugeBold,
     );
     _time = Text(
       DateFormat('HH:mm:ss').format(DateTime.now()),
-      style: MyTextStyle(color: Colors.white).hugeBold(),
+      style: MyTextStyle(color: Colors.white).hugeBold,
     );
   });
 

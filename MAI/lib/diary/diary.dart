@@ -13,7 +13,7 @@ class Diary extends StatelessWidget {
 
   Widget _name() => Text(
     name,
-    style: MyTextStyle().normalBold(),
+    style: MyTextStyle().normalBold,
   );
 
   Widget _prefix() {
@@ -24,7 +24,7 @@ class Diary extends StatelessWidget {
     _prefix += '...';
     return Text(
       _prefix,
-      style: MyTextStyle().mini(),
+      style: MyTextStyle().mini,
     );
   }
 

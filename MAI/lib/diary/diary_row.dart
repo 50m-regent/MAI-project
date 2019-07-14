@@ -24,7 +24,7 @@ class DiaryRow extends StatelessWidget {
           DateFormat('M/d').format(
             DateTime.parse(diaryList[0].date.toString())
           ).toString(),
-          style: MyTextStyle().bigBold(),
+          style: MyTextStyle().bigBold,
         ),
         _diaries(),
       ],
