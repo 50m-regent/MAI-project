@@ -4,12 +4,7 @@ import 'opened_diary/main.dart';
 
 class Diary extends StatelessWidget {
   final date, image, name, text;
-  Diary({
-    this.date,
-    this.image,
-    this.text,
-    this.name,
-  });
+  Diary({this.date, this.image, this.text, this.name});
 
   Widget _name() => Text(
     name,

@@ -28,7 +28,7 @@ class _FriendState extends State<Friend> {
 
   @override
   Widget build(BuildContext context) => Container(
-    margin: EdgeInsets.only(bottom: margin, right: margin, left: margin,),
+    margin: EdgeInsets.only(bottom: margin, right: margin, left: margin),
     height: displaySize.height / 8,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(10)),
