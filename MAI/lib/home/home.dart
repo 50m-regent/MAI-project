@@ -50,9 +50,7 @@ class _HomeState extends State {
     margin: EdgeInsets.all(margin),
     child: _isUIVisible ? Stack(
       children: <Widget>[
-        scheduleNotice,
-        diaryNotice,
-        todoNotice,
+        notice,
         Date(),
         _icons(),
         _maiTemp, // TODO: 本物

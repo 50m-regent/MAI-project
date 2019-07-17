@@ -1,7 +1,8 @@
 import 'dart:io';
 import '../constants.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+//import 'package:image_picker/image_picker.dart';
+//TODO: あん
 
 class Profile extends StatefulWidget {
   @override
@@ -29,9 +30,7 @@ class _ProfileState extends State {
       height: iconSize * 4,
       width: iconSize * 4,
       child: FlatButton(
-        onPressed: () => setState(() {
-          _profileImage = ImagePicker.pickImage(source: ImageSource.gallery);
-        }),
+        //onPressed: () => setState(() => _profileImage = ImagePicker.pickImage(source: ImageSource.gallery)),
         child: snapshot.connectionState == ConnectionState.done && snapshot.data != null ? Container(
           child: CircleAvatar(
             backgroundImage: FileImage(
