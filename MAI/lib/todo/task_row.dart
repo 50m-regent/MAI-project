@@ -4,8 +4,9 @@ import '../constants.dart';
 import 'task.dart';
 
 class TaskRow extends StatefulWidget {
+  final todoList;
   final tasks;
-  TaskRow(this.tasks);
+  TaskRow(this.todoList, this.tasks);
 
   @override
   State createState() => _TaskRowState();
@@ -41,7 +42,7 @@ class _TaskRowState extends State<TaskRow> {
       Icons.add,
       color: MyColors.icon,
     ),
-    onPressed: () => setState(() {
+    onPressed: () => widget.todoList.setState(() {
       print(todo[tag]);
       _taskList.add(
           Task(
@@ -62,11 +63,8 @@ class _TaskRowState extends State<TaskRow> {
       Icons.remove,
       color: MyColors.icon,
     ),
-    onPressed: () => setState(() {
-      print(todo);
-      print(tag);
+    onPressed: () => widget.todoList.setState(() {
       todo.remove(tag);
-      print(todo);
     }),
     tooltip: 'タグ削除',
     iconSize: iconSize * 1.5,

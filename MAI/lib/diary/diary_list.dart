@@ -15,7 +15,7 @@ class DiaryList extends StatelessWidget {
       name: '山田',
       date: 20190703,
       image: null,
-      text: '今日は楽しかったさだまさしああdfはkdfはd',
+      text: '今日asasasaしかったさだまさしああdfはkdfはd',
     ),
     Diary(
       name: '平田',
