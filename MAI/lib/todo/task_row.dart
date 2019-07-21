@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'todo.dart';
 import '../constants.dart';
 import 'task.dart';
 
 class TaskRow extends StatefulWidget {
-  final todoList;
   final tasks;
-
-  TaskRow(this.todoList, this.tasks);
+  TaskRow(this.tasks);
 
   @override
   State createState() => _TaskRowState();
@@ -26,7 +25,6 @@ class _TaskRowState extends State<TaskRow> {
       _v.forEach((_title, _t) {
         _taskList.add(
           Task(
-            this,
             tag: _k,
             title: _title,
             deadline: _t['deadline'],
@@ -44,8 +42,16 @@ class _TaskRowState extends State<TaskRow> {
       color: MyColors.icon,
     ),
     onPressed: () => setState(() {
-      widget.tasks[tag]['新しいタスク'] = {'deadline': 20201231, 'priority': 0};
-      widget.todoList.todo[tag] = widget.tasks[tag];
+      print(todo[tag]);
+      _taskList.add(
+          Task(
+            tag: tag,
+            title: '新しいタスク',
+            deadline: 20201231,
+            priority: 0,
+          )
+        );
+      todo[tag]['新しいタスク'] = {'deadline': 20201231, 'priority': 0};
     }),
     tooltip: '新しいタスク',
     iconSize: iconSize * 1.5,
@@ -56,7 +62,12 @@ class _TaskRowState extends State<TaskRow> {
       Icons.remove,
       color: MyColors.icon,
     ),
-    onPressed: () => setState(() => widget.todoList.todo.remove(tag)),
+    onPressed: () => setState(() {
+      print(todo);
+      print(tag);
+      todo.remove(tag);
+      print(todo);
+    }),
     tooltip: 'タグ削除',
     iconSize: iconSize * 1.5,
   );
@@ -71,8 +82,9 @@ class _TaskRowState extends State<TaskRow> {
           ),
           style: MyTextStyle().bigBold,
           onEditingComplete: () => setState(() {
-            widget.todoList._todo[_tagController.text] = widget.todoList._todo[tag];
-            widget.todoList._todo.remove(tag);
+            todo[_tagController.text] = todo[tag];
+            todo.remove(tag);
+            tag = _tagController.text;
           }),
         ),
       ),

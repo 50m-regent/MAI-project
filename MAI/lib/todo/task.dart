@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'todo.dart';
 import '../constants.dart';
 
 class Task extends StatefulWidget {
-  final taskRow;
   String tag, title;
   int deadline, priority;
 
-  Task(this.taskRow, {this.tag, this.title, this.deadline, this.priority});
+  Task({this.tag, this.title, this.deadline, this.priority});
 
   @override
   State createState() => _TaskState();
@@ -26,8 +26,9 @@ class _TaskState extends State<Task> {
         ),
         style: MyTextStyle().largeBold,
         onEditingComplete: () => setState(() {
-          widget.taskRow.widget.todoList._todo[widget.tag][_titleController.text] = {'deadline': widget.deadline, 'priority': widget.priority};
-          widget.taskRow.widget.todoList._todo[widget.tag].remove(widget.title);
+          todo[widget.tag][_titleController.text] = {'deadline': widget.deadline, 'priority': widget.priority};
+          todo[widget.tag].remove(widget.title);
+          widget.title = _titleController.text;
         }),
       ),
     );
@@ -65,7 +66,7 @@ class _TaskState extends State<Task> {
       child: FlatButton(
         onPressed: () => setState(() {
           widget.priority = (widget.priority + 1) % 4;
-          widget.taskRow.widget.todoList.todo[widget.tag][widget.title]['priority'] = widget.priority;
+          todo[widget.tag][widget.title]['priority'] = widget.priority;
         }),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

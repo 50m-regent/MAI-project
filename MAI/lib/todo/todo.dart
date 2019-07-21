@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'task_row.dart';
 
+Map<String, dynamic> todo = {};
+
 class Todo extends StatefulWidget {
   final state = _TodoState();
 
@@ -10,8 +12,6 @@ class Todo extends StatefulWidget {
 }
 
 class _TodoState extends State {
-  Map<String, dynamic> todo = {};
-
   FloatingActionButton newTagIcon() => FloatingActionButton.extended(
     onPressed: () => setState(() => todo['新しいタグ'] = {
       "新しいタスク" : {
@@ -48,7 +48,7 @@ class _TodoState extends State {
       ),
       child: ListView.builder(
         itemCount: todo.length,
-        itemBuilder: (BuildContext context, int index) => TaskRow(this, _tasks[index]),
+        itemBuilder: (BuildContext context, int index) => TaskRow(_tasks[index]),
       ),
     );
   }
