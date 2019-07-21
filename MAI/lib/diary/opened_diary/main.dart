@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mai/diary/items.dart';
-import 'package:mai/constants.dart';
+import '../../constants.dart';
+import '../items.dart';
 
 class OpenDiary extends StatefulWidget {
   final Diary diary;
