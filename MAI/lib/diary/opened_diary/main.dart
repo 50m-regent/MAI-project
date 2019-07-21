@@ -1,25 +1,72 @@
 import 'package:flutter/material.dart';
-import '../diary.dart';
+import 'package:intl/intl.dart';
+import '../../constants.dart';
+import '../items.dart';
 
-class OpenedDiary extends StatefulWidget {
+class OpenDiary extends StatefulWidget {
   final Diary diary;
 
-  OpenedDiary(this.diary);
+  OpenDiary(this.diary);
 
   @override
-  State<OpenedDiary> createState() => _OpenedDiaryState(diary);
+  State<OpenDiary> createState() => _OpenDiaryState(diary);
 }
 
-class _OpenedDiaryState extends State<OpenedDiary> {
+class _OpenDiaryState extends State<OpenDiary> {
   final Diary diary;
-
-  _OpenedDiaryState(this.diary);
+  final _diaryheight = DISPLAY_SIZE.height/2.5;
+  _OpenDiaryState(this.diary);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyColors.background,
+      appBar: AppBar(
+        backgroundColor: MyColors.box,
+        title: Text(
+          diary.name,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       body: Container(
-        child: Text('tt'),
+        margin: EdgeInsets.all(MARGIN),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  DateFormat('M月d日').format(
+                    DateTime.parse(diary.date.toString())
+                  ).toString(),
+                  style: MyTextStyle().bigBold(),
+                ),
+              ),
+              Container(
+                child:Column(
+                  children: <Widget>[
+                    //Image.file(diary.image),
+                    Container(
+                      height: _diaryheight,
+                      child: ListView.builder(
+                        itemCount: 1,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Text(
+                            "${diary.text}",
+                            style: MyTextStyle().normal(),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
       ),
     );
   }
