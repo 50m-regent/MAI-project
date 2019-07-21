@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'opened_diary/main.dart';
+import 'package:validators/validators.dart';
 
 class Diary extends StatelessWidget {
   final date, image, name, text;
@@ -13,8 +14,11 @@ class Diary extends StatelessWidget {
 
   Widget _prefix() {
     String _prefix = '';
-    for (int i = 0; i < 10; i++){
+    for (int i = 0, textWidth = 0; textWidth < 18; textWidth++, i++){
       _prefix += text[i];
+      if(isFullWidth(text[i])) {
+        textWidth++;
+      }
     }
     _prefix += '...';
     return Text(
