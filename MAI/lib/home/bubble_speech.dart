@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 enum NipLocation { TOP, RIGHT, BOTTOM, LEFT }
 
 class SpeechBubble extends StatelessWidget {
-  SpeechBubble({
-    Key key,
-    @required this.child,
-    this.nipLocation: NipLocation.BOTTOM,
-    this.color: Colors.redAccent,
-    this.borderRadius: 4.0,
-    this.height,
-    this.width,
-    this.padding
-  }) : super(key: key);
+  /// Creates a widget that emulates a speech bubble.
+  /// Could be used for a tooltip, or as a pop-up notification, etc.
+  SpeechBubble(
+      {Key key,
+      @required this.child,
+      this.nipLocation: NipLocation.BOTTOM,
+      this.color: Colors.redAccent,
+      this.borderRadius: 4.0,
+      this.height,
+      this.width,
+      this.padding})
+      : super(key: key);
 
   /// The [child] contained by the [SpeechBubble]
   final Widget child;

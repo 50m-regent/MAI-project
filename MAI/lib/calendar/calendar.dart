@@ -19,8 +19,11 @@ Widget _mark(Color color) {
 }
 
 class _CalendarHeader extends StatelessWidget {
-  final localDate, dates;
-  _CalendarHeader(this.localDate, this.dates);
+  _CalendarHeader({
+    @required this.headerTitle,
+  });
+
+  final String headerTitle;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -28,8 +31,8 @@ class _CalendarHeader extends StatelessWidget {
     child: Row(
       children: <Widget>[
         Text(
-          '${localDate.format(dates[1])}',
-          style: MyTextStyle().bigBold,
+          headerTitle,
+          style: MyTextStyle().bigBold(),
         ),
       ]
     ),
@@ -37,8 +40,11 @@ class _CalendarHeader extends StatelessWidget {
 }
 
 class _WeekdayRow extends StatelessWidget {
+  _WeekdayRow({
+    @required this.localeDate,
+  });
+
   final DateFormat localeDate;
-  _WeekdayRow(this.localeDate);
 
   Widget _weekdayContainer(String weekDay) => Expanded(
     child: Container(
@@ -46,7 +52,7 @@ class _WeekdayRow extends StatelessWidget {
       child: Center(
         child: Text(
           weekDay,
-          style: MyTextStyle().normalBold,
+          style: MyTextStyle().normalBold(),
         ),
       ),
     ),
@@ -291,27 +297,33 @@ class _CalendarState extends State<Calendar> {
   }
 
   @override
-  Widget build(BuildContext context) => Container(
-    height: displaySize.height / 2,
-    padding: EdgeInsets.all(margin),
-    child: Column(
-      children: <Widget>[
-        _CalendarHeader(
-          _localeDate,
-          _dates,
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        height: DISPLAY_SIZE.height / 2,
+        padding: EdgeInsets.all(MARGIN),
+        child: Column(
+          children: <Widget>[
+            _CalendarHeader(
+              headerTitle: '${_localeDate.format(this._dates[1])}',
+            ),
+            _WeekdayRow(
+              localeDate: _localeDate,
+            ),
+            Expanded(
+              child: PageView.builder(
+                itemCount: 3,
+                onPageChanged: (index) {
+                  this._setDate(index);
+                },
+                controller: _controller,
+                itemBuilder: (BuildContext context, int index) {
+                  return _builder(index);
+                },
+            )),
+          ],
         ),
-        _WeekdayRow(_localeDate),
-        Expanded(
-          child: PageView.builder(
-            itemCount: 3,
-            controller: _controller,
-            itemBuilder: (BuildContext context, int index) => _builder(index),
-            onPageChanged: (index) {
-              this._setDate(index);
-            },
-          ),
-        ),
-      ],
-    ),
-  );
+      ),
+    );
+  }
 }

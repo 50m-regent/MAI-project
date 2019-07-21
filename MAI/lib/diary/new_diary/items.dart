@@ -8,7 +8,7 @@ Widget date() {
     children: <Widget>[
       Text(
         date,
-        style: MyTextStyle().bigBold,
+        style: MyTextStyle().bigBold(),
       ),
     ],
   );

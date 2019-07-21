@@ -3,12 +3,10 @@ import 'calendar.dart';
 import 'schedule.dart';
 
 Widget body() {
-  return Container(
-    color: Colors.transparent,
-    child: Column(
+  return Column(
     children: <Widget>[
       Calendar(),
       Schedule(),
     ],
-  ));
+  );
 }

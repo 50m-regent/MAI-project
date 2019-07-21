@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'friend_list.dart';
+import 'items.dart';
 
 class FriendsPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => FriendList();
+  Widget build(BuildContext context) {
+    return Friends();
+  }
 }
