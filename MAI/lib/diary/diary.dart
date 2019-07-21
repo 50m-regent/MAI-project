@@ -36,7 +36,7 @@ class Diary extends StatelessWidget {
       onPressed: () {
         showDialog(
           context: context,
-          builder: (BuildContext context) => OpenedDiary(this),
+          builder: (BuildContext context) => OpenDiary(this),
         );
       },
       child: Column(
