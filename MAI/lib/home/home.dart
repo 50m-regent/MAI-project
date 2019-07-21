@@ -38,7 +38,7 @@ class _HomeState extends State {
   );
 
   Widget _maiTemp = Align(
-    alignment: Alignment(0, -0.3),
+    alignment: Alignment.center,
     child: Text(
       'MAIさん(仮)',
       style: MyTextStyle(color: Colors.white). bigBold,
