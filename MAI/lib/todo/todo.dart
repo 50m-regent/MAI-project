@@ -31,9 +31,10 @@ class _TodoState extends State {
   );
 
   List<Map<String, dynamic>> _getTasks() {
-    List<Map<String, dynamic>> tasks = [];
-    todo.forEach((_tag, _t) => tasks.add({_tag: _t}));
-    return tasks;
+    List<Map<String, dynamic>> _tasks = [];
+    todo.forEach((_tag, _t) => _tasks.add({_tag: _t}));
+    print(_tasks);
+    return _tasks;
   }
 
   Widget _todoList() {
@@ -48,7 +49,7 @@ class _TodoState extends State {
       ),
       child: ListView.builder(
         itemCount: todo.length,
-        itemBuilder: (BuildContext context, int index) => TaskRow(_tasks[index]),
+        itemBuilder: (BuildContext context, int index) => TaskRow(this, _tasks[index]),
       ),
     );
   }
