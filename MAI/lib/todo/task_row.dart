@@ -95,7 +95,6 @@ class _TaskRowState extends State<TaskRow> {
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: EdgeInsets.only(bottom: margin),
     height: displaySize.height / 4,
     child: Column(
       children: <Widget>[
