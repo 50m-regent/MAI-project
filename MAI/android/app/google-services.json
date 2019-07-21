@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "594949985259",
+    "firebase_url": "https://mai-project-eed1b.firebaseio.com",
+    "project_id": "mai-project-eed1b",
+    "storage_bucket": "mai-project-eed1b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594949985259:android:57e66215b64a761a",
+        "android_client_info": {
+          "package_name": "com.example.mai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "594949985259-6pacq23okier291vn6j9qm4aj5mcpc5t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcNKegO_NuoLcyzdYQQKgB4Va3JswtQF4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "594949985259-6pacq23okier291vn6j9qm4aj5mcpc5t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "594949985259-326qsn8cd2jp6ea7aem3hqutslrblcni.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mai"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
