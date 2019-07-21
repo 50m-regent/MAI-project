@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../diary.dart';
 import 'package:intl/intl.dart';
-import 'package:mai/constants.dart';
+import '../../constants.dart';
 
 class OpenedDiary extends StatefulWidget {
   final Diary diary;
