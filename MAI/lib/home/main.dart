@@ -1,24 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:mai/constants.dart';
-import 'items.dart';
+import 'package:flutter/material.dart'; //TODO: import確認
+import '../constants.dart';
+import 'home.dart';
 
-// ホーム
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() {
-    return _HomePageState();
-  }
-}
-
-class _HomePageState extends State<HomePage> {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    DISPLAY_SIZE = MediaQuery.of(context).size;
-    MARGIN = DISPLAY_SIZE.width / 12;
-    ICON_SIZE = DISPLAY_SIZE.width / 12;
-    return Scaffold(
-      backgroundColor: MyColors.background,
-      body: Home(),
-    );
+    displaySize = MediaQuery.of(context).size;
+    margin = displaySize.width / 12;
+    iconSize = displaySize.width / 12;
+    return Home();
   }
 }

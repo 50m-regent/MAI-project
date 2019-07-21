@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 
-Size DISPLAY_SIZE;
-double ICON_SIZE;
-double MARGIN;
+Size displaySize;
+double iconSize;
+double margin;
 
 class MyColors {
-  /*
-  static final Color background = MaterialColor(
-    0xFFE0F7FA,
-    <int, Color>{},
-  );
-  */
   static final Color background = Colors.blueGrey[300];
-  static final Color icon = Colors.grey;
-  static final Color darkIcon = Colors.grey[600];
-  static final Color box = Colors.grey[350];
+  static final Color icon       = Colors.grey;
+  static final Color darkIcon   = Colors.grey[600];
+  static final Color box        = Colors.grey[350];
 }
 
-const BoxShadow SHADOW = BoxShadow(
+BoxShadow shadow = BoxShadow(
   color: Colors.black45,
   offset: Offset(5, 5),
   blurRadius: 5,
@@ -27,51 +21,28 @@ class MyTextStyle {
   final Color color;
   MyTextStyle({this.color: Colors.black});
 
-  TextStyle hugeBold() => TextStyle(
-    color: this.color,
-    fontSize: 40,
+  TextStyle _bold(double fontSize) => TextStyle(
+    color: color,
+    fontSize: fontSize,
     fontWeight: FontWeight.bold,
   );
 
-  TextStyle huge() => TextStyle(
-    color: this.color,
-    fontSize: 40,
+  TextStyle _regular(double fontSize) => TextStyle(
+    color: color,
+    fontSize: fontSize,
   );
 
-  TextStyle bigBold() => TextStyle(
-    color: this.color,
-    fontSize: 29,
-    fontWeight: FontWeight.bold,
-  );
+  TextStyle get hugeBold =>    _bold(40);
+  TextStyle get veryBigBold => _bold(35);
+  TextStyle get bigBold =>     _bold(29);
+  TextStyle get largeBold =>   _bold(25);
+  TextStyle get normalBold =>  _bold(20);
+  TextStyle get miniBold =>    _bold(17);
 
-  TextStyle big() => TextStyle(
-    color: this.color,
-    fontSize: 29,
-  );
-
-  TextStyle normalBold() => TextStyle(
-    color: this.color,
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-  );
-
-  TextStyle normal() => TextStyle(
-    color: this.color,
-    fontSize: 20,
-  );
-
-  TextStyle miniBold() => TextStyle(
-    color: this.color,
-    fontSize: 17,
-    fontWeight: FontWeight.bold,
-  );
-
-  TextStyle mini() => TextStyle(
-    color: this.color,
-    fontSize: 17,
-  );
+  TextStyle get huge =>    _regular(40);
+  TextStyle get veryBig => _regular(35);
+  TextStyle get big =>     _regular(29);
+  TextStyle get large =>   _regular(25);
+  TextStyle get normal =>  _regular(20);
+  TextStyle get mini =>    _regular(17);
 }
-
-// 鍵アイコン
-const IconData LOCK_ICON_ON = Icons.lock_outline;
-const IconData LOCK_ICON_OFF = Icons.lock_open;
