@@ -3,20 +3,28 @@ import '../constants.dart';
 import 'opened_diary/main.dart';
 import 'package:validators/validators.dart';
 
-class Diary extends StatelessWidget {
+class Diary extends StatefulWidget {
   final date, image, name, text;
   Diary({this.date, this.image, this.text, this.name});
 
+  @override
+  State<Diary> createState() => _DiaryState();
+}
+
+class _DiaryState extends State<Diary> {
+  final _readColor = Colors.pinkAccent;
+  bool _read = false;
+
   Widget _name() => Text(
-    name,
+    widget.name,
     style: MyTextStyle().normalBold,
   );
 
   Widget _prefix() {
     String _prefix = '';
     for (int i = 0, _textWidth = 0; _textWidth < 17; _textWidth++, i++){
-      _prefix += text[i];
-      if(isFullWidth(text[i])) {
+      _prefix += widget.text[i];
+      if(isFullWidth(widget.text[i])) {
         _textWidth++;
       }
     }
@@ -37,14 +45,15 @@ class Diary extends StatelessWidget {
     width: displaySize.width / 2,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(10)),
-      color: MyColors.box,
+      color: _read ? _readColor : MyColors.box,
       boxShadow: [shadow],
     ),
     child: FlatButton(
       onPressed: () {
+        _read = true;
         showDialog(
           context: context,
-          builder: (BuildContext context) => OpenedDiary(this),
+          builder: (BuildContext context) => OpenedDiary(this.widget),
         );
       },
       child: Column(
