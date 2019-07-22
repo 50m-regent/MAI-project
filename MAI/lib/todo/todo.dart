@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'task_row.dart';
 import 'package:firebase_database/firebase_database.dart';
+import '../main.dart';
 
 Map<String, dynamic> todo = {};
 
@@ -13,7 +14,7 @@ class Todo extends StatefulWidget {
 }
 
 class _TodoState extends State {
-  final _mainReference = FirebaseDatabase.instance.reference().child("todo");
+  final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('todo');
 
   FloatingActionButton newTagIcon() => FloatingActionButton.extended(
     onPressed: () => setState(() {
@@ -57,6 +58,14 @@ class _TodoState extends State {
         itemBuilder: (BuildContext context, int index) => TaskRow(this, _tasks[index]),
       ),
     );
+  }
+
+  _onAdded(Event e) => setState(() => print(e.snapshot.value));
+
+  @override
+  initState() {
+    super.initState();
+    _mainReference.onChildAdded.listen(_onAdded);
   }
 
   @override

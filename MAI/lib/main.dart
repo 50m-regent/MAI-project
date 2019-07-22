@@ -9,6 +9,8 @@ import 'todo/main.dart';
 import 'profile/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+FirebaseUser user;
+
 class MyApp extends StatefulWidget {
   @override
   State createState() => _MyAppState();
@@ -51,21 +53,7 @@ class _MyAppState extends State {
     }),
   );
 
-  anonymousLogin() {
-    FirebaseAuth.instance.onAuthStateChanged.listen((user) async {
-      if (user != null) {
-        var isAnonymous = user.isAnonymous;
-        var uid = user.uid;
-        print(
-            'In FirestoreServices, isAnonymous = $isAnonymous and uid = $uid');
-      } else {
-        FirebaseAuth.instance.signInAnonymously().then((user) {
-          print(
-              'In FirestoreServices, isAnonymous = ${user.isAnonymous} and uid = ${user.uid}');
-        });
-      }
-    });
-  }
+  anonymousLogin() => FirebaseAuth.instance.onAuthStateChanged.listen((usr) async => user = usr);
 
   @override
   Widget build(BuildContext context) {

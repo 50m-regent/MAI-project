@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:firebase_database/firebase_database.dart';
 import '../constants.dart';
 import 'package:flutter/material.dart';
+import '../main.dart';
 //import 'package:image_picker/image_picker.dart';
 //TODO: あん
 
@@ -10,6 +12,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State {
+  final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('profile');
   Future<File> _profileImage;
 
   final _profile = {
@@ -17,6 +20,8 @@ class _ProfileState extends State {
     'birthday': '1118',
     'message': '最近進捗が生えすぎるﾄﾎﾎギス'
   };
+
+  TextEditingController _nameController = TextEditingController();
 
   Widget _defaultIcon = Icon(
     Icons.account_circle,
@@ -42,10 +47,23 @@ class _ProfileState extends State {
     ),
   );
 
-  Widget _name() => Text(
-    _profile['name'],
-    style: MyTextStyle().veryBigBold,
-  );
+  Widget _name() {
+    _nameController.text = _profile['name'];
+    return Container(
+      width: displaySize.width / 2,
+      child: TextFormField(
+        controller: _nameController,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+        ),
+        style: MyTextStyle().veryBigBold,
+        onEditingComplete: () => setState(() {
+          _mainReference.push().set(_nameController.text);
+          _profile['name'] = _nameController.text;
+        }),
+      ),
+    );
+  }
 
   Widget _birthday() => Row(
     children: <Widget>[
