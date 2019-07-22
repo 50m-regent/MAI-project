@@ -7,6 +7,7 @@ import 'diary/main.dart';
 import 'calendar/main.dart';
 import 'todo/main.dart';
 import 'profile/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -50,15 +51,34 @@ class _MyAppState extends State {
     }),
   );
 
+  anonymousLogin() {
+    FirebaseAuth.instance.onAuthStateChanged.listen((user) async {
+      if (user != null) {
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        print(
+            'In FirestoreServices, isAnonymous = $isAnonymous and uid = $uid');
+      } else {
+        FirebaseAuth.instance.signInAnonymously().then((user) {
+          print(
+              'In FirestoreServices, isAnonymous = ${user.isAnonymous} and uid = ${user.uid}');
+        });
+      }
+    });
+  }
+
   @override
-  Widget build(BuildContext context) => MaterialApp(
-    home: Scaffold(
-      backgroundColor: MyColors.background,
-      body: _pageList[_now],
-      appBar: _appBar(),
-      bottomNavigationBar: _menu(),
-    ),
-  );
+  Widget build(BuildContext context) {
+    anonymousLogin();
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: MyColors.background,
+        body: _pageList[_now],
+        appBar: _appBar(),
+        bottomNavigationBar: _menu(),
+      ),
+    );
+  }
 }
 
 main() => runApp(MyApp());

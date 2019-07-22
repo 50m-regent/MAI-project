@@ -43,7 +43,6 @@ class _TaskRowState extends State<TaskRow> {
       color: MyColors.icon,
     ),
     onPressed: () => widget.todoList.setState(() {
-      print(todo[tag]);
       _taskList.add(
           Task(
             tag: tag,

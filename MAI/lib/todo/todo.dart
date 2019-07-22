@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'task_row.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 Map<String, dynamic> todo = {};
 
@@ -12,12 +13,17 @@ class Todo extends StatefulWidget {
 }
 
 class _TodoState extends State {
+  final _mainReference = FirebaseDatabase.instance.reference().child("todo");
+
   FloatingActionButton newTagIcon() => FloatingActionButton.extended(
-    onPressed: () => setState(() => todo['新しいタグ'] = {
-      "新しいタスク" : {
-        "deadline": 20201231,
-        "priority": 0
-      }
+    onPressed: () => setState(() {
+      todo['新しいタグ'] = {
+        "新しいタスク" : {
+          "deadline": 20201231,
+          "priority": 0
+        }
+      };
+      _mainReference.push().set(todo);
     }),
     backgroundColor: MyColors.icon,
     label: Text(
@@ -33,7 +39,6 @@ class _TodoState extends State {
   List<Map<String, dynamic>> _getTasks() {
     List<Map<String, dynamic>> _tasks = [];
     todo.forEach((_tag, _t) => _tasks.add({_tag: _t}));
-    print(_tasks);
     return _tasks;
   }
 
