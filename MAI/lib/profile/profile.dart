@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import '../constants.dart';
 import 'package:flutter/material.dart';
 import '../main.dart';
@@ -8,20 +11,41 @@ import '../main.dart';
 
 class Profile extends StatefulWidget {
   @override
-  State createState() => _ProfileState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _ProfileState extends State {
+class _ProfileState extends State<Profile> {
   final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('profile');
   Future<File> _profileImage;
+  Map<dynamic, dynamic> _profile = {'name': '', 'birthday': '0101', 'message': ''};
 
-  final _profile = {
-    'name': 'りーぜんと',
-    'birthday': '1118',
-    'message': '最近進捗が生えすぎるﾄﾎﾎギス'
-  };
+  _getProfile() => setState(() {
+    _mainReference.once().then((DataSnapshot snapshot) {
+      _profile = snapshot.value;
+    });
+    print(_profile);
+  });
 
-  TextEditingController _nameController = TextEditingController();
+  @override
+  initState() {
+    super.initState();
+    initializeDateFormatting('ja-JP');
+
+    _mainReference.once().then((DataSnapshot snapshot) {
+      setState(() {
+        if(snapshot.value == null) {
+          _mainReference.update({
+            'name': '名前',
+            'birthday': '0101',
+            'message': ''
+          });
+        }
+        _getProfile();
+      });
+    });
+  }
+
+  TextEditingController _nameController = TextEditingController(), _messageController = TextEditingController();
 
   Widget _defaultIcon = Icon(
     Icons.account_circle,
@@ -57,37 +81,55 @@ class _ProfileState extends State {
           border: InputBorder.none,
         ),
         style: MyTextStyle().veryBigBold,
-        onEditingComplete: () => setState(() {
-          _mainReference.push().set(_nameController.text);
-          _profile['name'] = _nameController.text;
-        }),
+        onEditingComplete: () {
+          _mainReference.update({'name': _nameController.text});
+          _getProfile();
+        },
       ),
     );
   }
 
-  Widget _birthday() => Row(
+  Widget _birthday() => Row( //TODO: むずかちいwww
     children: <Widget>[
       Text(
         '誕生日: ',
         style: MyTextStyle().normalBold,
       ),
-      Text(
-        '${_profile['birthday'][0] + _profile['birthday'][1]}/${_profile['birthday'][2] + _profile['birthday'][3]}',
-        style: MyTextStyle().normal,
-      )
+      Container(
+        height: displaySize.height / 10,
+        width: displaySize.width / 3,
+        child: CupertinoDatePicker(
+          mode: CupertinoDatePickerMode.date,
+          minimumYear: 2019,
+          maximumYear: 2019,
+          initialDateTime: DateTime.now(),
+          onDateTimeChanged: (DateTime dateTime) {
+            _mainReference.update({'birthday': DateFormat('MMdd').format(dateTime)});
+            _getProfile();
+          },
+        ),
+      ),
     ],
   );
 
-  Widget _status() => Container(
-    height: displaySize.height / 4,
-    child: TextFormField(
-      maxLines: 5,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(),
+  Widget _status() {
+    _messageController.text = _profile['message'];
+    return Container(
+      height: displaySize.height / 4,
+      child: TextFormField(
+        controller: _messageController,
+        maxLines: 5,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+        ),
+        style: MyTextStyle().normal,
+        onEditingComplete: () {
+          _mainReference.update({'message': _messageController.text});
+          _getProfile();
+        },
       ),
-      style: MyTextStyle().normal,
-    ),
-  );
+    );
+  }
 
   Widget _colorIcon(Color color) => FlatButton(
     onPressed: (() {}), //TODO: 押した処理
