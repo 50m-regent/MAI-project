@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../constants.dart';
-import '../items.dart';
+import '../diary.dart';
 
 class OpenDiary extends StatefulWidget {
   final Diary diary;
@@ -14,7 +14,7 @@ class OpenDiary extends StatefulWidget {
 
 class _OpenDiaryState extends State<OpenDiary> {
   final Diary diary;
-  final _diaryheight = DISPLAY_SIZE.height/2.5;
+  final _diaryheight = displaySize.height/2.5;
   _OpenDiaryState(this.diary);
 
   @override
@@ -33,7 +33,7 @@ class _OpenDiaryState extends State<OpenDiary> {
         ),
       ),
       body: Container(
-        margin: EdgeInsets.all(MARGIN),
+        margin: EdgeInsets.all(margin),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -43,7 +43,7 @@ class _OpenDiaryState extends State<OpenDiary> {
                   DateFormat('M月d日').format(
                     DateTime.parse(diary.date.toString())
                   ).toString(),
-                  style: MyTextStyle().bigBold(),
+                  style: MyTextStyle().bigBold,
                 ),
               ),
               Container(
@@ -57,7 +57,7 @@ class _OpenDiaryState extends State<OpenDiary> {
                         itemBuilder: (BuildContext context, int index) {
                           return Text(
                             "${diary.text}",
-                            style: MyTextStyle().normal(),
+                            style: MyTextStyle().normal,
                           );
                         },
                       ),

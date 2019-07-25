@@ -53,7 +53,7 @@ class _DiaryState extends State<Diary> {
         _read = true;
         showDialog(
           context: context,
-          builder: (BuildContext context) => OpenedDiary(this.widget),
+          builder: (BuildContext context) => OpenDiary(this.widget),
         );
       },
       child: Column(
