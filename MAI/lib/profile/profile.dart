@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 import '../constants.dart';
 import 'package:flutter/material.dart';
 import '../main.dart';
@@ -23,18 +22,13 @@ class _ProfileState extends State<Profile> {
     _mainReference.once().then((DataSnapshot snapshot) {
       _profile = snapshot.value;
     });
-    print(_profile);
   });
 
   @override
   initState() {
     super.initState();
-    initializeDateFormatting('ja-JP');
-    print("reached");
-
-    _mainReference.once().then((DataSnapshot snapshot) {
-      print(snapshot);
-      setState(() {
+    setState(() {
+      _mainReference.once().then((DataSnapshot snapshot) {
         if(snapshot.value == null) {
           _mainReference.update({
             'name': '名前',
@@ -175,7 +169,7 @@ class _ProfileState extends State<Profile> {
             ],
           ),
           _status(),
-          _palette(),
+          _palette(), //TODO: 自分のQRコード
         ],
       ),
     );

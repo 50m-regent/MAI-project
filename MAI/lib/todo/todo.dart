@@ -4,7 +4,8 @@ import 'task_row.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../main.dart';
 
-Map<String, dynamic> todo = {};
+Map<dynamic, dynamic> todo = {};
+final mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('todo');
 
 class Todo extends StatefulWidget {
   final state = _TodoState();
@@ -14,18 +15,23 @@ class Todo extends StatefulWidget {
 }
 
 class _TodoState extends State {
-  final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('todo');
+  _getList() => setState(() {
+    mainReference.once().then((DataSnapshot snapshot) {
+      print(snapshot);
+      todo = snapshot.value;
+    });
+  });
 
   FloatingActionButton newTagIcon() => FloatingActionButton.extended(
-    onPressed: () => setState(() {
-      todo['新しいタグ'] = {
+    onPressed: () {
+      mainReference.child('新しいタグ').update({
         "新しいタスク" : {
           "deadline": 20201231,
           "priority": 0
         }
-      };
-      _mainReference.push().set(todo);
-    }),
+      });
+      _getList();
+    },
     backgroundColor: MyColors.icon,
     label: Text(
       '新しいタグを作成',
@@ -60,12 +66,18 @@ class _TodoState extends State {
     );
   }
 
-  _onAdded(Event e) => setState(() => print(e.snapshot.value));
-
   @override
   initState() {
     super.initState();
-    _mainReference.onChildAdded.listen(_onAdded);
+    setState(() {
+      mainReference.once().then((DataSnapshot snapshot) {
+        print(snapshot.value);
+        if(snapshot.value == null) {
+          mainReference.update({});
+        }
+        _getList();
+      });
+    });
   }
 
   @override
