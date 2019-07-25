@@ -30,8 +30,10 @@ class _ProfileState extends State<Profile> {
   initState() {
     super.initState();
     initializeDateFormatting('ja-JP');
+    print("reached");
 
     _mainReference.once().then((DataSnapshot snapshot) {
+      print(snapshot);
       setState(() {
         if(snapshot.value == null) {
           _mainReference.update({
@@ -81,36 +83,13 @@ class _ProfileState extends State<Profile> {
           border: InputBorder.none,
         ),
         style: MyTextStyle().veryBigBold,
-        onEditingComplete: () {
-          _mainReference.update({'name': _nameController.text});
+        onEditingComplete: () async {
+          await _mainReference.update({'name': _nameController.text});
           _getProfile();
         },
       ),
     );
   }
-
-  Widget _birthday() => Row( //TODO: むずかちいwww
-    children: <Widget>[
-      Text(
-        '誕生日: ',
-        style: MyTextStyle().normalBold,
-      ),
-      Container(
-        height: displaySize.height / 10,
-        width: displaySize.width / 3,
-        child: CupertinoDatePicker(
-          mode: CupertinoDatePickerMode.date,
-          minimumYear: 2019,
-          maximumYear: 2019,
-          initialDateTime: DateTime.now(),
-          onDateTimeChanged: (DateTime dateTime) {
-            _mainReference.update({'birthday': DateFormat('MMdd').format(dateTime)});
-            _getProfile();
-          },
-        ),
-      ),
-    ],
-  );
 
   Widget _status() {
     _messageController.text = _profile['message'];
@@ -191,7 +170,6 @@ class _ProfileState extends State<Profile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   _name(),
-                  _birthday(),
                 ],
               ),
             ],

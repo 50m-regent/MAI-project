@@ -53,11 +53,18 @@ class _MyAppState extends State {
     }),
   );
 
-  anonymousLogin() => FirebaseAuth.instance.onAuthStateChanged.listen((usr) async => user = usr);
+  _signIn() async {
+    user = await FirebaseAuth.instance.signInAnonymously();
+  }
+
+  @override
+  initState() {
+    super.initState();
+    _signIn();
+  }
 
   @override
   Widget build(BuildContext context) {
-    anonymousLogin();
     return MaterialApp(
       home: Scaffold(
         backgroundColor: MyColors.background,
