@@ -17,7 +17,6 @@ class Todo extends StatefulWidget {
 class _TodoState extends State {
   _getList() => setState(() {
     mainReference.once().then((DataSnapshot snapshot) {
-      print(snapshot);
       todo = snapshot.value;
     });
   });
@@ -69,9 +68,8 @@ class _TodoState extends State {
   @override
   initState() {
     super.initState();
-    setState(() {
-      mainReference.once().then((DataSnapshot snapshot) {
-        print(snapshot.value);
+    mainReference.once().then((DataSnapshot snapshot) {
+      setState(() {
         if(snapshot.value == null) {
           mainReference.update({});
         }

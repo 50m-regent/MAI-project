@@ -10,7 +10,7 @@ class FriendList extends StatefulWidget {
 }
 
 class _FriendListState extends State {
-  final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('friends');
+  final _mainReference = FirebaseDatabase.instance.reference().child(user.uid);
   List<Friend> _sortedFriendList = [];
 
   @override
@@ -19,20 +19,19 @@ class _FriendListState extends State {
     _mainReference.once().then((DataSnapshot snapshot) {
       setState(() {
         if(snapshot.value == null) {
-        _mainReference.update({'list': []});
-      }
-      snapshot.value.child('list').forEach((_f) {
-        if(_f.isBestFriend){
-          _sortedFriendList.add(_f);
+          _mainReference.update({'friends': []});
         }
+        snapshot.value.child('friends').forEach((_f) {
+          if(_f.isBestFriend){
+            _sortedFriendList.add(_f);
+          }
+        });
+        snapshot.value.child('friends').forEach((_f) {
+          if(!_f.isBestFriend){
+            _sortedFriendList.add(_f);
+          }
+        });
       });
-      snapshot.value.child('list').forEach((_f) {
-        if(!_f.isBestFriend){
-          _sortedFriendList.add(_f);
-        }
-      });
-      });
-      
     });
   }
 

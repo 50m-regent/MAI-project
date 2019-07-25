@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import '../constants.dart';
 import 'package:flutter/material.dart';
 import '../main.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 //import 'package:image_picker/image_picker.dart';
 //TODO: あん
 
@@ -27,8 +27,8 @@ class _ProfileState extends State<Profile> {
   @override
   initState() {
     super.initState();
-    setState(() {
-      _mainReference.once().then((DataSnapshot snapshot) {
+    _mainReference.once().then((DataSnapshot snapshot) {
+      setState(() {
         if(snapshot.value == null) {
           _mainReference.update({
             'name': '名前',
@@ -88,10 +88,9 @@ class _ProfileState extends State<Profile> {
   Widget _status() {
     _messageController.text = _profile['message'];
     return Container(
-      height: displaySize.height / 4,
       child: TextFormField(
         controller: _messageController,
-        maxLines: 5,
+        maxLines: 2,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
         ),
@@ -104,72 +103,41 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget _colorIcon(Color color) => FlatButton(
-    onPressed: (() {}), //TODO: 押した処理
-    child: Container(
-      width: 50,
-      height: 50,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        boxShadow: [shadow],
-      ),
-    ),
-  );
-
-  Widget _palette() { //TODO: なんか実装
-    List<Widget> _colors = [
-      _colorIcon(Colors.pinkAccent),
-      _colorIcon(Colors.orangeAccent),
-      _colorIcon(Colors.lightGreenAccent),
-      _colorIcon(Colors.lightBlueAccent),
-      _colorIcon(Colors.blueAccent),
-      _colorIcon(Colors.red),
-      _colorIcon(Colors.redAccent),
-    ];
-    return Container(
-      height: displaySize.height / 5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'パレッチュ',
-            style: MyTextStyle().bigBold,
-          ),
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _colors.length,
-              itemBuilder: (BuildContext context, int index) => _colors[index],
-            ),
-          ),
-        ],
-      ),
+  Widget _qrCode() {
+    final _qrCode = QrImage(
+      data: user.uid,
+      size: displaySize.width * 0.7,
+    );
+    final _title = Text(
+      'QRコード',
+      style: MyTextStyle(color: MyColors.darkIcon).bigBold,
+    );
+    return Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            _title,
+          ],
+        ),
+        _qrCode,
+      ],
     );
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent,
       margin: EdgeInsets.all(margin),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Row(
             children: <Widget>[
               _icon(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _name(),
-                ],
-              ),
+              _name(),
             ],
           ),
           _status(),
-          _palette(), //TODO: 自分のQRコード
+          _qrCode(),
         ],
       ),
     );
