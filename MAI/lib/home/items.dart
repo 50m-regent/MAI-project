@@ -17,10 +17,20 @@ Widget notice = Align(
 );
 
 _scan() async {
-  final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('friends');
+  final _mainReference = FirebaseDatabase.instance.reference().child(user.uid);
   String _uid = await BarcodeScanner.scan();
 
-  
+  _mainReference.once().then((DataSnapshot snapshot) {
+    List<Map<dynamic, dynamic>> _list;
+    if(snapshot.value == null) {
+      _mainReference.update({'friends': []});
+      _list = [];
+    } else {
+      _list = snapshot.value.child('friends');
+    }
+    _list.add({'uid': _uid, 'isBestFriend': false});
+    _mainReference.update({'friends': _list});
+  });
 }
 
 Widget arMode = IconButton(
