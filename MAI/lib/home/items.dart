@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../main.dart';
 import 'bubble_speech.dart';
-import 'package:barcode_scan/barcode_scan.dart';
+//import 'package:barcode_scan/barcode_scan.dart';
 
 Widget notice = Align(
   alignment: Alignment.topCenter,
@@ -18,7 +18,7 @@ Widget notice = Align(
 
 _scan() async {
   final _mainReference = FirebaseDatabase.instance.reference().child(user.uid);
-  String _uid = await BarcodeScanner.scan();
+  //String _uid = await BarcodeScanner.scan();
 
   _mainReference.once().then((DataSnapshot snapshot) {
     List<Map<dynamic, dynamic>> _list;
@@ -28,13 +28,13 @@ _scan() async {
     } else {
       _list = snapshot.value.child('friends');
     }
-    _list.add({'uid': _uid, 'isBestFriend': false});
+    //_list.add({'uid': _uid, 'isBestFriend': false});
     _mainReference.update({'friends': _list});
   });
 }
 
 Widget arMode = IconButton(
-  onPressed: _scan, //TODO: AR MODE
+  onPressed: _scan,
   tooltip: 'ARモード',
   icon: Icon(
     Icons.camera_alt,
