@@ -53,9 +53,7 @@ class _MyAppState extends State {
     }),
   );
 
-  _signIn() async {
-    user = await FirebaseAuth.instance.signInAnonymously();
-  }
+  _signIn() async => user = await FirebaseAuth.instance.signInAnonymously();
 
   @override
   initState() {
