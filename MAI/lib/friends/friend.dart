@@ -18,7 +18,7 @@ class Friend extends StatefulWidget {
 class _FriendState extends State<Friend> {
   Widget _icon() => widget.iconImage == null ? Icon(
     Icons.account_circle,
-    color: MyColors.darkIcon,
+    color: MyColors.icon,
     size: iconSize * 2.5,
   ) : CircleAvatar(
     backgroundImage: FileImage(
@@ -33,7 +33,6 @@ class _FriendState extends State<Friend> {
     decoration: BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(10)),
       color: widget.isBestFriend ? Colors.yellow : MyColors.box,
-      boxShadow: [shadow],
     ),
     child: FlatButton(
       onPressed: () => setState(() => widget.isBestFriend = widget.isBestFriend ? false : true),

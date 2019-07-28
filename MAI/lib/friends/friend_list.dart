@@ -21,12 +21,12 @@ class _FriendListState extends State {
         if(snapshot.value == null) {
           _mainReference.update({'friends': []});
         }
-        snapshot.value.child('friends').forEach((_f) {
+        snapshot.value['friends'].forEach((_f) {
           if(_f.isBestFriend){
             _sortedFriendList.add(_f);
           }
         });
-        snapshot.value.child('friends').forEach((_f) {
+        snapshot.value['friends'].forEach((_f) {
           if(!_f.isBestFriend){
             _sortedFriendList.add(_f);
           }
@@ -50,15 +50,15 @@ class _FriendListState extends State {
       children: <Widget>[
         Text(
           'フレンドがいません...',
-          style: MyTextStyle(color: MyColors.darkIcon).bigBold,
+          style: MyTextStyle(color: MyColors.icon).bigBold,
         ),
         Text(
           'ホームのカメラで友達の',
-          style: MyTextStyle(color: MyColors.darkIcon).bigBold,
+          style: MyTextStyle(color: MyColors.icon).bigBold,
         ),
         Text(
           'QRコードを読み取ろう！',
-          style: MyTextStyle(color: MyColors.darkIcon).bigBold,
+          style: MyTextStyle(color: MyColors.icon).bigBold,
         ),
       ],
     ),

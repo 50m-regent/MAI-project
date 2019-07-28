@@ -37,10 +37,9 @@ class _MyAppState extends State {
   ];
 
   AppBar _appBar() => AppBar(
-    backgroundColor: MyColors.box,
     title: Text(
       _titleList[_now],
-      style: MyTextStyle().largeBold,
+      style: MyTextStyle(color: Colors.white).largeBold,
     ),
   );
 
@@ -64,6 +63,9 @@ class _MyAppState extends State {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: MyColors.theme,
+      ),
       home: Scaffold(
         backgroundColor: MyColors.background,
         body: _pageList[_now],

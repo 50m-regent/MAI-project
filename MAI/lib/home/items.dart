@@ -38,7 +38,7 @@ Widget arMode = IconButton(
   tooltip: 'ARモード',
   icon: Icon(
     Icons.camera_alt,
-    color: MyColors.darkIcon,
+    color: MyColors.icon,
     size: iconSize * 1.5,
   ),
 );

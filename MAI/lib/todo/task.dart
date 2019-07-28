@@ -69,7 +69,6 @@ class _TaskState extends State<Task> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: color,
-        boxShadow: [shadow],
       ),
       child: FlatButton(
         onPressed: () {

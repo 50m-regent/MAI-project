@@ -64,7 +64,7 @@ class DiaryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     color: Colors.transparent,
-    margin: EdgeInsets.all(margin),
+    margin: EdgeInsets.symmetric(horizontal: margin),
     child: ListView.builder(
       itemCount: _sortedList.length,
       itemBuilder: (BuildContext context, int index) => _sortedList[index],

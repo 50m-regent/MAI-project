@@ -236,13 +236,13 @@ class _CalendarState extends State<Calendar> {
                   return Container(
                     margin: EdgeInsets.all(2),
                     child: FlatButton(
-                      color:
-                          _isSelectedDay ? selectedDayButtonColor : Colors.transparent,
+                      color: _isSelectedDay ? selectedDayButtonColor : Colors.transparent,
                       onPressed: () => _onDayPressed(_now),
                       padding: EdgeInsets.all(2),
                       shape: CircleBorder(
                         side: BorderSide(
                           color: _isToday ? todayBorderColor : Colors.transparent,
+                          width: 2,
                         ),
                       ),
                       child: Stack(
@@ -292,7 +292,7 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) => Container(
-    height: displaySize.height / 2,
+    height: displaySize.height * 0.9,
     padding: EdgeInsets.all(margin),
     child: Column(
       children: <Widget>[

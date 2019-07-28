@@ -70,10 +70,9 @@ class _TodoState extends State {
     super.initState();
     mainReference.once().then((DataSnapshot snapshot) {
       setState(() {
-        if(snapshot.value == null) {
-          mainReference.update({});
+        if(snapshot.value != null) {
+          _getList();
         }
-        _getList();
       });
     });
   }
@@ -82,7 +81,7 @@ class _TodoState extends State {
   Widget build(BuildContext context) => todo.length == 0 ? Center(
     child: Text(
       'タスク完了！偉い！',
-      style: MyTextStyle(color: MyColors.darkIcon).bigBold,
+      style: MyTextStyle(color: MyColors.icon).bigBold,
     ),
   ) : _todoList();
 }

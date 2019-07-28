@@ -22,7 +22,7 @@ BottomNavigationBarItem _iconTemplate({IconData icon, String title, Color color}
   ),
   activeIcon: Icon(
     icon,
-    color: color,
+    color: MyColors.theme,
   ),
   title: Text(
     title,

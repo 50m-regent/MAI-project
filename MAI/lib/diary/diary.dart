@@ -41,12 +41,14 @@ class _DiaryState extends State<Diary> {
 
   @override
   Widget build(BuildContext context) => Container(
-    margin: EdgeInsets.only(right: margin, bottom: margin),
-    width: displaySize.width / 2,
+    margin: EdgeInsets.only(right: margin),
+    width: 200,
     decoration: BoxDecoration(
+      border: Border.all(
+        color: _read ? _readColor : MyColors.theme,
+        width: 2.0,
+      ),
       borderRadius: BorderRadius.all(Radius.circular(10)),
-      color: _read ? _readColor : MyColors.box,
-      boxShadow: [shadow],
     ),
     child: FlatButton(
       onPressed: () {
@@ -56,13 +58,12 @@ class _DiaryState extends State<Diary> {
           builder: (BuildContext context) => OpenDiary(this.widget),
         );
       },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _name(),
-          _prefix(),
-        ],
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        child: Align(
+          alignment: Alignment.bottomLeft,
+          child: _name(),
+        ),
       ),
     ),
   );

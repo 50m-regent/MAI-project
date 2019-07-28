@@ -16,7 +16,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('profile');
   Future<File> _profileImage;
-  Map<dynamic, dynamic> _profile = {'name': '', 'birthday': '0101', 'message': ''};
+  Map<dynamic, dynamic> _profile = {'name': '', 'message': ''};
 
   _getProfile() => setState(() {
     _mainReference.once().then((DataSnapshot snapshot) {
@@ -32,7 +32,6 @@ class _ProfileState extends State<Profile> {
         if(snapshot.value == null) {
           _mainReference.update({
             'name': '名前',
-            'birthday': '0101',
             'message': ''
           });
         }
@@ -45,7 +44,7 @@ class _ProfileState extends State<Profile> {
 
   Widget _defaultIcon = Icon(
     Icons.account_circle,
-    color: MyColors.darkIcon,
+    color: MyColors.icon,
     size: iconSize * 3,
   );
 
@@ -110,7 +109,7 @@ class _ProfileState extends State<Profile> {
     );
     final _title = Text(
       'QRコード',
-      style: MyTextStyle(color: MyColors.darkIcon).bigBold,
+      style: MyTextStyle(color: MyColors.icon).bigBold,
     );
     return Column(
       children: <Widget>[
