@@ -51,13 +51,13 @@ class _DiaryState extends State<Diary> {
       borderRadius: BorderRadius.all(Radius.circular(10)),
     ),
     child: FlatButton(
-      onPressed: () {
+      onPressed: () => setState(() {
         _read = true;
         showDialog(
           context: context,
           builder: (BuildContext context) => OpenDiary(this.widget),
         );
-      },
+      }),
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10),
         child: Align(

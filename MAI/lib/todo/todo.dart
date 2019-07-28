@@ -79,9 +79,15 @@ class _TodoState extends State {
 
   @override
   Widget build(BuildContext context) => todo.length == 0 ? Center(
-    child: Text(
-      'タスク完了！偉い！',
-      style: MyTextStyle(color: MyColors.icon).bigBold,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          'タスクは消化済みです！',
+          style: MyTextStyle(color: MyColors.icon).bigBold,
+        ),
+      ],
     ),
   ) : _todoList();
 }
