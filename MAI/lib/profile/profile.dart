@@ -76,10 +76,10 @@ class _ProfileState extends State<Profile> {
           border: InputBorder.none,
         ),
         style: MyTextStyle().veryBigBold,
-        onEditingComplete: () async {
-          await _mainReference.update({'name': _nameController.text});
+        onEditingComplete: () => setState(() {
+          _mainReference.update({'name': _nameController.text});
           _getProfile();
-        },
+        }),
       ),
     );
   }
@@ -94,10 +94,10 @@ class _ProfileState extends State<Profile> {
           border: OutlineInputBorder(),
         ),
         style: MyTextStyle().normal,
-        onEditingComplete: () {
+        onEditingComplete: () => setState(() {
           _mainReference.update({'message': _messageController.text});
           _getProfile();
-        },
+        }),
       ),
     );
   }
@@ -108,7 +108,7 @@ class _ProfileState extends State<Profile> {
       size: displaySize.width * 0.7,
     );
     final _title = Text(
-      'QRコード',
+      'MAI QRコード',
       style: MyTextStyle(color: MyColors.icon).bigBold,
     );
     return Column(

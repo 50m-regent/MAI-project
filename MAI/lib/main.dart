@@ -8,6 +8,7 @@ import 'calendar/main.dart';
 import 'todo/main.dart';
 import 'profile/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 FirebaseUser user;
 
@@ -62,6 +63,7 @@ class _MyAppState extends State {
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting("ja_JP");
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: MyColors.theme,

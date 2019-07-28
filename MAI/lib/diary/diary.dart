@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'opened_diary/main.dart';
-import 'package:validators/validators.dart';
 
 class Diary extends StatefulWidget {
   final date, image, name, text;
@@ -19,25 +18,6 @@ class _DiaryState extends State<Diary> {
     widget.name,
     style: MyTextStyle().normalBold,
   );
-
-  Widget _prefix() {
-    String _prefix = '';
-    for (int i = 0, _textWidth = 0; _textWidth < 17; _textWidth++, i++){
-      _prefix += widget.text[i];
-      if(isFullWidth(widget.text[i])) {
-        _textWidth++;
-      }
-    }
-    _prefix += '...';
-
-    return Container(
-      width: displaySize.width / 2,
-      child: Text(
-        _prefix,
-        style: MyTextStyle().mini,
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) => Container(

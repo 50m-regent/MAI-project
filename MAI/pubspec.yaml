@@ -19,7 +19,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  #image_picker: ^0.4.10
+  image_picker: ^0.4.10
   flutter_calendar_carousel: ^1.3.17
   path_provider: ^1.1.0
   validators: ^2.0.0

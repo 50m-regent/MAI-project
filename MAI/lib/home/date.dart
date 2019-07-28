@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import '../constants.dart';
 
 class Date extends StatefulWidget {
@@ -14,7 +13,7 @@ class _DateState extends State {
 
   _getTime() => setState(() {
     _date = Text(
-      DateFormat('M月d日(E)').format(DateTime.now()),
+      DateFormat('M月d日(E)', 'ja_JP').format(DateTime.now()),
       style: MyTextStyle().hugeBold,
     );
     _time = Text(
@@ -26,7 +25,6 @@ class _DateState extends State {
   @override
   void initState() {
     super.initState();
-    initializeDateFormatting('ja_JP');
     _getTime();
     //Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
   }

@@ -30,20 +30,21 @@ class _OpenDiaryState extends State<OpenDiary> {
   );
 
   @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: _title(),
-      titleTextStyle: MyTextStyle().normalBold,
-      content: _diary(),
-      actions: <Widget>[
-        FlatButton(
-          child: Text('閉じる'),
-          onPressed: () => Navigator.pop(context),
+  Widget build(BuildContext context) => AlertDialog(
+    title: _title(),
+    titleTextStyle: MyTextStyle().normalBold,
+    content: _diary(),
+    actions: <Widget>[
+      FlatButton(
+        onPressed: () => Navigator.pop(context),
+        child: Text(
+          '閉じる',
+          style: MyTextStyle(color: MyColors.theme).mini,
         ),
-      ],
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
       ),
-    );
-  }
+    ],
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20.0),
+    ),
+  );
 }
