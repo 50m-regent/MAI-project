@@ -13,6 +13,5 @@ class DiaryPage extends StatelessWidget {
         NewDiaryIcon(),
       ],
     ),
-    backgroundColor: Colors.transparent,
   );
 }

@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:image_picker/image_picker.dart';
+//import 'package:image_picker/image_picker.dart';
 import 'package:mai/constants.dart';
 import 'dart:io';
 import '../../main.dart';
@@ -70,7 +70,7 @@ class _NewDiaryState extends State<NewDiaryPage> {
   Widget _picture() => FutureBuilder<File>(
     future: _galleryFile,
     builder: (BuildContext context, AsyncSnapshot<File> snapshot) => FlatButton(
-      onPressed: () => setState(() => _galleryFile = ImagePicker.pickImage(source: ImageSource.gallery)),
+      onPressed: () {},//() => setState(() => _galleryFile = ImagePicker.pickImage(source: ImageSource.gallery)),
       child: Container(
         height: displaySize.height / 4,
         child: snapshot.connectionState == ConnectionState.done && snapshot.data != null ? Image.file(

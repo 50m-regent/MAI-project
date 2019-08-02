@@ -1,52 +1,64 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mai/diary/diary_row.dart';
 import '../constants.dart';
+import '../main.dart';
 import 'diary.dart';
 
 class DiaryList extends StatelessWidget {
-  final _list = [
-    Diary(
-      name: '篠田',
-      date: 20190702,
-      image: null,
-      text: '今日は楽しかったさだまさし',
-    ),
-    Diary(
-      name: '山田',
-      date: 20190703,
-      image: null,
-      text: '今日asasasaしかったさだまさしああdfはkdfはd',
-    ),
-    Diary(
-      name: '平田',
-      date: 20190703,
-      image: null,
-      text: '今日は楽しかったさだまさしあdふぁ',
-    ),
-    Diary(
-      name: '福田',
-      date: 20190702,
-      image: null,
-      text: '今日は楽しかったさだまさしふぁ',
-    ),
-    Diary(
-      name: '福田',
-      date: 20190708,
-      image: null,
-      text: '今日楽しかasdfasfasった',
-    ),
-    Diary(
-      name: '福田',
-      date: 20190710,
-      image: null,
-      text: 'dfaasdsafasfdaしかった',
-    ),
-  ];
-
+  List<Diary> _list = [];
   final Map<int, List<Diary>> _newList = {};
-  List<DiaryRow> _sortedList = [];
+  List<DiaryRow> _rowList = [];
+
+  _getDiary() {
+    final _friendReference = FirebaseDatabase.instance.reference().child('friends');
+    _friendReference.once().then((DataSnapshot friendSnapshot) {
+      if(friendSnapshot.value != null){
+        friendSnapshot.value.forEach((String id) {
+          final _ref = FirebaseDatabase.instance.reference().child(id);
+          String name;
+          _ref.child('profile').once().then((DataSnapshot profileSnapshot) {
+            name = profileSnapshot.value['name'];
+          });
+
+          _ref.child('diary').once().then((DataSnapshot diarySnapshot) {
+            diarySnapshot.value.forEach((String date, Map<String, dynamic> diary) {
+              if(!diary['lock']) {
+                _list.add(Diary(
+                  date: date,
+                  image: null,
+                  text: diary['text'],
+                  name: name,
+                ));
+              }
+            });
+          });
+        });
+      } 
+    });
+    
+    final _ref = FirebaseDatabase.instance.reference().child(user.uid);
+    String name;
+    _ref.child('profile').once().then((DataSnapshot profileSnapshot) {
+      name = profileSnapshot.value['name'];
+    });
+
+    _ref.child('diary').once().then((DataSnapshot diarySnapshot) {
+      diarySnapshot.value.forEach((dynamic date, dynamic diary) {
+        _list.add(Diary(
+          date: date,
+          image: null,
+          text: diary['text'],
+          name: name,
+        ));
+      });
+    });
+    print(_list);
+  }
 
   DiaryList() {
+    _getDiary();
+
     _list.forEach((_d) {
       if(_newList[_d.date] == null) {
         _newList[_d.date] = [];
@@ -55,10 +67,10 @@ class DiaryList extends StatelessWidget {
     });
 
     _newList.forEach((_date, _l) {
-      _sortedList.add(DiaryRow(_l));
+      _rowList.add(DiaryRow(_l));
     });
     
-    _sortedList = _sortedList.reversed.toList();
+    _rowList = _rowList.reversed.toList();
   }
 
   @override
@@ -66,8 +78,8 @@ class DiaryList extends StatelessWidget {
     color: Colors.transparent,
     margin: EdgeInsets.symmetric(horizontal: margin),
     child: ListView.builder(
-      itemCount: _sortedList.length,
-      itemBuilder: (BuildContext context, int index) => _sortedList[index],
+      itemCount: _rowList.length,
+      itemBuilder: (BuildContext context, int index) => _rowList[index],
     ),
   );
 }
