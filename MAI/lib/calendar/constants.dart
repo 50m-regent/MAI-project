@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
-// カレンダーのTextStyle
-class CalendarTextStyle {
+class CalendarTextStyles { // カレンダーのTextStyle
   static TextStyle get title         => MyTextStyle().bigBold;                           // 年月
   static TextStyle get weekdays      => MyTextStyle(color: Colors.red).miniBold;         // 平日の曜日
   static TextStyle get weekendDays   => MyTextStyle(color: MyColors.icon).miniBold;      // 週末の曜日
@@ -16,4 +15,6 @@ class CalendarTextStyle {
   static TextStyle get weekends      => MyTextStyle(color: Colors.redAccent).normalBold; // 週末
 }
 
-const Color todayColor = Colors.blue; // 今日の色
+class CalendarColors { // カレンダーで使う色
+ static Color get today => Colors.blue;    // 今日の色
+}
