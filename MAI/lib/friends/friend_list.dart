@@ -85,7 +85,7 @@ class _FriendListState extends State {
           style: MyTextStyle(color: MyColors.icon).bigBold,
         ),
         Text(
-          'ホームのカメラで友達の',
+          '右上のカメラで友達の',
           style: MyTextStyle(color: MyColors.icon).bigBold,
         ),
         Text(

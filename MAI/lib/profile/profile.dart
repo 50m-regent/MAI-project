@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mai/constants.dart' as prefix0;
 import '../constants.dart';
 import 'package:flutter/material.dart';
 import '../main.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 //import 'package:image_picker/image_picker.dart';
 //TODO: あん
 

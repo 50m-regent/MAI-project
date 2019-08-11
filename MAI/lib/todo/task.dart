@@ -5,16 +5,24 @@ import 'todo.dart';
 import '../constants.dart';
 
 class Task extends StatefulWidget {
-  String tag, title;
-  int deadline, priority;
+  final String tag, title;
+  final int deadline, priority;
 
   Task({this.tag, this.title, this.deadline, this.priority});
 
   @override
-  State createState() => _TaskState();
+  State createState() => _TaskState(
+    title: title,
+    priority: priority,
+  );
 }
 
 class _TaskState extends State<Task> {
+  String title;
+  int priority;
+
+  _TaskState({this.title, this.priority});
+
   TextEditingController _titleController = TextEditingController();
 
   _getList() => setState(() {
@@ -35,7 +43,7 @@ class _TaskState extends State<Task> {
         onEditingComplete: () {
           mainReference.child(widget.tag).child(_titleController.text).update({'deadline': widget.deadline, 'priority': widget.priority});
           mainReference.child(widget.tag).child(widget.title).remove();
-          widget.title = _titleController.text;
+          title = _titleController.text;
           _getList();
         },
       ),
@@ -75,7 +83,7 @@ class _TaskState extends State<Task> {
       ),
       child: FlatButton(
         onPressed: () {
-          widget.priority = (widget.priority + 1) % 4;
+          priority = (widget.priority + 1) % 4;
           mainReference.child(widget.tag).child(widget.title).child('priority').set(widget.priority);
           _getList();
         },
