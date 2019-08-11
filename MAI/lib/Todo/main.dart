@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constants.dart';
 import 'todo.dart';
 
 class TodoPage extends StatelessWidget {
@@ -7,8 +8,12 @@ class TodoPage extends StatelessWidget {
     Todo _todo = Todo();
     return Scaffold(
       body: _todo,
-      floatingActionButton: _todo.state.newTagIcon(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Column(
+        children: <Widget>[
+          Container(height: margin, width: 0),
+          _todo.state.newTagIcon(),
+        ],
+      ),
     );
   }
 }

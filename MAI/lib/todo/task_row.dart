@@ -1,11 +1,13 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'todo.dart';
 import '../constants.dart';
 import 'task.dart';
 
 class TaskRow extends StatefulWidget {
+  final todoList;
   final tasks;
-  TaskRow(this.tasks);
+  TaskRow(this.todoList, this.tasks);
 
   @override
   State createState() => _TaskRowState();
@@ -36,25 +38,31 @@ class _TaskRowState extends State<TaskRow> {
     _taskList.sort( (b, a) => a.priority.compareTo(b.priority) );
   }
 
+  _getList() => setState(() {
+    mainReference.once().then((DataSnapshot snapshot) {
+      todo = snapshot.value;
+    });
+  });
+
   Widget _newTaskIcon() => IconButton(
+    tooltip: '新しいタスク',
+    iconSize: iconSize,
     icon: Icon(
       Icons.add,
       color: MyColors.icon,
     ),
-    onPressed: () => setState(() {
-      print(todo[tag]);
+    onPressed: () {
       _taskList.add(
-          Task(
-            tag: tag,
-            title: '新しいタスク',
-            deadline: 20201231,
-            priority: 0,
-          )
-        );
-      todo[tag]['新しいタスク'] = {'deadline': 20201231, 'priority': 0};
-    }),
-    tooltip: '新しいタスク',
-    iconSize: iconSize * 1.5,
+        Task(
+          tag: tag,
+          title: '新しいタスク',
+          deadline: 20201231,
+          priority: 0,
+        )
+      );
+      mainReference.child(tag).child('新しいタスク').update({'deadline': 20201231, 'priority': 0});
+      _getList();
+    },
   );
 
   Widget _deleteTagIcon() => IconButton(
@@ -62,30 +70,32 @@ class _TaskRowState extends State<TaskRow> {
       Icons.remove,
       color: MyColors.icon,
     ),
-    onPressed: () => setState(() {
-      print(todo);
-      print(tag);
-      todo.remove(tag);
-      print(todo);
-    }),
     tooltip: 'タグ削除',
-    iconSize: iconSize * 1.5,
+    iconSize: iconSize,
+    onPressed: () {
+      setState(() => {
+        mainReference.child(tag).remove(),
+        _getList()
+      });
+    },
   );
 
   Widget _taskTag() => Row(
     children: <Widget>[
-      Expanded(
+      Container(
+        width: displaySize.width / 2,
         child: TextFormField(
           controller: _tagController,
           decoration: InputDecoration(
             border: InputBorder.none,
           ),
           style: MyTextStyle().bigBold,
-          onEditingComplete: () => setState(() {
-            todo[_tagController.text] = todo[tag];
-            todo.remove(tag);
+          onEditingComplete: () {
+            mainReference.child(tag).child(_tagController.text).update(todo[tag]);
+            mainReference.child(tag).remove();
             tag = _tagController.text;
-          }),
+            _getList();
+          },
         ),
       ),
       _newTaskIcon(),
@@ -95,7 +105,7 @@ class _TaskRowState extends State<TaskRow> {
 
   @override
   Widget build(BuildContext context) => Container(
-    height: displaySize.height / 4,
+    height: 200,
     child: Column(
       children: <Widget>[
         _taskTag(),

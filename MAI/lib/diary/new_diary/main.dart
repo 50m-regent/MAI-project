@@ -1,72 +1,75 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
-//import 'package:image_picker/image_picker.dart';
-//TODO: あん
+import 'package:intl/intl.dart';
 import 'package:mai/constants.dart';
 import 'dart:io';
+import '../../main.dart';
 import 'items.dart';
 
 class NewDiaryPage extends StatefulWidget {
-  @override //TODO: ここもpopup
+  @override
   _NewDiaryState createState() => _NewDiaryState();
 }
 
 class _NewDiaryState extends State<NewDiaryPage> {
-  final IconData lockIconOff = Icons.lock_outline;
-  final IconData lockIconOn = Icons.lock_open;
+  final IconData lockIconOn = Icons.lock_outline;
+  final IconData lockIconOff = Icons.lock_open;
 
-  String _diary;
-  int _lockFlag = 0;
+  String _text;
+  bool _lockFlag = false;
   Future<File> _galleryFile;
 
   Widget _lockIcon() {
-    Color _lockColor = MyColors.darkIcon;
+    Color _lockColor = MyColors.icon;
     String _lockTooltip = "公開";
     IconData _lockIcon = lockIconOff;
-    if(_lockFlag == 1){
+    if(_lockFlag){
       _lockColor = Colors.red[400];
       _lockTooltip = "非公開";
       _lockIcon = lockIconOn;
     }
-    return IconButton(
-      onPressed: () => setState(() => _lockFlag = 1 - _lockFlag),
-      tooltip: _lockTooltip,
-      icon: Icon(
-        _lockIcon,
-        color: _lockColor,
-        size: iconSize,
+    return Align(
+      alignment: Alignment.topLeft,
+      child: IconButton(
+        onPressed: () => setState(() => _lockFlag = _lockFlag ? false : true),
+        tooltip: _lockTooltip,
+        icon: Icon(
+          _lockIcon,
+          color: _lockColor,
+          size: iconSize,
+        ),
       ),
     );
   }
 
-  Widget _postIcon = IconButton(
-    onPressed: () {}, // TODO: 投稿
-    tooltip: "投稿",
-    icon: Icon(
-      Icons.library_books,
-      color: MyColors.darkIcon,
-      size: iconSize,
+  Widget _post(BuildContext context) => FlatButton(
+    onPressed: () {
+      final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('diary');
+      final _date = DateFormat('MMdd').format( DateTime.now() );
+      _mainReference.update({
+        _date: {
+          'text': _text,
+          'lock': _lockFlag ? true: false,
+        }
+      });
+      Navigator.pop(context);
+    },
+    child: Text(
+      '投稿',
+      style: MyTextStyle(color: MyColors.theme).mini,
     )
-  );
-
-  Widget _lockAndPost() => Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: <Widget>[
-      _lockIcon(),
-      _postIcon,
-    ],
   );
 
   Widget _selectPicture = Icon(
     Icons.add_a_photo,
-    color: MyColors.darkIcon,
+    color: MyColors.icon,
     size: iconSize * 3,
   );
 
   Widget _picture() => FutureBuilder<File>(
     future: _galleryFile,
     builder: (BuildContext context, AsyncSnapshot<File> snapshot) => FlatButton(
-      //onPressed: () => setState(() => _galleryFile = ImagePicker.pickImage(source: ImageSource.gallery)),
+      onPressed: () {},//() => setState(() => _galleryFile = ImagePicker.pickImage(source: ImageSource.gallery)),
       child: Container(
         height: displaySize.height / 4,
         child: snapshot.connectionState == ConnectionState.done && snapshot.data != null ? Image.file(
@@ -93,31 +96,27 @@ class _NewDiaryState extends State<NewDiaryPage> {
         ),
       ),
       onChanged: (text) {
-        _diary = text;
+        _text = text;
       },
     ),
   );
 
   @override
-  void initState() {
-    super.initState();
-    initializeDateFormatting("ja_JP");
-  }
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    backgroundColor: Colors.transparent,
-    body: Container(
-      padding: EdgeInsets.all(margin),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          _lockAndPost(),
-          date(),
-          _picture(),
-          _textField(),
-        ],
-      ),
+  Widget build(BuildContext context) => AlertDialog(
+    title: date(),
+    titleTextStyle: MyTextStyle().normalBold,
+    content: Column(
+      children: <Widget>[
+        _lockIcon(),
+        _picture(),
+        _textField(),
+      ],
+    ),
+    actions: <Widget>[
+      _post(context),
+    ],
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20.0),
     ),
   );
 }

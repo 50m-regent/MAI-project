@@ -2,50 +2,49 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'opened_diary/main.dart';
 
-class Diary extends StatelessWidget {
-  final date, image, name, text;
-  Diary({this.date, this.image, this.text, this.name});
+class Diary extends StatefulWidget {
+  final String date, name, text;
+  final image;
+  Diary({this.date, this.name, this.image, this.text});
+
+  @override
+  State<Diary> createState() => _DiaryState();
+}
+
+class _DiaryState extends State<Diary> {
+  final _readColor = Colors.pinkAccent;
+  bool _read = false;
 
   Widget _name() => Text(
-    name,
+    widget.name,
     style: MyTextStyle().normalBold,
   );
 
-  Widget _prefix() {
-    String _prefix = '';
-    for (int i = 0; i < 10; i++){
-      _prefix += text[i];
-    }
-    _prefix += '...';
-    return Text(
-      _prefix,
-      style: MyTextStyle().mini,
-    );
-  }
-
   @override
   Widget build(BuildContext context) => Container(
-    margin: EdgeInsets.only(right: margin, bottom: margin),
-    width: displaySize.width / 2,
+    margin: EdgeInsets.only(right: margin),
+    width: 200,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(10)),
-      color: MyColors.box,
-      boxShadow: [shadow],
+      border: Border.all(
+        color: _read ? _readColor : MyColors.theme,
+        width: 3,
+      ),
     ),
     child: FlatButton(
-      onPressed: () {
+      onPressed: () => setState(() {
+        _read = true;
         showDialog(
           context: context,
-          builder: (BuildContext context) => OpenDiary(this),
+          builder: (BuildContext context) => OpenDiary(this.widget),
         );
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _name(),
-          _prefix(),
-        ],
+      }),
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        child: Align(
+          alignment: Alignment.bottomLeft,
+          child: _name(),
+        ),
       ),
     ),
   );

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../constants.dart';
@@ -14,12 +13,12 @@ class _DateState extends State {
 
   _getTime() => setState(() {
     _date = Text(
-      DateFormat('M月d日(E)').format(DateTime.now()),
-      style: MyTextStyle(color: Colors.white).hugeBold,
+      DateFormat('M月d日(E)', 'ja_JP').format(DateTime.now()),
+      style: MyTextStyle().hugeBold,
     );
     _time = Text(
       DateFormat('HH:mm:ss').format(DateTime.now()),
-      style: MyTextStyle(color: Colors.white).hugeBold,
+      style: MyTextStyle().hugeBold,
     );
   });
 

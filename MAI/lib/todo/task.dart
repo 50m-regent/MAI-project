@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'todo.dart';
@@ -16,6 +17,12 @@ class Task extends StatefulWidget {
 class _TaskState extends State<Task> {
   TextEditingController _titleController = TextEditingController();
 
+  _getList() => setState(() {
+    mainReference.once().then((DataSnapshot snapshot) {
+      todo = snapshot.value;
+    });
+  });
+
   Widget _title() {
     _titleController.text = widget.title;
     return Container(
@@ -25,11 +32,12 @@ class _TaskState extends State<Task> {
           border: InputBorder.none,
         ),
         style: MyTextStyle().largeBold,
-        onEditingComplete: () => setState(() {
-          todo[widget.tag][_titleController.text] = {'deadline': widget.deadline, 'priority': widget.priority};
-          todo[widget.tag].remove(widget.title);
+        onEditingComplete: () {
+          mainReference.child(widget.tag).child(_titleController.text).update({'deadline': widget.deadline, 'priority': widget.priority});
+          mainReference.child(widget.tag).child(widget.title).remove();
           widget.title = _titleController.text;
-        }),
+          _getList();
+        },
       ),
     );
   }
@@ -60,14 +68,17 @@ class _TaskState extends State<Task> {
       margin: EdgeInsets.only(right: margin, bottom: margin),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
-        color: color,
-        boxShadow: [shadow],
+        border: Border.all(
+          color: color,
+          width: 3,
+        ),
       ),
       child: FlatButton(
-        onPressed: () => setState(() {
+        onPressed: () {
           widget.priority = (widget.priority + 1) % 4;
-          todo[widget.tag][widget.title]['priority'] = widget.priority;
-        }),
+          mainReference.child(widget.tag).child(widget.title).child('priority').set(widget.priority);
+          _getList();
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
