@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mai/constants.dart' as prefix0;
 import '../constants.dart';
 import 'package:flutter/material.dart';
 import '../main.dart';
@@ -100,24 +101,34 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget _qrCode() {
-    final _qrCode = QrImage(
-      data: user.uid,
-      size: displaySize.width * 0.7,
+  Widget _coloricon(Color iconcolor){
+    return Container(
+      height: 10,
+      width: 10,
+      child:FlatButton(
+        onPressed: (){},
+      ),
     );
-    final _title = Text(
-      'MAI QRコード',
-      style: MyTextStyle(color: MyColors.icon).bigBold,
+  }
+
+  Widget _pallete(){
+    return Container(
+      height: displaySize.height/3.0,
+      width: displaySize.width,
+      child:Row(
+        children: <Widget>[
+          _coloricon(Colors.red),
+          _coloricon(Colors.orange),
+          _coloricon(Colors.yellow),
+          _coloricon(Colors.lightGreen),
+        ],
+      ),
     );
-    return Column(
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            _title,
-          ],
-        ),
-        _qrCode,
-      ],
+  }
+
+  Widget _test(){
+    return Container(
+      child: _coloricon(Colors.red),
     );
   }
 
@@ -134,7 +145,8 @@ class _ProfileState extends State<Profile> {
             ],
           ),
           _status(),
-          _qrCode(),
+          //_pallete(),
+          _coloricon(Colors.red),
         ],
       ),
     );
