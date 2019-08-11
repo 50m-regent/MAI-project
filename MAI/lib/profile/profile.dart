@@ -102,33 +102,27 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _coloricon(Color iconcolor){
-    return Container(
-      height: 10,
-      width: 10,
-      child:FlatButton(
-        onPressed: (){},
-      ),
+    return FlatButton(
+      onPressed: (){},
     );
   }
 
   Widget _pallete(){
     return Container(
       height: displaySize.height/3.0,
-      width: displaySize.width,
-      child:Row(
+      child:ListView(
+        scrollDirection: Axis.horizontal,
         children: <Widget>[
-          _coloricon(Colors.red),
-          _coloricon(Colors.orange),
-          _coloricon(Colors.yellow),
-          _coloricon(Colors.lightGreen),
+          Row(
+            children: <Widget>[
+              _coloricon(Colors.red),
+              _coloricon(Colors.orange),
+              _coloricon(Colors.yellow),
+              _coloricon(Colors.lightGreen),
+            ],
+          ),
         ],
       ),
-    );
-  }
-
-  Widget _test(){
-    return Container(
-      child: _coloricon(Colors.red),
     );
   }
 
@@ -145,8 +139,7 @@ class _ProfileState extends State<Profile> {
             ],
           ),
           _status(),
-          //_pallete(),
-          _coloricon(Colors.red),
+          _pallete(),
         ],
       ),
     );
