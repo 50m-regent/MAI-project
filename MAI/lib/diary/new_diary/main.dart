@@ -1,10 +1,15 @@
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:mai/constants.dart';
+// Format Verified 1
+
 import 'dart:io';
+import 'package:intl/intl.dart';
+
+import 'package:flutter/material.dart';
+
+import 'package:firebase_database/firebase_database.dart';
+
 import '../../main.dart';
-import 'items.dart';
+import '../../constants.dart';
+import 'constants.dart';
 
 class NewDiaryPage extends StatefulWidget {
   @override
@@ -12,81 +17,84 @@ class NewDiaryPage extends StatefulWidget {
 }
 
 class _NewDiaryState extends State<NewDiaryPage> {
-  final IconData lockIconOn = Icons.lock_outline;
-  final IconData lockIconOff = Icons.lock_open;
+  String _text;              // 文章
+  bool _isLocked = false;     // 鍵かどうか
+  Future<File> _imageFile; // 画像ファイル
 
-  String _text;
-  bool _lockFlag = false;
-  Future<File> _galleryFile;
+  Widget _date() { // 日付
+    final String _date = DateFormat('MM月dd日(E)', "ja_JP").format(DateTime.now());
 
-  Widget _lockIcon() {
-    Color _lockColor = MyColors.icon;
-    String _lockTooltip = "公開";
-    IconData _lockIcon = lockIconOff;
-    if(_lockFlag){
-      _lockColor = Colors.red[400];
-      _lockTooltip = "非公開";
-      _lockIcon = lockIconOn;
+    return Row(
+      children: <Widget>[
+        Text(
+          _date,
+          style: NewDiaryTextStyles.date,
+        ),
+      ],
+    );
+  }
+
+  Widget _lockIcon() { // 鍵アイコン
+    Color    _lockColor   = MyColors.icon;         // 色
+    IconData _lockIcon    = NewDiaryIcons.lockOff; // アイコン
+
+    if(_isLocked) { // 鍵がかかっていたら色とアイコン変更
+      _lockColor = NewDiaryColors.lock;
+      _lockIcon  = NewDiaryIcons.lockOn;
     }
+
     return Container(
       child: IconButton(
-        onPressed: () => setState(() => _lockFlag = _lockFlag ? false : true),
-        tooltip: _lockTooltip,
+        onPressed: () => setState(() => _isLocked = _isLocked ? false : true),
         icon: Icon(
           _lockIcon,
           color: _lockColor,
-          size: iconSize,
+          size:  iconSize,
         ),
       ),
     );
   }
 
-  Widget _post(BuildContext context) => FlatButton(
+  Widget _post(BuildContext context) => FlatButton( // 投稿ボタン
     onPressed: () {
-      final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('diary');
-      final _date = DateFormat('MMdd').format( DateTime.now() );
+      final DatabaseReference _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('diary');
+      final String            _date          = DateFormat('MMdd').format( DateTime.now() );
       _mainReference.update({
         _date: {
           'text': _text,
-          'lock': _lockFlag ? true: false,
+          'lock': _isLocked ? true: false,
         }
       });
       Navigator.pop(context);
     },
     child: Text(
       '投稿',
-      style: MyTextStyle(color: MyColors.theme).mini,
+      style: NewDiaryTextStyles.post,
     )
   );
 
-  Widget _selectPicture = Icon(
-    Icons.add_a_photo,
-    color: MyColors.icon,
-    size: iconSize * 3,
-  );
-
-  Widget _picture() => FutureBuilder<File>(
-    future: _galleryFile,
+  Widget _picture() => FutureBuilder<File>( // 写真
+    future:  _imageFile,
     builder: (BuildContext context, AsyncSnapshot<File> snapshot) => FlatButton(
-      onPressed: () {},//() => setState(() => _galleryFile = ImagePicker.pickImage(source: ImageSource.gallery)),
+      onPressed: () {}, //() => setState(() => _galleryFile = ImagePicker.pickImage(source: ImageSource.gallery)), // TODO: あん
       child: Container(
         height: displaySize.height / 4,
-        child: snapshot.connectionState == ConnectionState.done && snapshot.data != null ? Image.file(
-          snapshot.data,
-        ) : _selectPicture,
+        child:  snapshot.connectionState == ConnectionState.done && snapshot.data != null ? Image.file(
+          snapshot.data) : Icon(
+            Icons.add_a_photo,
+            color: MyColors.icon,
+            size: iconSize * 3,
+        ),
       ),
     ),
   );
 
-  Widget _textField() => Container(
-      height: displaySize.height/3,
-      child: TextField(
+  Widget _textField() => Container( // 文章
+    height: displaySize.height / 3,
+    child: TextField(
       keyboardType: TextInputType.multiline,
       maxLines: 100,
-      style: TextStyle(
-        fontSize: 22,
-        height: 1.3,
-      ),
+      style: NewDiaryTextStyles.text,
       decoration: InputDecoration(
         hintText: "内容を入力...",
         focusedBorder: UnderlineInputBorder(
@@ -95,15 +103,13 @@ class _NewDiaryState extends State<NewDiaryPage> {
           ),
         ),
       ),
-      onChanged: (text) {
-        _text = text;
-      },
+      onChanged: (text) => _text = text,
     ),
   );
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-    title: date(),
+    title: _date(),
     titleTextStyle: MyTextStyle().normalBold,
     content: Container(
       child:ListView(
@@ -118,7 +124,7 @@ class _NewDiaryState extends State<NewDiaryPage> {
       _post(context),
     ],
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20.0),
+      borderRadius: BorderRadius.circular(borderRadius),
     ),
   );
 }

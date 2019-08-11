@@ -53,7 +53,7 @@ class _HomeState extends State {
         notice,
         Date(),
         _icons(),
-        _maiTemp, // TODO: 本物
+        _maiTemp,
       ],
     ) : Stack(
       children: <Widget>[
@@ -61,7 +61,7 @@ class _HomeState extends State {
           alignment: Alignment.bottomRight,
           child: _showUI(),
         ),
-        _maiTemp, // TODO: 本物
+        _maiTemp,
       ],
     ),
   );
