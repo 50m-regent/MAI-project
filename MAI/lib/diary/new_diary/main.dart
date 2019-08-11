@@ -28,8 +28,7 @@ class _NewDiaryState extends State<NewDiaryPage> {
       _lockTooltip = "非公開";
       _lockIcon = lockIconOn;
     }
-    return Align(
-      alignment: Alignment.topLeft,
+    return Container(
       child: IconButton(
         onPressed: () => setState(() => _lockFlag = _lockFlag ? false : true),
         tooltip: _lockTooltip,
@@ -79,8 +78,9 @@ class _NewDiaryState extends State<NewDiaryPage> {
     ),
   );
 
-  Widget _textField() => Expanded(
-    child: TextField(
+  Widget _textField() => Container(
+      height: displaySize.height/3,
+      child: TextField(
       keyboardType: TextInputType.multiline,
       maxLines: 100,
       style: TextStyle(
@@ -105,12 +105,14 @@ class _NewDiaryState extends State<NewDiaryPage> {
   Widget build(BuildContext context) => AlertDialog(
     title: date(),
     titleTextStyle: MyTextStyle().normalBold,
-    content: Column(
-      children: <Widget>[
-        _lockIcon(),
-        _picture(),
-        _textField(),
-      ],
+    content: Container(
+      child:ListView(
+        children: <Widget>[
+          _lockIcon(),
+          _picture(),
+          _textField(),
+        ],
+      ),
     ),
     actions: <Widget>[
       _post(context),
