@@ -69,6 +69,8 @@ class _MyAppState extends State {
         primarySwatch: MyColors.theme,
       ),
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomPadding: false,
         backgroundColor: MyColors.background,
         body: _pageList[_now],
         appBar: _appBar(),

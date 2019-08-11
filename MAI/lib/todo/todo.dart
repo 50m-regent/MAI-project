@@ -8,20 +8,20 @@ Map<dynamic, dynamic> todo = {};
 final mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('todo');
 
 class Todo extends StatefulWidget {
-  final state = _TodoState();
+  final _TodoState state = _TodoState();
 
   @override
-  State createState() => state;
+  _TodoState createState() => state;
 }
 
-class _TodoState extends State {
+class _TodoState extends State<Todo> {
   _getList() => setState(() {
     mainReference.once().then((DataSnapshot snapshot) {
       todo = snapshot.value;
     });
   });
 
-  FloatingActionButton newTagIcon() => FloatingActionButton.extended(
+  FloatingActionButton newTagIcon() => FloatingActionButton(
     onPressed: () {
       mainReference.child('新しいタグ').update({
         "新しいタスク" : {
@@ -31,12 +31,8 @@ class _TodoState extends State {
       });
       _getList();
     },
-    backgroundColor: MyColors.icon,
-    label: Text(
-      '新しいタグを作成',
-      style: MyTextStyle(color: Colors.white).normalBold,
-    ),
-    icon: Icon(
+    backgroundColor: MyColors.theme,
+    child: Icon(
       Icons.add,
       size: iconSize,
     ),

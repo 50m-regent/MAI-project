@@ -13,9 +13,40 @@ class _FriendListState extends State {
   final _mainReference = FirebaseDatabase.instance.reference().child(user.uid);
   List<Friend> _sortedFriendList = [];
 
+  List<Friend> _list = [
+    Friend(
+      name: 'アナリング',
+      message: 'あー気持ちいー',
+      iconImage: null,
+      isBestFriend: true,
+    ),
+    Friend(
+      name: 'アナリング',
+      message: 'あーなるほどん',
+      iconImage: null,
+      isBestFriend: true,
+    ),
+    Friend(
+      name: 'アナリング',
+      message: 'あーうんこ出る',
+      iconImage: null,
+    ),
+    Friend(
+      name: 'アナリング',
+      message: 'あー自分は出そうにない',
+      iconImage: null,
+    ),
+    Friend(
+      name: 'アナリング',
+      message: 'あーね',
+      iconImage: null,
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
+    /*
     _mainReference.once().then((DataSnapshot snapshot) {
       setState(() {
         if(snapshot.value == null) {
@@ -33,13 +64,26 @@ class _FriendListState extends State {
         });
       });
     });
+    */
+    _list.forEach((_f) {
+      if(_f.isBestFriend) {
+        _sortedFriendList.add(_f);
+      }
+    });
+    _list.forEach((_f) {
+      if(!_f.isBestFriend) {
+        _sortedFriendList.add(_f);
+      }
+    });
   }
+
 
   @override
   Widget build(BuildContext context) => _sortedFriendList.length != 0 ? Container(
     color: Colors.transparent,
     margin: EdgeInsets.symmetric(vertical: margin),
     child: ListView.builder(
+      reverse: true,
       itemCount: _sortedFriendList.length,
       itemBuilder: ((BuildContext context, int index) => _sortedFriendList[index]),
     ),

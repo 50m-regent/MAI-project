@@ -15,7 +15,7 @@ class OpenDiary extends StatefulWidget {
 class _OpenDiaryState extends State<OpenDiary> {
   _title() => Text(
     DateFormat('M/d').format(
-      DateTime.parse(widget.diary.date.toString())
+      DateTime.parse('2019' + widget.diary.date)
     ).toString() + ' ' + widget.diary.name,
   );
 

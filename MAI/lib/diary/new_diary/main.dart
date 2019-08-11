@@ -1,7 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-//import 'package:image_picker/image_picker.dart';
 import 'package:mai/constants.dart';
 import 'dart:io';
 import '../../main.dart';
@@ -107,7 +106,6 @@ class _NewDiaryState extends State<NewDiaryPage> {
     title: date(),
     titleTextStyle: MyTextStyle().normalBold,
     content: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         _lockIcon(),
         _picture(),

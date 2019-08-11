@@ -45,12 +45,12 @@ class _TaskRowState extends State<TaskRow> {
   });
 
   Widget _newTaskIcon() => IconButton(
+    tooltip: '新しいタスク',
+    iconSize: iconSize,
     icon: Icon(
       Icons.add,
       color: MyColors.icon,
     ),
-    tooltip: '新しいタスク',
-    iconSize: iconSize * 1.5,
     onPressed: () {
       _taskList.add(
         Task(
@@ -71,7 +71,7 @@ class _TaskRowState extends State<TaskRow> {
       color: MyColors.icon,
     ),
     tooltip: 'タグ削除',
-    iconSize: iconSize * 1.5,
+    iconSize: iconSize,
     onPressed: () {
       mainReference.child(tag).remove();
       _getList();
@@ -80,7 +80,8 @@ class _TaskRowState extends State<TaskRow> {
 
   Widget _taskTag() => Row(
     children: <Widget>[
-      Expanded(
+      Container(
+        width: displaySize.width / 2,
         child: TextFormField(
           controller: _tagController,
           decoration: InputDecoration(
@@ -102,7 +103,7 @@ class _TaskRowState extends State<TaskRow> {
 
   @override
   Widget build(BuildContext context) => Container(
-    height: displaySize.height / 4,
+    height: 200,
     child: Column(
       children: <Widget>[
         _taskTag(),

@@ -6,10 +6,48 @@ import '../main.dart';
 import 'diary.dart';
 
 class DiaryList extends StatelessWidget {
-  List<Diary> _list = [];
-  final Map<int, List<Diary>> _newList = {};
+  List<Diary> _list = [
+    Diary(
+      date: '0809',
+      image: null,
+      text: '今日から夏休みンゴwwwww',
+      name: '福田',
+    ),
+    Diary(
+      date: '0810',
+      image: null,
+      text: '夏休み飽きたンゴwww',
+      name: '福田',
+    ),
+    Diary(
+      date: '0810',
+      image: null,
+      text: '夏休み飽きたンゴwww',
+      name: '山田',
+    ),
+    Diary(
+      date: '0810',
+      image: null,
+      text: '夏休み飽きたンゴwww',
+      name: '平田',
+    ),
+    Diary(
+      date: '0811',
+      image: null,
+      text: 'わかるなあ',
+      name: '山田',
+    ),
+    Diary(
+      date: '0808',
+      image: null,
+      text: 'わかるかなあ',
+      name: '山田',
+    ),
+  ];
+  final Map<String, List<Diary>> _newList = {};
   List<DiaryRow> _rowList = [];
 
+/*
   _getDiary() {
     final _friendReference = FirebaseDatabase.instance.reference().child('friends');
     _friendReference.once().then((DataSnapshot friendSnapshot) {
@@ -34,7 +72,7 @@ class DiaryList extends StatelessWidget {
             });
           });
         });
-      } 
+      }
     });
     
     final _ref = FirebaseDatabase.instance.reference().child(user.uid);
@@ -55,9 +93,10 @@ class DiaryList extends StatelessWidget {
     });
     print(_list);
   }
+*/
 
   DiaryList() {
-    _getDiary();
+    //_getDiary();
 
     _list.forEach((_d) {
       if(_newList[_d.date] == null) {
@@ -69,15 +108,20 @@ class DiaryList extends StatelessWidget {
     _newList.forEach((_date, _l) {
       _rowList.add(DiaryRow(_l));
     });
-    
+
     _rowList = _rowList.reversed.toList();
   }
 
   @override
   Widget build(BuildContext context) => Container(
     color: Colors.transparent,
-    margin: EdgeInsets.symmetric(horizontal: margin),
+    margin: EdgeInsets.only(
+      right: margin,
+      left: margin,
+      bottom: margin,
+    ),
     child: ListView.builder(
+      reverse: true,
       itemCount: _rowList.length,
       itemBuilder: (BuildContext context, int index) => _rowList[index],
     ),

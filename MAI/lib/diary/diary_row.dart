@@ -15,20 +15,27 @@ class DiaryRow extends StatelessWidget {
   );
 
   @override
-  Widget build(BuildContext context) => Container(
-    height: 150,
-    margin: EdgeInsets.only(top: margin),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          DateFormat('M/d').format(
-            DateTime.parse(diaryList[0].date.toString())
-          ).toString(),
-          style: MyTextStyle().bigBold,
-        ),
-        _diaries(),
-      ],
-    ),
-  );
+  Widget build(BuildContext context) {
+    final Widget _date = Container(
+      padding: EdgeInsets.only(bottom: 10),
+      child: Text(
+        DateFormat('M/d').format(
+          DateTime.parse('2019' + diaryList[0].date)
+        ).toString(),
+        style: MyTextStyle().bigBold,
+      )
+    );
+
+    return Container(
+      height: 150,
+      margin: EdgeInsets.only(top: margin),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _date,
+          _diaries(),
+        ],
+      ),
+    );
+  }
 }

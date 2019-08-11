@@ -6,5 +6,4 @@ final TextStyle otherDaysTextStyle   = MyTextStyle(color: Colors.grey).miniBold;
 final TextStyle selectedDayTextStyle = MyTextStyle(color: Colors.white).normalBold;
 final TextStyle weekendTextStyle     = MyTextStyle(color: Colors.redAccent).normalBold;
 
-final Color todayBorderColor       = Colors.redAccent;
-      Color selectedDayButtonColor = MyColors.theme;
+final Color selectedColor = Colors.blue;

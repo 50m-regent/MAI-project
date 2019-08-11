@@ -3,8 +3,9 @@ import '../constants.dart';
 import 'opened_diary/main.dart';
 
 class Diary extends StatefulWidget {
-  final date, image, name, text;
-  Diary({this.date, this.image, this.text, this.name});
+  final String date, name, text;
+  final image;
+  Diary({this.date, this.name, this.image, this.text});
 
   @override
   State<Diary> createState() => _DiaryState();
@@ -24,11 +25,11 @@ class _DiaryState extends State<Diary> {
     margin: EdgeInsets.only(right: margin),
     width: 200,
     decoration: BoxDecoration(
+      borderRadius: BorderRadius.all(Radius.circular(10)),
       border: Border.all(
         color: _read ? _readColor : MyColors.theme,
-        width: 2.0,
+        width: 3,
       ),
-      borderRadius: BorderRadius.all(Radius.circular(10)),
     ),
     child: FlatButton(
       onPressed: () => setState(() {

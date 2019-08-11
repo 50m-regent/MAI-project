@@ -16,30 +16,45 @@ class Friend extends StatefulWidget {
 }
 
 class _FriendState extends State<Friend> {
-  Widget _icon() => widget.iconImage == null ? Icon(
-    Icons.account_circle,
-    color: MyColors.icon,
-    size: iconSize * 2.5,
-  ) : CircleAvatar(
-    backgroundImage: FileImage(
-      widget.iconImage.data,
+  _switchToBestFriend() => setState(() => widget.isBestFriend = widget.isBestFriend ? false : true);
+
+  Widget _icon() => widget.iconImage == null ? Container(
+    width: iconSize * 2.5,
+    height: iconSize * 2.5,
+    child: FlatButton(
+      onPressed: _switchToBestFriend,
+        child: Icon(
+          Icons.account_circle,
+          color: MyColors.icon,
+          size: iconSize * 2.5,
+        )
+    )
+  ) : FlatButton(
+      onPressed: _switchToBestFriend,
+      child: CircleAvatar(
+      backgroundImage: FileImage(
+        widget.iconImage.data,
+      ),
     ),
   );
 
   @override
   Widget build(BuildContext context) => Container(
-    margin: EdgeInsets.only(bottom: margin, right: margin, left: margin),
-    height: displaySize.height / 8,
+    margin: EdgeInsets.only(top: margin, right: margin, left: margin),
+    height: 100,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(10)),
-      color: widget.isBestFriend ? Colors.yellow : MyColors.box,
+      border: Border.all(
+        color: widget.isBestFriend ? Colors.yellow : MyColors.box,
+        width: 3,
+      ),
     ),
     child: FlatButton(
-      onPressed: () => setState(() => widget.isBestFriend = widget.isBestFriend ? false : true),
+      onPressed: () => (() {}),
       child: Row(
         children: <Widget>[
           _icon(),
-          Container(width: margin / 2),
+          //Container(width: margin / 2),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
