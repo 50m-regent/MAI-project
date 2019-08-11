@@ -101,7 +101,7 @@ class SpeechBubble extends StatelessWidget {
     );
   }
 
-  Widget nip(Offset nipOffset) { //TODO: 右上とか
+  Widget nip(Offset nipOffset) {
     return Transform.translate(
       offset: nipOffset,
       child: RotationTransition(
