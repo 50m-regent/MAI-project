@@ -8,7 +8,7 @@ class MyColors {
   static final Color background = Colors.white;
   static final Color icon       = Colors.grey;
   static final Color box        = Colors.grey[350];
-  static       Color theme      = Colors.green;
+  static       Color theme      = Colors.orange;
 }
 
 class MyTextStyle {
