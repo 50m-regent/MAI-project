@@ -1,11 +1,14 @@
 import 'dart:io';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
-import '../constants.dart';
+
 import 'package:flutter/material.dart';
-import '../main.dart';
+
+import 'package:firebase_database/firebase_database.dart';
 //import 'package:image_picker/image_picker.dart';
 //TODO: あん
+
+import '../constants.dart';
+import '../main.dart';
+import 'items.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -99,37 +102,43 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget _coloricon(Color iconcolor){
-    return Container(
-      height: 10,
-      width: 10,
-      child:FlatButton(
-        onPressed: (){},
+  static Widget _paletteTitle = Row(
+    children: <Widget>[
+      Text(
+        'テーマカラー',
+        style: MyTextStyle().largeBold,
       ),
-    );
-  }
+    ],
+  );
 
-  Widget _pallete(){
-    return Container(
-      height: displaySize.height/3.0,
-      width: displaySize.width,
-      child:Row(
-        children: <Widget>[
-          _coloricon(Colors.red),
-          _coloricon(Colors.orange),
-          _coloricon(Colors.yellow),
-          _coloricon(Colors.lightGreen),
-        ],
-      ),
-    );
-  }
-
-  Widget _test(){
-    return Container(
-      child: _coloricon(Colors.red),
-    );
-  }
-
+  static Widget _palette = Container(
+    height: displaySize.height / 5,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        _paletteTitle,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            palette[0],
+            palette[1],
+            palette[2],
+            palette[3],
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            palette[4],
+            palette[5],
+            palette[6],
+            palette[7],
+          ],
+        ),
+      ],
+    ),
+  );
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -143,8 +152,7 @@ class _ProfileState extends State<Profile> {
             ],
           ),
           _status(),
-          //_pallete(),
-          _coloricon(Colors.red),
+          _palette,
         ],
       ),
     );

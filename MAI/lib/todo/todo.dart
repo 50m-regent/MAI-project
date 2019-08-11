@@ -35,6 +35,7 @@ class _TodoState extends State<Todo> {
     child: Icon(
       Icons.add,
       size: iconSize,
+      color: Colors.white,
     ),
   );
 

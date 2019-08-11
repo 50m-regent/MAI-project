@@ -28,7 +28,7 @@ class CalendarPage extends StatelessWidget {
     todayStyle:          CalendarTextStyles.selectedDay,   // 今日
     selectedStyle:       CalendarTextStyles.selectedDay,   // 選択日
     todayColor:          CalendarColors.today,             // 今日の色
-    selectedColor:       MyColors.theme,                   // 選択日色
+    selectedColor:       MyColors.theme,                   // 選択色
   );
 
   @override

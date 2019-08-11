@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
+// Format Verified 1
+
 import 'package:intl/intl.dart';
+
+import 'package:flutter/material.dart';
+
 import '../../constants.dart';
 import '../diary.dart';
 
@@ -44,7 +48,7 @@ class _OpenDiaryState extends State<OpenDiary> {
       ),
     ],
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20.0),
+      borderRadius: BorderRadius.circular(20),
     ),
   );
 }
