@@ -24,7 +24,9 @@ class CalendarPage extends StatelessWidget {
           CalendarFormat.week: '1週間',
         },
         headerStyle: HeaderStyle(
-          titleTextStyle: MyTextStyle().largeBold,
+          centerHeaderTitle: true,
+          formatButtonVisible: false,
+          titleTextStyle: MyTextStyle().bigBold,
           formatButtonTextStyle: MyTextStyle().miniBold,
         ),
         daysOfWeekStyle: DaysOfWeekStyle(

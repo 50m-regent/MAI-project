@@ -73,8 +73,10 @@ class _TaskRowState extends State<TaskRow> {
     tooltip: 'タグ削除',
     iconSize: iconSize,
     onPressed: () {
-      mainReference.child(tag).remove();
-      _getList();
+      setState(() => {
+        mainReference.child(tag).remove(),
+        _getList()
+      });
     },
   );
 

@@ -23,12 +23,12 @@ class _TodoState extends State<Todo> {
 
   FloatingActionButton newTagIcon() => FloatingActionButton(
     onPressed: () {
-      mainReference.child('新しいタグ').update({
+      setState(() => mainReference.child('新しいタグ').update({
         "新しいタスク" : {
           "deadline": 20201231,
           "priority": 0
         }
-      });
+      }));
       _getList();
     },
     backgroundColor: MyColors.theme,

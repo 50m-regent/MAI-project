@@ -46,7 +46,6 @@ class _FriendListState extends State {
   @override
   void initState() {
     super.initState();
-    /*
     _mainReference.once().then((DataSnapshot snapshot) {
       setState(() {
         if(snapshot.value == null) {
@@ -63,17 +62,6 @@ class _FriendListState extends State {
           }
         });
       });
-    });
-    */
-    _list.forEach((_f) {
-      if(_f.isBestFriend) {
-        _sortedFriendList.add(_f);
-      }
-    });
-    _list.forEach((_f) {
-      if(!_f.isBestFriend) {
-        _sortedFriendList.add(_f);
-      }
     });
   }
 
