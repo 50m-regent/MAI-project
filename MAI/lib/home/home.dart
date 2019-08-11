@@ -18,7 +18,7 @@ class _HomeState extends State {
     tooltip: _isUIVisible ? 'UI非表示' : 'UI表示',
     icon: Icon(
       Icons.chat,
-      color: _isUIVisible ? MyColors.darkIcon : Colors.red[400],
+      color: _isUIVisible ? MyColors.icon : Colors.red[400],
       size: iconSize * 1.5,
     ),
   );

@@ -7,6 +7,10 @@ import 'diary/main.dart';
 import 'calendar/main.dart';
 import 'todo/main.dart';
 import 'profile/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
+FirebaseUser user;
 
 class MyApp extends StatefulWidget {
   @override
@@ -34,10 +38,9 @@ class _MyAppState extends State {
   ];
 
   AppBar _appBar() => AppBar(
-    backgroundColor: MyColors.box,
     title: Text(
       _titleList[_now],
-      style: MyTextStyle().largeBold,
+      style: MyTextStyle(color: Colors.white).largeBold,
     ),
   );
 
@@ -50,15 +53,31 @@ class _MyAppState extends State {
     }),
   );
 
+  _signIn() async => user = await FirebaseAuth.instance.signInAnonymously();
+
   @override
-  Widget build(BuildContext context) => MaterialApp(
-    home: Scaffold(
-      backgroundColor: MyColors.background,
-      body: _pageList[_now],
-      appBar: _appBar(),
-      bottomNavigationBar: _menu(),
-    ),
-  );
+  initState() {
+    super.initState();
+    _signIn();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    initializeDateFormatting("ja_JP");
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: MyColors.theme,
+      ),
+      home: Scaffold(
+        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomPadding: false,
+        backgroundColor: MyColors.background,
+        body: _pageList[_now],
+        appBar: _appBar(),
+        bottomNavigationBar: _menu(),
+      ),
+    );
+  }
 }
 
 main() => runApp(MyApp());

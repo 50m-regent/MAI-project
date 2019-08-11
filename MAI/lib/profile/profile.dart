@@ -1,26 +1,50 @@
 import 'dart:io';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import '../constants.dart';
 import 'package:flutter/material.dart';
+import '../main.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 //import 'package:image_picker/image_picker.dart';
 //TODO: あん
 
 class Profile extends StatefulWidget {
   @override
-  State createState() => _ProfileState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _ProfileState extends State {
+class _ProfileState extends State<Profile> {
+  final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('profile');
   Future<File> _profileImage;
+  Map<dynamic, dynamic> _profile = {'name': '', 'message': ''};
 
-  final _profile = {
-    'name': 'りーぜんと',
-    'birthday': '1118',
-    'message': '最近進捗が生えすぎるﾄﾎﾎギス'
-  };
+  _getProfile() => setState(() {
+    _mainReference.once().then((DataSnapshot snapshot) {
+      _profile = snapshot.value;
+    });
+  });
+
+  @override
+  initState() {
+    super.initState();
+    _mainReference.once().then((DataSnapshot snapshot) {
+      setState(() {
+        if(snapshot.value == null) {
+          _mainReference.update({
+            'name': '名前',
+            'message': ''
+          });
+        }
+        _getProfile();
+      });
+    });
+  }
+
+  TextEditingController _nameController = TextEditingController(), _messageController = TextEditingController();
 
   Widget _defaultIcon = Icon(
     Icons.account_circle,
-    color: MyColors.darkIcon,
+    color: MyColors.icon,
     size: iconSize * 3,
   );
 
@@ -42,102 +66,77 @@ class _ProfileState extends State {
     ),
   );
 
-  Widget _name() => Text(
-    _profile['name'],
-    style: MyTextStyle().veryBigBold,
-  );
-
-  Widget _birthday() => Row(
-    children: <Widget>[
-      Text(
-        '誕生日: ',
-        style: MyTextStyle().normalBold,
-      ),
-      Text(
-        '${_profile['birthday'][0] + _profile['birthday'][1]}/${_profile['birthday'][2] + _profile['birthday'][3]}',
-        style: MyTextStyle().normal,
-      )
-    ],
-  );
-
-  Widget _status() => Container(
-    height: displaySize.height / 4,
-    child: TextFormField(
-      maxLines: 5,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(),
-      ),
-      style: MyTextStyle().normal,
-    ),
-  );
-
-  Widget _colorIcon(Color color) => FlatButton(
-    onPressed: (() {}), //TODO: 押した処理
-    child: Container(
-      width: 50,
-      height: 50,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        boxShadow: [shadow],
-      ),
-    ),
-  );
-
-  Widget _palette() { //TODO: なんか実装
-    List<Widget> _colors = [
-      _colorIcon(Colors.pinkAccent),
-      _colorIcon(Colors.orangeAccent),
-      _colorIcon(Colors.lightGreenAccent),
-      _colorIcon(Colors.lightBlueAccent),
-      _colorIcon(Colors.blueAccent),
-      _colorIcon(Colors.red),
-      _colorIcon(Colors.redAccent),
-    ];
+  Widget _name() {
+    _nameController.text = _profile['name'];
     return Container(
-      height: displaySize.height / 5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'パレッチュ',
-            style: MyTextStyle().bigBold,
-          ),
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _colors.length,
-              itemBuilder: (BuildContext context, int index) => _colors[index],
-            ),
-          ),
-        ],
+      width: displaySize.width / 2,
+      child: TextFormField(
+        controller: _nameController,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+        ),
+        style: MyTextStyle().veryBigBold,
+        onEditingComplete: () => setState(() {
+          _mainReference.update({'name': _nameController.text});
+          _getProfile();
+        }),
       ),
     );
   }
 
+  Widget _status() {
+    _messageController.text = _profile['message'];
+    return Container(
+      child: TextFormField(
+        controller: _messageController,
+        maxLines: 2,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+        ),
+        style: MyTextStyle().normal,
+        onEditingComplete: () => setState(() {
+          _mainReference.update({'message': _messageController.text});
+          _getProfile();
+        }),
+      ),
+    );
+  }
+
+  Widget _qrCode() {
+    final _qrCode = QrImage(
+      data: user.uid,
+      size: displaySize.width * 0.7,
+    );
+    final _title = Text(
+      'MAI QRコード',
+      style: MyTextStyle(color: MyColors.icon).bigBold,
+    );
+    return Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            _title,
+          ],
+        ),
+        _qrCode,
+      ],
+    );
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent,
       margin: EdgeInsets.all(margin),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Row(
             children: <Widget>[
               _icon(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _name(),
-                  _birthday(),
-                ],
-              ),
+              _name(),
             ],
           ),
           _status(),
-          _palette(),
+          _qrCode(),
         ],
       ),
     );

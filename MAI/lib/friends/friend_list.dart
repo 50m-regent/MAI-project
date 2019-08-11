@@ -1,5 +1,7 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
+import '../main.dart';
 import 'friend.dart';
 
 class FriendList extends StatefulWidget {
@@ -8,69 +10,101 @@ class FriendList extends StatefulWidget {
 }
 
 class _FriendListState extends State {
-  final _friendList = [
+  final _mainReference = FirebaseDatabase.instance.reference().child(user.uid);
+  List<Friend> _sortedFriendList = [];
+
+  List<Friend> _list = [
     Friend(
-      name: 'aiueo',
-      message: 'aeiou',
-      iconImage: null,
-    ),
-    Friend(
-      name: 'たかし',
-      message: 'あじ',
+      name: 'アナリング',
+      message: 'あー気持ちいー',
       iconImage: null,
       isBestFriend: true,
     ),
     Friend(
-      name: 'なめこ',
-      message: 'バーカ',
-      iconImage: null,
-    ),
-    Friend(
-      name: '佐田',
-      message: '佐田です',
-      iconImage: null,
-    ),
-    Friend(
-      name: 'アーメン',
-      message: 'あーめんどくせー',
-      iconImage: null,
-    ),
-    Friend(
-      name: 'ジーメン',
-      message: 'じーめんどくせー',
-      iconImage: null,
-    ),
-    Friend(
-      name: 'ダーメン',
-      message: 'だーめんどくせー',
+      name: 'アナリング',
+      message: 'あーなるほどん',
       iconImage: null,
       isBestFriend: true,
+    ),
+    Friend(
+      name: 'アナリング',
+      message: 'あーうんこ出る',
+      iconImage: null,
+    ),
+    Friend(
+      name: 'アナリング',
+      message: 'あー自分は出そうにない',
+      iconImage: null,
+    ),
+    Friend(
+      name: 'アナリング',
+      message: 'あーね',
+      iconImage: null,
     ),
   ];
-  List<Friend> _sortedFriendList = [];
 
   @override
   void initState() {
     super.initState();
-    _friendList.forEach((_f) {
-      if(_f.isBestFriend){
+    /*
+    _mainReference.once().then((DataSnapshot snapshot) {
+      setState(() {
+        if(snapshot.value == null) {
+          _mainReference.update({'friends': []});
+        }
+        snapshot.value['friends'].forEach((_f) {
+          if(_f.isBestFriend){
+            _sortedFriendList.add(_f);
+          }
+        });
+        snapshot.value['friends'].forEach((_f) {
+          if(!_f.isBestFriend){
+            _sortedFriendList.add(_f);
+          }
+        });
+      });
+    });
+    */
+    _list.forEach((_f) {
+      if(_f.isBestFriend) {
         _sortedFriendList.add(_f);
       }
     });
-    _friendList.forEach((_f) {
-      if(!_f.isBestFriend){
+    _list.forEach((_f) {
+      if(!_f.isBestFriend) {
         _sortedFriendList.add(_f);
       }
     });
   }
 
+
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => _sortedFriendList.length != 0 ? Container(
     color: Colors.transparent,
     margin: EdgeInsets.symmetric(vertical: margin),
     child: ListView.builder(
-      itemCount: _friendList.length,
+      reverse: true,
+      itemCount: _sortedFriendList.length,
       itemBuilder: ((BuildContext context, int index) => _sortedFriendList[index]),
+    ),
+  ) : Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          'フレンドがいません...',
+          style: MyTextStyle(color: MyColors.icon).bigBold,
+        ),
+        Text(
+          'ホームのカメラで友達の',
+          style: MyTextStyle(color: MyColors.icon).bigBold,
+        ),
+        Text(
+          'QRコードを読み取ろう！',
+          style: MyTextStyle(color: MyColors.icon).bigBold,
+        ),
+      ],
     ),
   );
 }
