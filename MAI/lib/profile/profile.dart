@@ -32,7 +32,7 @@ class _ProfileState extends State<Profile> {
         if(snapshot.value == null) {
           _mainReference.update({
             'name': '名前',
-            'message': ''
+            'message': '',
           });
         }
         _getProfile();
@@ -78,7 +78,7 @@ class _ProfileState extends State<Profile> {
         style: MyTextStyle().veryBigBold,
         onEditingComplete: () => setState(() {
           _mainReference.update({'name': _nameController.text});
-          _getProfile();
+          _profile['name'] = _nameController.text;
         }),
       ),
     );
@@ -89,14 +89,14 @@ class _ProfileState extends State<Profile> {
     return Container(
       child: TextFormField(
         controller: _messageController,
-        maxLines: 2,
-        decoration: InputDecoration(
+        maxLines: 3,
+        /*decoration: InputDecoration(
           border: OutlineInputBorder(),
-        ),
+        ),*/
         style: MyTextStyle().normal,
         onEditingComplete: () => setState(() {
           _mainReference.update({'message': _messageController.text});
-          _getProfile();
+          _profile['message'] = _messageController.text;
         }),
       ),
     );
@@ -122,12 +122,12 @@ class _ProfileState extends State<Profile> {
       ],
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(margin),
-      child: Column(
+      child: ListView(
         children: <Widget>[
           Row(
             children: <Widget>[
