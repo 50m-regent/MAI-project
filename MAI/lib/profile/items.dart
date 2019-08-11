@@ -14,6 +14,10 @@ class Palette extends StatefulWidget {
 }
 
 class _PaletteState extends State<Palette> {
+  _saveColor() { //TODO: 色保存
+
+  }
+
   _changeTheme() {
     MyColors.theme = widget.color;
     showDialog(
@@ -25,14 +29,20 @@ class _PaletteState extends State<Palette> {
         ),
         actions: <Widget>[
           FlatButton(
-            onPressed: () => exit(0),
+            onPressed: () {
+              _saveColor();
+              exit(0);
+            },
             child: Text(
               '再起動',
               style: MyTextStyle(color: MyColors.theme).mini,
             ),
           ),
           FlatButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              _saveColor();
+              Navigator.pop(context);
+            },
             child: Text(
               '後で',
               style: MyTextStyle(color: MyColors.theme).mini,
