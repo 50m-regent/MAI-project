@@ -70,7 +70,7 @@ class _ProfileState extends State<Profile> {
     _nameController.text = _profile['name'];
     return Container(
       width: displaySize.width / 2,
-      child: TextFormField(
+      child: TextField(
         controller: _nameController,
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -87,12 +87,10 @@ class _ProfileState extends State<Profile> {
   Widget _status() {
     _messageController.text = _profile['message'];
     return Container(
-      child: TextFormField(
+      child: TextField(
         controller: _messageController,
-        maxLines: 3,
-        /*decoration: InputDecoration(
-          border: OutlineInputBorder(),
-        ),*/
+        //maxLines: 3,
+        maxLength: 40,
         style: MyTextStyle().normal,
         onEditingComplete: () => setState(() {
           _mainReference.update({'message': _messageController.text});
