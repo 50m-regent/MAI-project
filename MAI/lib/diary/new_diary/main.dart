@@ -43,15 +43,17 @@ class _NewDiaryState extends State<NewDiaryPage> {
       _lockIcon  = NewDiaryIcons.lockOn;
     }
 
-    return Container(
-      child: IconButton(
-        onPressed: () => setState(() => _isLocked = _isLocked ? false : true),
-        icon: Icon(
-          _lockIcon,
-          color: _lockColor,
-          size:  iconSize,
+    return Row(
+      children: <Widget>[
+        IconButton(
+          onPressed: () => setState(() => _isLocked = _isLocked ? false : true),
+          icon: Icon(
+            _lockIcon,
+            color: _lockColor,
+            size:  iconSize,
+          ),
         ),
-      ),
+      ],
     );
   }
 
@@ -112,6 +114,7 @@ class _NewDiaryState extends State<NewDiaryPage> {
     title: _date(),
     titleTextStyle: MyTextStyle().normalBold,
     content: Container(
+      width: displaySize.width,
       child:ListView(
         children: <Widget>[
           _lockIcon(),

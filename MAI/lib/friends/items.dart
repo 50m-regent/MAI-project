@@ -10,6 +10,7 @@ class AddFriendIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => FloatingActionButton(
+    backgroundColor: MyColors.theme,
     onPressed: scan,
     child: Icon(
       Icons.add,

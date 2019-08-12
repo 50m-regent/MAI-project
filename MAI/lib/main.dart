@@ -1,4 +1,12 @@
+// Format Verified 1
+
+import 'package:intl/date_symbol_data_local.dart';
+
 import 'package:flutter/material.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'constants.dart';
 import 'friends/main.dart';
 import 'menu/items.dart';
@@ -7,8 +15,7 @@ import 'diary/main.dart';
 import 'calendar/main.dart';
 import 'todo/main.dart';
 import 'profile/main.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:intl/date_symbol_data_local.dart';
+
 
 FirebaseUser user;
 
@@ -55,18 +62,25 @@ class _MyAppState extends State {
 
   _signIn() async => user = await FirebaseAuth.instance.signInAnonymously();
 
+  _getTheme() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() => MyColors.theme = Color(prefs.getInt('theme') ?? 0xFFF44336));
+  }
+
   @override
   initState() {
     super.initState();
+    initializeDateFormatting("ja_JP");
     _signIn();
+    _getTheme();
   }
 
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting("ja_JP");
+    print(MyColors.theme.value);
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: MyColors.theme,
+        primaryColor: MyColors.theme,
       ),
       home: Scaffold(
         resizeToAvoidBottomInset: false,

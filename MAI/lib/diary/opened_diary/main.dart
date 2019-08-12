@@ -23,14 +23,17 @@ class _OpenDiaryState extends State<OpenDiary> {
     ).toString() + ' ' + widget.diary.name,
   );
 
-  _diary() => Column(
-    children: <Widget>[
-      //Image.file(diary.image),
-      Text(
-        widget.diary.text,
-        style: MyTextStyle().mini,
-      ),
-    ],
+  _diary() => Container(
+    width: displaySize.width,
+    child: Column(
+      children: <Widget>[
+        //Image.file(diary.image),
+        Text(
+          widget.diary.text,
+          style: MyTextStyle().mini,
+        ),
+      ],
+    ),
   );
 
   @override

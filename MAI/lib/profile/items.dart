@@ -1,6 +1,10 @@
+// Format Verified 1
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 
@@ -14,12 +18,13 @@ class Palette extends StatefulWidget {
 }
 
 class _PaletteState extends State<Palette> {
-  _saveColor() { //TODO: 色保存
-
-  }
-
-  _changeTheme() {
+  _changeTheme() async {
     MyColors.theme = widget.color;
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('theme', MyColors.theme.value);
+    print(MyColors.theme.value);
+
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -30,7 +35,6 @@ class _PaletteState extends State<Palette> {
         actions: <Widget>[
           FlatButton(
             onPressed: () {
-              _saveColor();
               exit(0);
             },
             child: Text(
@@ -40,7 +44,6 @@ class _PaletteState extends State<Palette> {
           ),
           FlatButton(
             onPressed: () {
-              _saveColor();
               Navigator.pop(context);
             },
             child: Text(
