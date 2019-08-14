@@ -45,6 +45,7 @@ class _HomeState extends State {
     ),
   );
 
+  @override
   Widget build(BuildContext context) => Container(
     color: Colors.transparent,
     margin: EdgeInsets.all(margin),
