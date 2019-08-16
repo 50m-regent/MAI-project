@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_unity_widget/flutter_unity_widget.dart';
 
 import 'constants.dart';
 import 'friends/main.dart';
@@ -14,10 +15,13 @@ import 'home/main.dart';
 import 'diary/main.dart';
 import 'calendar/main.dart';
 import 'todo/main.dart';
+import 'todo/todo.dart';
 import 'profile/main.dart';
 
-
 FirebaseUser user;
+
+UnityWidgetController _unityController;
+final unityObj = UnityWidget(onUnityViewCreated: (UnityWidgetController controller) => _unityController = controller);
 
 class MyApp extends StatefulWidget {
   @override
@@ -25,6 +29,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State {
+  bool _isLoading = true;
   int _now = 0;
   // アプリのページ一覧
   final _pageList = [
@@ -52,7 +57,6 @@ class _MyAppState extends State {
   );
 
   BottomNavigationBar _menu() => BottomNavigationBar(
-    backgroundColor: MyColors.box,
     currentIndex: _now,
     items: buttons,
     onTap: (int index) => setState(() {
@@ -67,22 +71,41 @@ class _MyAppState extends State {
     setState(() => MyColors.theme = Color(prefs.getInt('theme') ?? 0xFFF44336));
   }
 
+  _load() {
+    setState(() {
+      Future.delayed(
+        Duration(seconds: 3),
+        () async {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      );
+    });
+  }
+
   @override
   initState() {
     super.initState();
     initializeDateFormatting("ja_JP");
+    _load();
     _signIn();
     _getTheme();
+    getTodo();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(MyColors.theme.value);
     return MaterialApp(
       theme: ThemeData(
         primaryColor: MyColors.theme,
       ),
-      home: Scaffold(
+      home: _isLoading ? Scaffold(
+        backgroundColor: MyColors.background,
+        body: Center(
+          child: CircularProgressIndicator(), //TODO: アイコン
+        ),
+      ) : Scaffold(
         resizeToAvoidBottomInset: false,
         resizeToAvoidBottomPadding: false,
         backgroundColor: MyColors.background,

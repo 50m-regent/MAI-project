@@ -6,6 +6,7 @@ import 'items.dart';
 class DiaryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
+    backgroundColor: MyColors.background,
     body: DiaryList(),
     floatingActionButton: Column(
       children: <Widget>[

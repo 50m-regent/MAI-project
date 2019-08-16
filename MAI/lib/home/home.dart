@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+
 import '../constants.dart';
 import 'date.dart';
 import 'items.dart';
+import '../main.dart';
+
 
 class Home extends StatefulWidget {
   @override
@@ -37,33 +40,22 @@ class _HomeState extends State {
     ),
   );
 
-  Widget _maiTemp = Align(
-    alignment: Alignment.center,
-    child: Text(
-      'MAIさん(仮)',
-      style: MyTextStyle(color: Colors.white). bigBold,
-    ),
-  );
-
-  @override
-  Widget build(BuildContext context) => Container(
-    color: Colors.transparent,
-    margin: EdgeInsets.all(margin),
-    child: _isUIVisible ? Stack(
-      children: <Widget>[
-        notice,
-        Date(),
-        _icons(),
-        _maiTemp,
-      ],
-    ) : Stack(
-      children: <Widget>[
-        Align(
-          alignment: Alignment.bottomRight,
-          child: _showUI(),
+  Widget build(BuildContext context) => Stack(
+    children: <Widget>[
+      unityObj,
+      Container(
+        margin: EdgeInsets.all(margin),
+        child: Stack(
+          children: <Widget>[
+            _isUIVisible ? notice : Container(),
+            _isUIVisible ? Date() : Container(),
+            _isUIVisible ? _icons() : Align(
+              alignment: Alignment.bottomRight,
+              child: _showUI(),
+            ),
+          ],
         ),
-        _maiTemp,
-      ],
-    ),
+      ),
+    ],
   );
 }

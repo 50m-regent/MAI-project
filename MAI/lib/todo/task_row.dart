@@ -38,12 +38,6 @@ class _TaskRowState extends State<TaskRow> {
     _taskList.sort( (b, a) => a.priority.compareTo(b.priority) );
   }
 
-  _getList() => setState(() {
-    mainReference.once().then((DataSnapshot snapshot) {
-      todo = snapshot.value;
-    });
-  });
-
   Widget _newTaskIcon() => IconButton(
     tooltip: '新しいタスク',
     iconSize: iconSize,
@@ -51,7 +45,7 @@ class _TaskRowState extends State<TaskRow> {
       Icons.add,
       color: MyColors.icon,
     ),
-    onPressed: () {
+    onPressed: () => setState(() {
       _taskList.add(
         Task(
           tag: tag,
@@ -60,9 +54,9 @@ class _TaskRowState extends State<TaskRow> {
           priority: 0,
         )
       );
-      mainReference.child(tag).child('新しいタスク').update({'deadline': 20201231, 'priority': 0});
-      _getList();
-    },
+      todo[tag]['新しいタスク'] = {'deadline': 20201231, 'priority': 0};
+      saveTodo();
+    }),
   );
 
   Widget _deleteTagIcon() => IconButton(
@@ -73,9 +67,9 @@ class _TaskRowState extends State<TaskRow> {
     tooltip: 'タグ削除',
     iconSize: iconSize,
     onPressed: () {
-      setState(() => {
-        mainReference.child(tag).remove(),
-        _getList()
+      setState(() {
+        todo.remove(tag);
+        saveTodo();
       });
     },
   );
@@ -91,10 +85,10 @@ class _TaskRowState extends State<TaskRow> {
           ),
           style: MyTextStyle().bigBold,
           onEditingComplete: () {
-            mainReference.child(tag).child(_tagController.text).update(todo[tag]);
-            mainReference.child(tag).remove();
+            todo[_tagController.text] = todo[tag];
+            todo.remove(tag);
             tag = _tagController.text;
-            _getList();
+            saveTodo();
           },
         ),
       ),

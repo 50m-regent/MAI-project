@@ -1,4 +1,3 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'todo.dart';
@@ -25,12 +24,6 @@ class _TaskState extends State<Task> {
 
   TextEditingController _titleController = TextEditingController();
 
-  _getList() => setState(() {
-    mainReference.once().then((DataSnapshot snapshot) {
-      todo = snapshot.value;
-    });
-  });
-
   Widget _title() {
     _titleController.text = widget.title;
     return Container(
@@ -41,10 +34,10 @@ class _TaskState extends State<Task> {
         ),
         style: MyTextStyle().largeBold,
         onEditingComplete: () {
-          mainReference.child(widget.tag).child(_titleController.text).update({'deadline': widget.deadline, 'priority': widget.priority});
-          mainReference.child(widget.tag).child(widget.title).remove();
+          todo[widget.tag][_titleController.text] = {'deadline': widget.deadline, 'priority': widget.priority};
+          todo[widget.tag].remove(widget.title);
           title = _titleController.text;
-          _getList();
+          saveTodo();
         },
       ),
     );
@@ -84,8 +77,8 @@ class _TaskState extends State<Task> {
       child: FlatButton(
         onPressed: () {
           priority = (widget.priority + 1) % 4;
-          mainReference.child(widget.tag).child(widget.title).child('priority').set(widget.priority);
-          _getList();
+          todo[widget.tag][widget.title]['priority'] = widget.priority;
+          saveTodo();
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

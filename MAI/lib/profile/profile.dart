@@ -22,24 +22,21 @@ class _ProfileState extends State<Profile> {
 
   _getProfile() => setState(() {
     _mainReference.once().then((DataSnapshot snapshot) {
+      if(snapshot.value == null) {
+          _mainReference.update({
+            'name': '名前',
+            'message': '',
+          });
+        }
       _profile = snapshot.value;
+      print('got');
     });
   });
 
   @override
   initState() {
     super.initState();
-    _mainReference.once().then((DataSnapshot snapshot) {
-      setState(() {
-        if(snapshot.value == null) {
-          _mainReference.update({
-            'name': '名前',
-            'message': '',
-          });
-        }
-        _getProfile();
-      });
-    });
+    _getProfile();
   }
 
   TextEditingController _nameController = TextEditingController(), _messageController = TextEditingController();

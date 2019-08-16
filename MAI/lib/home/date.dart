@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../constants.dart';
@@ -11,7 +13,7 @@ class _DateState extends State {
   Widget _date;
   Widget _time;
 
-  _getTime() => setState(() {
+  _getTime({Timer timer}) => mounted ? setState(() {
     _date = Text(
       DateFormat('M月d日(E)', 'ja_JP').format(DateTime.now()),
       style: MyTextStyle().hugeBold,
@@ -20,13 +22,13 @@ class _DateState extends State {
       DateFormat('HH:mm:ss').format(DateTime.now()),
       style: MyTextStyle().hugeBold,
     );
-  });
+  }) : timer.cancel();
 
   @override
   void initState() {
     super.initState();
     _getTime();
-    //Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
+    Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime(timer: t));
   }
   
   @override

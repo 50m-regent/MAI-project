@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'dart:convert';
+
 import '../constants.dart';
 import 'task_row.dart';
-import 'package:firebase_database/firebase_database.dart';
-import '../main.dart';
 
 Map<dynamic, dynamic> todo = {};
-final mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('todo');
+
+getTodo() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String tmp = prefs.getString('todo');
+  if(tmp != null){
+    todo = json.decode(tmp);
+  }
+}
+
+saveTodo() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString('todo', json.encode(todo));
+}
 
 class Todo extends StatefulWidget {
   final _TodoState state = _TodoState();
@@ -15,22 +29,18 @@ class Todo extends StatefulWidget {
 }
 
 class _TodoState extends State<Todo> {
-  _getList() => setState(() {
-    mainReference.once().then((DataSnapshot snapshot) {
-      todo = snapshot.value;
-    });
-  });
+  _TodoState() {
+    getTodo();
+  }
 
   FloatingActionButton newTagIcon() => FloatingActionButton(
-    onPressed: () {
-      setState(() => mainReference.child('新しいタグ').update({
-        "新しいタスク" : {
-          "deadline": 20201231,
-          "priority": 0
-        }
-      }));
-      _getList();
-    },
+    onPressed: () => setState(() {
+      todo['新しいタスク'] = {
+        'deadline': 20201231,
+        'priority': 0,
+      };
+      saveTodo();
+    }),
     backgroundColor: MyColors.theme,
     child: Icon(
       Icons.add,
@@ -60,18 +70,6 @@ class _TodoState extends State<Todo> {
         itemBuilder: (BuildContext context, int index) => TaskRow(this, _tasks[index]),
       ),
     );
-  }
-
-  @override
-  initState() {
-    super.initState();
-    mainReference.once().then((DataSnapshot snapshot) {
-      setState(() {
-        if(snapshot.value != null) {
-          _getList();
-        }
-      });
-    });
   }
 
   @override
