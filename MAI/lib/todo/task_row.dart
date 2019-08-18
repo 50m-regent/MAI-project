@@ -1,41 +1,25 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+
 import 'todo.dart';
 import '../constants.dart';
 import 'task.dart';
 
 class TaskRow extends StatefulWidget {
-  final todoList;
-  final tasks;
-  TaskRow(this.todoList, this.tasks);
+  String tag;
+  TaskRow(this.tag);
 
-  @override
-  State createState() => _TaskRowState();
+  _TaskRowState createState() => _TaskRowState();
 }
 
 class _TaskRowState extends State<TaskRow> {
-  String tag;
   List<Task> _taskList = [];
   TextEditingController _tagController = TextEditingController();
 
-  @override
   initState() {
     super.initState();
-    widget.tasks.forEach((_k, _v) {
-      tag = _k;
-      _tagController.text = tag;
-      _v.forEach((_title, _t) {
-        _taskList.add(
-          Task(
-            tag: _k,
-            title: _title,
-            deadline: _t['deadline'],
-            priority: _t['priority'],
-          )
-        );
-      });
-    });
-    _taskList.sort( (b, a) => a.priority.compareTo(b.priority) );
+    _tagController.text = widget.tag;
+    todo[widget.tag].forEach((_title, _tasks) => _taskList.add(Task(widget.tag, _title)));
+    _taskList.sort( (b, a) => todo[widget.tag][a.title]['priority'].compareTo(todo[widget.tag][b.title]['priority']) );
   }
 
   Widget _newTaskIcon() => IconButton(
@@ -46,16 +30,11 @@ class _TaskRowState extends State<TaskRow> {
       color: MyColors.icon,
     ),
     onPressed: () => setState(() {
-      _taskList.add(
-        Task(
-          tag: tag,
-          title: '新しいタスク',
-          deadline: 20201231,
-          priority: 0,
-        )
-      );
-      todo[tag]['新しいタスク'] = {'deadline': 20201231, 'priority': 0};
-      saveTodo();
+      if(todo[widget.tag]['新しいタスク'] == null){
+        _taskList.add(Task(widget.tag, '新しいタスク'));
+        todo[widget.tag]['新しいタスク'] = {'deadline': 20201231, 'priority': 0};
+        saveTodo();
+      }
     }),
   );
 
@@ -66,12 +45,11 @@ class _TaskRowState extends State<TaskRow> {
     ),
     tooltip: 'タグ削除',
     iconSize: iconSize,
-    onPressed: () {
-      setState(() {
-        todo.remove(tag);
-        saveTodo();
-      });
-    },
+    onPressed: () => setState(() {
+      todo.remove(widget.tag);
+      saveTodo();
+      dispose();
+    }),
   );
 
   Widget _taskTag() => Row(
@@ -84,12 +62,12 @@ class _TaskRowState extends State<TaskRow> {
             border: InputBorder.none,
           ),
           style: MyTextStyle().bigBold,
-          onEditingComplete: () {
-            todo[_tagController.text] = todo[tag];
-            todo.remove(tag);
-            tag = _tagController.text;
+          onEditingComplete: () => setState(() {
+            todo[_tagController.text] = todo[widget.tag];
+            todo.remove(widget.tag);
+            widget.tag = _tagController.text;
             saveTodo();
-          },
+          }),
         ),
       ),
       _newTaskIcon(),

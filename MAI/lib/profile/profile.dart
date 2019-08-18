@@ -29,7 +29,6 @@ class _ProfileState extends State<Profile> {
           });
         }
       _profile = snapshot.value;
-      print('got');
     });
   });
 

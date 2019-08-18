@@ -6,7 +6,8 @@ import 'dart:convert';
 import '../constants.dart';
 import 'task_row.dart';
 
-Map<dynamic, dynamic> todo = {};
+Map<String, dynamic> todo = {};
+List<String> _tagList = [];
 
 getTodo() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -19,25 +20,28 @@ getTodo() async {
 saveTodo() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString('todo', json.encode(todo));
+  getTodo();
 }
 
 class Todo extends StatefulWidget {
   final _TodoState state = _TodoState();
 
-  @override
   _TodoState createState() => state;
 }
 
 class _TodoState extends State<Todo> {
-  _TodoState() {
+  initState() {
+    super.initState();
     getTodo();
   }
 
   FloatingActionButton newTagIcon() => FloatingActionButton(
     onPressed: () => setState(() {
-      todo['新しいタスク'] = {
-        'deadline': 20201231,
-        'priority': 0,
+      todo['新しいタグ'] = {
+        '新しいタスク': {
+          'deadline': 20201231,
+          'priority': 0,
+        }
       };
       saveTodo();
     }),
@@ -49,14 +53,10 @@ class _TodoState extends State<Todo> {
     ),
   );
 
-  List<Map<String, dynamic>> _getTasks() {
-    List<Map<String, dynamic>> _tasks = [];
-    todo.forEach((_tag, _t) => _tasks.add({_tag: _t}));
-    return _tasks;
-  }
-
   Widget _todoList() {
-    List<Map<String, dynamic>> _tasks = _getTasks();
+    _tagList = [];
+    todo.forEach((_tag, _tasks) => _tagList.add(_tag));
+
     return Container(
       color: Colors.transparent,
       padding: EdgeInsets.only(
@@ -66,13 +66,12 @@ class _TodoState extends State<Todo> {
         bottom: margin * 2,
       ),
       child: ListView.builder(
-        itemCount: todo.length,
-        itemBuilder: (BuildContext context, int index) => TaskRow(this, _tasks[index]),
+        itemCount: _tagList.length,
+        itemBuilder: (BuildContext context, int index) => TaskRow(_tagList[index]),
       ),
     );
   }
 
-  @override
   Widget build(BuildContext context) => todo.length == 0 ? Center(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
