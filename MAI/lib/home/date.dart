@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import '../constants.dart';
 
 class Date extends StatefulWidget {
