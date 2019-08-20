@@ -46,7 +46,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
   Schedule _schedule = Schedule(DateTime.now());
 
-  TableCalendar _calendar() => TableCalendar( // カレンダー
+  Widget _calendar() => TableCalendar( // カレンダー
     calendarController: _calendarController,
     locale: 'ja_JP',
     headerStyle:     _headerStyle,
@@ -72,16 +72,16 @@ class _CalendarPageState extends State<CalendarPage> {
     );
 
   Widget build(BuildContext context) => Scaffold(
-      backgroundColor: MyColors.background,
-      floatingActionButton: newPlanButton(),
-      body: Container(
-        margin: EdgeInsets.all(margin / 2),
-        child: Column(
-          children: <Widget>[
-            _calendar(),
-            _schedule,
-          ],
-        ),
+    backgroundColor: MyColors.background,
+    floatingActionButton: newPlanButton(),
+    body: Container(
+      margin: EdgeInsets.all(margin / 2),
+      child:ListView(
+        children: <Widget>[
+                _calendar(),
+                _schedule,
+        ],
       ),
-    );
+    ),
+  );
 }
