@@ -16,5 +16,5 @@ class CalendarTextStyles { // カレンダーのTextStyle
 }
 
 class CalendarColors { // カレンダーで使う色
- static Color get today => Colors.blue; // 今日の色
+ static Color today; // 今日の色
 }
