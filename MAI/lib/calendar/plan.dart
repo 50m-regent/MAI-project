@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 import 'constants.dart';
+import 'main.dart';
 
 class Plan extends StatefulWidget {
   final String title;
@@ -12,9 +13,8 @@ class Plan extends StatefulWidget {
   Plan(this.title, this.start, this.end);
 
   Map<String, dynamic> toJson() => {
-    'title': title,
-    'start': DateFormat('HH:mm', 'ja_JP').format(start),
-    'end':   DateFormat('HH:mm', 'ja_JP').format(end),
+    'start': start.toString(),
+    'end':   end.toString(),
   };
 
   _PlanState createState() => _PlanState();
@@ -27,16 +27,28 @@ class _PlanState extends State<Plan> {
   );
 
   Widget _time() => Text(
-    DateFormat('HH:mm', 'ja_JP').format(widget.start)
+    DateFormat('HH:mm').format(widget.start)
     + ' 〜 ' +
-    DateFormat('HH:mm', 'ja_JP').format(widget.end),
+    DateFormat('HH:mm').format(widget.end),
     style: CalendarTextStyles.days,
+  );
+
+  Widget _deleteIcon() => IconButton(
+    icon: Icon(
+      Icons.remove,
+      color: MyColors.icon,
+      size: iconSize,
+    ),
+    onPressed: () => setState(() {
+      plans[DateFormat('MMdd').format(widget.start)].remove(widget.title);
+      pref.child(DateFormat('MMdd').format(widget.start)).child(widget.title).remove();
+    }),
   );
 
   Widget build(BuildContext context) => Container(
     height: 60,
     margin: EdgeInsets.only(bottom: margin / 2),
-    padding: EdgeInsets.symmetric(horizontal: margin),
+    padding: EdgeInsets.only(left: margin),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(10)),
       border: Border.all(
@@ -49,6 +61,7 @@ class _PlanState extends State<Plan> {
       children: <Widget>[
         _title(),
         _time(),
+        _deleteIcon(),
       ],
     ),
   );

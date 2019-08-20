@@ -7,10 +7,10 @@ double iconSize;
 double margin;
 
 class MyColors {
-  static final Color background = Colors.blue[50];
   static final Color icon       = Colors.grey;
   static final Color box        = Colors.grey[350];
   static       Color theme;
+  static       Color background;
 }
 
 class MyTextStyle {

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_unity_widget/flutter_unity_widget.dart';
 
 import 'constants.dart';
 import 'friends/main.dart';
@@ -19,9 +18,6 @@ import 'todo/todo.dart';
 import 'profile/main.dart';
 
 FirebaseUser user;
-
-UnityWidgetController _unityController;
-final unityObj = UnityWidget(onUnityViewCreated: (UnityWidgetController controller) => _unityController = controller);
 
 class MyApp extends StatefulWidget {
   @override
@@ -71,7 +67,37 @@ class _MyAppState extends State {
 
   _getTheme() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() => MyColors.theme = Color(prefs.getInt('theme') ?? 0xFFF44336));
+    setState(() {
+      MyColors.theme = Color(prefs.getInt('theme') ?? 0xFFF44336);
+      switch(MyColors.theme.toString()) {
+        case 'Color(0xfff44336)': // red
+          MyColors.background = Colors.red[50];
+          break;
+        case 'Color(0xffff9800)': // orange
+          MyColors.background = Colors.orange[50];
+          break;
+        case 'Color(0xffffeb3b)': // yellow
+          MyColors.background = Colors.yellow[50];
+          break;
+        case 'Color(0xff4caf50)': // green
+          MyColors.background = Colors.green[50];
+          break;
+        case 'Color(0xff2196f3)': // blue
+          MyColors.background = Colors.blue[50];
+          break;
+        case 'Color(0xff9c27b0)': // purple
+          MyColors.background = Colors.purple[50];
+          break;
+        case 'Color(0xff9e9e9e)': // grey
+          MyColors.background = Colors.grey[50];
+          break;
+        case 'Color(0xff3f51b5)': // indigo
+          MyColors.background = Colors.indigo[50];
+          break;
+        default:
+          MyColors.background = Colors.red[50];
+      }
+    });
   }
 
   _load() {
@@ -98,8 +124,7 @@ class _MyAppState extends State {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context) => MaterialApp(
       theme: ThemeData(
         primaryColor: MyColors.theme,
       ),
@@ -117,7 +142,6 @@ class _MyAppState extends State {
         bottomNavigationBar: _menu(),
       ),
     );
-  }
 }
 
 main() => runApp(MyApp());

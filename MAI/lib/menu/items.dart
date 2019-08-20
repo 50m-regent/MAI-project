@@ -8,7 +8,7 @@ final _todoIcon =     Icons.assignment;
 final _profileIcon =  Icons.account_circle;
 final _friendIcon =   Icons.group;
 
-BottomNavigationBarItem _iconTemplate({IconData icon, String title}) => BottomNavigationBarItem(
+BottomNavigationBarItem _iconTemplate(IconData icon) => BottomNavigationBarItem(
   icon: Icon(
     icon,
     color: MyColors.icon,
@@ -17,20 +17,15 @@ BottomNavigationBarItem _iconTemplate({IconData icon, String title}) => BottomNa
     icon,
     color: MyColors.theme,
   ),
-  title: Text(
-    title,
-    style: TextStyle(
-      color: MyColors.icon,
-    ),
-  ),
+  title: Container(),
 );
 
-BottomNavigationBarItem _home =     _iconTemplate(icon: _homeIcon,     title: 'Home');
-BottomNavigationBarItem _diary =    _iconTemplate(icon: _diaryIcon,    title: 'Diary');
-BottomNavigationBarItem _calendar = _iconTemplate(icon: _calendarIcon, title: 'Calendar');
-BottomNavigationBarItem _todo =     _iconTemplate(icon: _todoIcon,     title: 'Todo');
-BottomNavigationBarItem _profile =  _iconTemplate(icon: _profileIcon,  title: 'Profile');
-BottomNavigationBarItem _friend =   _iconTemplate(icon: _friendIcon,   title: 'Friends');
+BottomNavigationBarItem _home =     _iconTemplate(_homeIcon);
+BottomNavigationBarItem _diary =    _iconTemplate(_diaryIcon);
+BottomNavigationBarItem _calendar = _iconTemplate(_calendarIcon);
+BottomNavigationBarItem _todo =     _iconTemplate(_todoIcon);
+BottomNavigationBarItem _profile =  _iconTemplate(_profileIcon);
+BottomNavigationBarItem _friend =   _iconTemplate(_friendIcon);
 
 List<BottomNavigationBarItem> buttons = [
   _home,

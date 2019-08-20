@@ -16,16 +16,22 @@ class Schedule extends StatefulWidget {
 }
 
 class _ScheduleState extends State<Schedule> {
-  Widget _body() => Container(
-    margin: EdgeInsets.symmetric(horizontal: margin / 2),
-    child: ListView.builder(
-      itemCount: plans[DateFormat('MMdd', 'ja_JP').format(widget.date)].length,
-      itemBuilder: (context, index) => plans[DateFormat('MMdd', 'ja_JP').format(widget.date)][index],
-    ),
-  );
+  Widget _body() {
+    List<String> _titles = [];
+
+    plans[DateFormat('MMdd').format(widget.date)].forEach((dynamic _title, dynamic _j) {_titles.add(_title);});
+
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: margin / 2),
+      child: ListView.builder(
+        itemCount: _titles.length,
+        itemBuilder: (context, index) => plans[DateFormat('MMdd').format(widget.date)][_titles[index]],
+      ),
+    );
+  }
 
   Widget build(BuildContext context) => Expanded(
-    child: plans[DateFormat('MMdd', 'ja_JP').format(widget.date)] != null ? _body() : Container(
+    child: plans[DateFormat('MMdd').format(widget.date)] != null ? _body() : Container(
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -8,13 +8,23 @@ import '../constants.dart';
 import '../main.dart';
 import 'constants.dart';
 import 'new_plan.dart';
+import 'plan.dart';
 import 'schedule.dart';
 
 Map<String, dynamic> plans = {};
 
 final DatabaseReference pref = FirebaseDatabase.instance.reference().child(user.uid).child('schedule');
 
-getSchedule() => pref.once().then((DataSnapshot snapshot) => snapshot.value == null ? {} : plans = snapshot.value);
+getSchedule() => pref.once().then((DataSnapshot snapshot) {
+  if(snapshot.value != null) {
+    snapshot.value.forEach((_date, _plan) {
+      plans[_date] = {};
+      _plan.forEach((_title, _data) {
+        plans[_date][_title] = Plan(_title, DateTime.parse(_data['start']), DateTime.parse(_data['end']));
+      });
+    });
+  }
+});
 
 // カレンダー
 class CalendarPage extends StatefulWidget {
@@ -67,7 +77,6 @@ class _CalendarPageState extends State<CalendarPage> {
           context: context,
           builder: (BuildContext context) => NewPlan(_schedule.date),
         );
-        print(plans);
       },
     );
 
@@ -76,10 +85,18 @@ class _CalendarPageState extends State<CalendarPage> {
     floatingActionButton: newPlanButton(),
     body: Container(
       margin: EdgeInsets.all(margin / 2),
-      child:ListView(
+      child: ListView(
         children: <Widget>[
+          Container(
+            width: displaySize.width,
+            height: displaySize.height * 0.8,
+            child: Column(
+              children: <Widget>[
                 _calendar(),
                 _schedule,
+              ],
+            ),
+          ),  
         ],
       ),
     ),
