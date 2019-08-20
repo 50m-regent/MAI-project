@@ -1,17 +1,31 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+
+import 'package:video_player/video_player.dart';
 
 import '../constants.dart';
 import 'date.dart';
 import 'items.dart';
-import '../main.dart';
-
 
 class Home extends StatefulWidget {
   @override
   State createState() => _HomeState();
 }
 
-class _HomeState extends State {
+class _HomeState extends State<Home> {
+  VideoPlayerController _videoController = VideoPlayerController.asset('assets/MAI.mp4');
+  VoidCallback _listener;
+
+  initState() {
+    super.initState();
+    _listener = () => mounted ? setState(() {}) : null;
+    _videoController..addListener(_listener)..setVolume(0)..initialize();
+    _videoController.setLooping(true);
+    _videoController.play();
+  }
+
   bool _isUIVisible = true;
 
   Widget _showUI() => IconButton(
@@ -42,7 +56,7 @@ class _HomeState extends State {
 
   Widget build(BuildContext context) => Stack(
     children: <Widget>[
-      //unityObj,
+      VideoPlayer(_videoController),
       Container(
         margin: EdgeInsets.all(margin),
         child: Stack(

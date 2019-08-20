@@ -13,14 +13,11 @@ dependencies:
   validators: ^2.0.0
   firebase_database: ^3.0.5
   firebase_auth: ^0.11.1
-  qr_flutter:
-    git:
-      url: git://github.com/lukef/qr.flutter.git
-      ref: 2.0.0-dev.1
   cupertino_icons: ^0.1.2
   table_calendar: ^2.0.0
   shared_preferences: ^0.5.3
   flutter_datetime_picker: ^1.2.6
+  video_player: ^0.5.1
 
 dev_dependencies:
   flutter_test:
@@ -28,3 +25,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/MAI.mp4
