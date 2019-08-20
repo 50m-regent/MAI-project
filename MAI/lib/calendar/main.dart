@@ -1,17 +1,20 @@
 // Format Verified 1
-import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
 
 import 'package:table_calendar/table_calendar.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import '../constants.dart';
+import '../main.dart';
 import 'constants.dart';
-import 'plan.dart';
+import 'new_plan.dart';
 import 'schedule.dart';
 
-Map<String, List<Plan>> plans = {};
+Map<String, dynamic> plans = {};
+
+final DatabaseReference pref = FirebaseDatabase.instance.reference().child(user.uid).child('schedule');
+
+getSchedule() => pref.once().then((DataSnapshot snapshot) => snapshot.value == null ? {} : plans = snapshot.value);
 
 // カレンダー
 class CalendarPage extends StatefulWidget {
@@ -52,25 +55,21 @@ class _CalendarPageState extends State<CalendarPage> {
     onDaySelected: (date, events) => setState(() => _schedule = Schedule(date)),
   );
 
-  Widget newPlanButton() {
-    final DatabaseReference _pref = FirebaseDatabase.instance.reference().child('schedule');
-    return FloatingActionButton(
+  Widget newPlanButton() => FloatingActionButton(
       backgroundColor: MyColors.theme,
       child: Icon(
         Icons.add,
         size: iconSize,
         color: Colors.white,
       ),
-      onPressed: () => setState(() {
-        final Plan _plan = Plan('test', DateTime.now(), DateTime.now().add(Duration(hours: 1)));
-        if(plans[DateFormat('MMdd', 'ja_JP').format(_schedule.date)] == null) {
-          plans[DateFormat('MMdd', 'ja_JP').format(_schedule.date)] = [];
-        }
-        plans[DateFormat('MMdd', 'ja_JP').format(_schedule.date)].add(_plan);
-        _pref.child(DateFormat('MMdd', 'ja_JP').format(_schedule.date)).push().set(_plan.toJson());
-      }),
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => NewPlan(_schedule.date),
+        );
+        print(plans);
+      },
     );
-  }
 
   Widget build(BuildContext context) => Scaffold(
       backgroundColor: MyColors.background,

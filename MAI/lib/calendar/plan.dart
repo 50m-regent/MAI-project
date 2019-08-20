@@ -35,6 +35,7 @@ class _PlanState extends State<Plan> {
 
   Widget build(BuildContext context) => Container(
     height: 60,
+    margin: EdgeInsets.only(bottom: margin / 2),
     padding: EdgeInsets.symmetric(horizontal: margin),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(10)),
