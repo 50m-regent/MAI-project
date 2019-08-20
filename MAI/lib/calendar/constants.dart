@@ -11,10 +11,7 @@ class CalendarTextStyles { // カレンダーのTextStyle
   static TextStyle get days          => MyTextStyle().normalBold;                        // 普通の日付
   static TextStyle get otherDays     => MyTextStyle(color: Colors.grey).miniBold;        // 前後月の日付
   static TextStyle get otherWeekends => MyTextStyle(color: Colors.red).miniBold;         // 前後月の週末
+  static TextStyle get today         => MyTextStyle(color: MyColors.theme).normalBold;   // 今日
   static TextStyle get selectedDay   => MyTextStyle(color: Colors.white).normalBold;     // 選択日
   static TextStyle get weekends      => MyTextStyle(color: Colors.redAccent).normalBold; // 週末
-}
-
-class CalendarColors { // カレンダーで使う色
- static Color today; // 今日の色
 }

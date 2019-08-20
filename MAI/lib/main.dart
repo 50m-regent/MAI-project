@@ -73,39 +73,30 @@ class _MyAppState extends State {
       switch(MyColors.theme.toString()) {
         case 'Color(0xfff44336)': // red
           MyColors.background  = Colors.red[50];
-          CalendarColors.today = Colors.redAccent;
           break;
         case 'Color(0xffff9800)': // orange
           MyColors.background  = Colors.orange[50];
-          CalendarColors.today = Colors.orangeAccent;
           break;
         case 'Color(0xffffeb3b)': // yellow
           MyColors.background  = Colors.yellow[50];
-          CalendarColors.today = Colors.yellowAccent;
           break;
         case 'Color(0xff4caf50)': // green
           MyColors.background  = Colors.green[50];
-          CalendarColors.today = Colors.greenAccent;
           break;
         case 'Color(0xff2196f3)': // blue
           MyColors.background  = Colors.blue[50];
-          CalendarColors.today = Colors.blueAccent;
           break;
         case 'Color(0xff9c27b0)': // purple
           MyColors.background  = Colors.purple[50];
-          CalendarColors.today = Colors.purpleAccent;
           break;
         case 'Color(0xff9e9e9e)': // grey
           MyColors.background  = Colors.grey[50];
-          CalendarColors.today = Colors.grey[300];
           break;
         case 'Color(0xff3f51b5)': // indigo
           MyColors.background  = Colors.indigo[50];
-          CalendarColors.today = Colors.indigoAccent;
           break;
         default:
           MyColors.background  = Colors.red[50];
-          CalendarColors.today = Colors.redAccent;
       }
     });
   }

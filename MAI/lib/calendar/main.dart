@@ -46,9 +46,9 @@ class _CalendarPageState extends State<CalendarPage> {
     weekendStyle:        CalendarTextStyles.weekends,      // 週末
     outsideStyle:        CalendarTextStyles.otherDays,     // 前後月の平日
     outsideWeekendStyle: CalendarTextStyles.otherWeekends, // 前後月の週末
-    todayStyle:          CalendarTextStyles.selectedDay,   // 今日
+    todayStyle:          CalendarTextStyles.today,         // 今日
     selectedStyle:       CalendarTextStyles.selectedDay,   // 選択日
-    todayColor:          CalendarColors.today,             // 今日の色
+    todayColor:          Colors.transparent,               // 今日の色
     selectedColor:       MyColors.theme,                   // 選択色
   );
 
