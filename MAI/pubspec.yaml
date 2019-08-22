@@ -8,7 +8,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  #image_picker: ^0.4.10
+  image_picker: ^0.6.1
   path_provider: ^1.1.0
   validators: ^2.0.0
   firebase_database: ^3.0.5

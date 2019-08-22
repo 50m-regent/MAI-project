@@ -7,13 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'calendar/constants.dart';
 import 'constants.dart';
 import 'friends/main.dart';
 import 'menu/items.dart';
 import 'home/main.dart';
 import 'diary/main.dart';
 import 'calendar/main.dart';
+import 'profile/profile.dart';
 import 'todo/main.dart';
 import 'todo/todo.dart';
 import 'profile/main.dart';
@@ -64,6 +64,7 @@ class _MyAppState extends State {
   _signIn() async {
     user = await FirebaseAuth.instance.signInAnonymously();
     getSchedule();
+    getProfile();
   }
 
   _getTheme() async {

@@ -3,12 +3,24 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_database/firebase_database.dart';
-//import 'package:image_picker/image_picker.dart';
-//TODO: あん
+import 'package:image_picker/image_picker.dart';
 
 import '../constants.dart';
 import '../main.dart';
 import 'items.dart';
+
+Future<File> _profileImage;
+Map<dynamic, dynamic> _profile = {'name': '', 'message': ''};
+
+final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('profile');
+getProfile() {
+  _mainReference.once().then((DataSnapshot snapshot) {
+    if(snapshot.value != null) {
+      _profile = snapshot.value;
+    }
+    print(_profile);
+  });
+}
 
 class Profile extends StatefulWidget {
   @override
@@ -16,28 +28,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('profile');
-  Future<File> _profileImage;
-  Map<dynamic, dynamic> _profile = {'name': '', 'message': ''};
-
-  _getProfile() => setState(() {
-    _mainReference.once().then((DataSnapshot snapshot) {
-      if(snapshot.value == null) {
-          _mainReference.update({
-            'name': '名前',
-            'message': '',
-          });
-        }
-      _profile = snapshot.value;
-    });
-  });
-
-  @override
-  initState() {
-    super.initState();
-    _getProfile();
-  }
-
   TextEditingController _nameController = TextEditingController(), _messageController = TextEditingController();
 
   Widget _defaultIcon = Icon(
@@ -52,7 +42,7 @@ class _ProfileState extends State<Profile> {
       height: iconSize * 4,
       width: iconSize * 4,
       child: FlatButton(
-        //onPressed: () => setState(() => _profileImage = ImagePicker.pickImage(source: ImageSource.gallery)),
+        onPressed: () => setState(() => _profileImage = ImagePicker.pickImage(source: ImageSource.gallery)),
         child: snapshot.connectionState == ConnectionState.done && snapshot.data != null ? Container(
           child: CircleAvatar(
             backgroundImage: FileImage(
@@ -137,6 +127,7 @@ class _ProfileState extends State<Profile> {
   
   @override
   Widget build(BuildContext context) {
+    print(_profile);
     return Container(
       margin: EdgeInsets.all(margin),
       child: ListView(
