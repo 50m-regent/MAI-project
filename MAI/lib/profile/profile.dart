@@ -3,22 +3,29 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../constants.dart';
 import '../main.dart';
 import 'items.dart';
 
-Future<File> _profileImage;
+Future<File> profileImage;
 Map<dynamic, dynamic> _profile = {'name': '', 'message': ''};
 
 final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('profile');
+final _storageReference = FirebaseStorage.instance.ref().child('icons/' + user.uid + '.jpg');
+
 getProfile() {
   _mainReference.once().then((DataSnapshot snapshot) {
     if(snapshot.value != null) {
       _profile = snapshot.value;
     }
-    print(_profile);
+  });
+  _storageReference.getData(1000000).then((data) {
+    if(data != null) {
+      //profileImage = (Image.memory(data));
+    }
   });
 }
 
@@ -37,12 +44,12 @@ class _ProfileState extends State<Profile> {
   );
 
   Widget _icon() => FutureBuilder<File>(
-    future: _profileImage,
+    future: profileImage,
     builder: (BuildContext context, AsyncSnapshot<File> snapshot) => Container(
       height: iconSize * 4,
       width: iconSize * 4,
       child: FlatButton(
-        onPressed: () => setState(() => _profileImage = ImagePicker.pickImage(source: ImageSource.gallery)),
+        onPressed: () => setState(() => profileImage = ImagePicker.pickImage(source: ImageSource.gallery)),
         child: snapshot.connectionState == ConnectionState.done && snapshot.data != null ? Container(
           child: CircleAvatar(
             backgroundImage: FileImage(
@@ -77,7 +84,6 @@ class _ProfileState extends State<Profile> {
     return Container(
       child: TextField(
         controller: _messageController,
-        //maxLines: 3,
         maxLength: 40,
         style: MyTextStyle().normal,
         onEditingComplete: () => setState(() {
