@@ -46,6 +46,7 @@ class _FriendListState extends State {
   @override
   void initState() {
     super.initState();
+    /*
     _mainReference.once().then((DataSnapshot snapshot) {
       setState(() {
         if(snapshot.value == null) {
@@ -63,6 +64,8 @@ class _FriendListState extends State {
         });
       });
     });
+    */
+    _sortedFriendList = _list;
   }
 
 

@@ -28,6 +28,7 @@ class _NewPlanState extends State<NewPlan> {
       plans[DateFormat('MMdd').format(widget.date)][title] = _plan;
       pref.child(DateFormat('MMdd').format(widget.date)).child(title).update(_plan.toJson());
       Navigator.pop(context);
+      setState(() {});
     },
     child: Text(
       '投稿',

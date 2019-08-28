@@ -27,7 +27,7 @@ class DiaryRow extends StatelessWidget {
     );
 
     return Container(
-      height: 150,
+      height: 180,
       margin: EdgeInsets.only(top: margin),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

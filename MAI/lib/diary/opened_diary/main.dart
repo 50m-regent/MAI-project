@@ -12,7 +12,6 @@ class OpenDiary extends StatefulWidget {
 
   OpenDiary(this.diary);
 
-  @override
   State<OpenDiary> createState() => _OpenDiaryState();
 }
 
@@ -27,7 +26,19 @@ class _OpenDiaryState extends State<OpenDiary> {
     width: displaySize.width,
     child: Column(
       children: <Widget>[
-        //Image.file(diary.image),
+        Container(
+          margin: EdgeInsets.only(
+            bottom: margin,
+          ),
+          width: displaySize.width,
+          height: displaySize.width / 2,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: widget.diary.image,
+              fit: BoxFit.fill,
+            ),
+          ),
+        ),
         Text(
           widget.diary.text,
           style: MyTextStyle().mini,
@@ -36,7 +47,6 @@ class _OpenDiaryState extends State<OpenDiary> {
     ),
   );
 
-  @override
   Widget build(BuildContext context) => AlertDialog(
     title: _title(),
     titleTextStyle: MyTextStyle().normalBold,

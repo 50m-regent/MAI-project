@@ -18,18 +18,14 @@ class Friend extends StatefulWidget {
 class _FriendState extends State<Friend> {
   _switchToBestFriend() => setState(() => widget.isBestFriend = widget.isBestFriend ? false : true);
 
-  Widget _icon() => widget.iconImage == null ? Container(
-    width: iconSize * 2.5,
-    height: iconSize * 2.5,
-    child: FlatButton(
+  Widget _icon() => widget.iconImage == null ? IconButton(
       onPressed: _switchToBestFriend,
-        child: Icon(
-          Icons.account_circle,
-          color: MyColors.icon,
-          size: iconSize * 2.5,
-        )
-    )
-  ) : FlatButton(
+      icon: Icon(
+        Icons.account_circle,
+        color: MyColors.icon,
+      ),
+      iconSize: iconSize * 2,
+    ) : FlatButton(
       onPressed: _switchToBestFriend,
       child: CircleAvatar(
       backgroundImage: FileImage(

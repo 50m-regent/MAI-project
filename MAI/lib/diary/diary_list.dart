@@ -6,40 +6,40 @@ import '../main.dart';
 import 'diary.dart';
 
 class DiaryList extends StatelessWidget {
-  List<Diary> _list = [
+  final List<Diary> _list = [
     Diary(
       date: '0809',
-      image: null,
-      text: '今日から夏休みンゴwwwww',
-      name: '福田',
+      image: AssetImage('assets/diary1.jpg'),
+      text: '今日から夏休みですね。',
+      name: 'ゆうま',
     ),
     Diary(
       date: '0810',
-      image: null,
+      image: AssetImage('assets/diary2.jpg'),
       text: '夏休み飽きたンゴwww',
-      name: '福田',
+      name: 'りきや',
     ),
     Diary(
       date: '0810',
-      image: null,
+      image: AssetImage('assets/diary3.jpg'),
       text: '夏休み飽きたンゴwww',
       name: '山田',
     ),
     Diary(
       date: '0810',
-      image: null,
+      image: AssetImage('assets/diary4.jpg'),
       text: '夏休み飽きたンゴwww',
       name: '平田',
     ),
     Diary(
       date: '0811',
-      image: null,
+      image: AssetImage('assets/diary5.jpeg'),
       text: 'わかるなあ',
       name: '山田',
     ),
     Diary(
       date: '0808',
-      image: null,
+      image: AssetImage('assets/diary6.jpeg'),
       text: 'わかるかなあ',
       name: '山田',
     ),
@@ -112,7 +112,6 @@ class DiaryList extends StatelessWidget {
     _rowList = _rowList.reversed.toList();
   }
 
-  @override
   Widget build(BuildContext context) => Container(
     color: Colors.transparent,
     margin: EdgeInsets.only(

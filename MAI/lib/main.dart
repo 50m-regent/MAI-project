@@ -115,7 +115,6 @@ class _MyAppState extends State {
     });
   }
 
-  @override
   initState() {
     super.initState();
     initializeDateFormatting("ja_JP");
@@ -125,15 +124,20 @@ class _MyAppState extends State {
     getTodo();
   }
 
-  @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context) {
+    
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: MyColors.theme,
       ),
       home: _isLoading ? Scaffold(
-        backgroundColor: MyColors.background,
+        backgroundColor: Colors.white,
         body: Center(
-          child: CircularProgressIndicator(), //TODO: アイコン
+          child: Container(
+            width: 100,
+            child: Image.asset('assets/MAI.jpg'),
+          ),
         ),
       ) : Scaffold(
         resizeToAvoidBottomInset: false,
@@ -144,6 +148,7 @@ class _MyAppState extends State {
         bottomNavigationBar: _menu(),
       ),
     );
+  }
 }
 
 main() => runApp(MyApp());

@@ -19,6 +19,7 @@ dependencies:
   flutter_datetime_picker: ^1.2.6
   video_player: ^0.5.1
   firebase_storage:
+  flutter_svg:
 
 dev_dependencies:
   flutter_test:
@@ -28,3 +29,10 @@ flutter:
   uses-material-design: true
   assets:
     - assets/MAI.mp4
+    - assets/MAI.jpg
+    - assets/diary1.jpg
+    - assets/diary2.jpg
+    - assets/diary3.jpg
+    - assets/diary4.jpg
+    - assets/diary5.jpeg
+    - assets/diary6.jpeg

@@ -52,22 +52,30 @@ class _HomeState extends State<Home> {
     ),
   );
 
-  Widget build(BuildContext context) => Stack(
-    children: <Widget>[
-      VideoPlayer(_videoController),
-      Container(
-        margin: EdgeInsets.all(margin),
-        child: Stack(
-          children: <Widget>[
-            _isUIVisible ? notice : Container(),
-            _isUIVisible ? Date() : Container(),
-            _isUIVisible ? _icons() : Align(
-              alignment: Alignment.bottomRight,
-              child: _showUI(),
-            ),
-          ],
+  Widget build(BuildContext context) => Scaffold(
+    backgroundColor: Colors.white,
+    body: Stack(
+      children: <Widget>[
+        Center(
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: VideoPlayer(_videoController),
+          ),
         ),
-      ),
-    ],
+        Container(
+          margin: EdgeInsets.all(margin),
+          child: Stack(
+            children: <Widget>[
+              _isUIVisible ? notice : Container(),
+              _isUIVisible ? Date() : Container(),
+              _isUIVisible ? _icons() : Align(
+                alignment: Alignment.bottomRight,
+                child: _showUI(),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
   );
 }
