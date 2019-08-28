@@ -20,6 +20,8 @@ dependencies:
   video_player: ^0.5.1
   firebase_storage:
   flutter_svg:
+  barcode_scan:
+  qr_flutter:
 
 dev_dependencies:
   flutter_test:

@@ -8,6 +8,12 @@ import 'diary.dart';
 class DiaryList extends StatelessWidget {
   final List<Diary> _list = [
     Diary(
+      date: '0808',
+      image: AssetImage('assets/diary6.jpeg'),
+      text: 'わかるかなあ',
+      name: '山田',
+    ),
+    Diary(
       date: '0809',
       image: AssetImage('assets/diary1.jpg'),
       text: '今日から夏休みですね。',
@@ -35,12 +41,6 @@ class DiaryList extends StatelessWidget {
       date: '0811',
       image: AssetImage('assets/diary5.jpeg'),
       text: 'わかるなあ',
-      name: '山田',
-    ),
-    Diary(
-      date: '0808',
-      image: AssetImage('assets/diary6.jpeg'),
-      text: 'わかるかなあ',
       name: '山田',
     ),
   ];

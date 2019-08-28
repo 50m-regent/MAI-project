@@ -15,30 +15,30 @@ class _FriendListState extends State {
 
   List<Friend> _list = [
     Friend(
-      name: 'アナリング',
-      message: 'あー気持ちいー',
+      name: 'ゆうま',
+      message: 'よろしくお願いします。',
       iconImage: null,
       isBestFriend: true,
     ),
     Friend(
-      name: 'アナリング',
-      message: 'あーなるほどん',
+      name: 'りきや',
+      message: 'よろしくお願いします。',
       iconImage: null,
       isBestFriend: true,
     ),
     Friend(
-      name: 'アナリング',
-      message: 'あーうんこ出る',
+      name: '福田',
+      message: 'よろしくお願いします。',
       iconImage: null,
     ),
     Friend(
-      name: 'アナリング',
-      message: 'あー自分は出そうにない',
+      name: '山田',
+      message: 'よろしくお願いします。',
       iconImage: null,
     ),
     Friend(
-      name: 'アナリング',
-      message: 'あーね',
+      name: '平田',
+      message: 'よろしくお願いします。',
       iconImage: null,
     ),
   ];

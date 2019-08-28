@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../constants.dart';
 import '../main.dart';
@@ -132,24 +133,39 @@ class _ProfileState extends State<Profile> {
       ],
     ),
   );
-  
-  @override
-  Widget build(BuildContext context) {
-    print(_profile);
-    return Container(
-      margin: EdgeInsets.all(margin),
-      child: ListView(
+
+  static final Widget _qr = Column(
+    children: <Widget>[
+      Row(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              _icon(),
-              _name(),
-            ],
+          Text(
+            'My QRコード',
+            style: MyTextStyle().largeBold,
           ),
-          _status(),
-          _palette,
         ],
       ),
-    );
-  }
+      QrImage(
+        data: user.uid,
+        size: displaySize.height / 3,
+      ),
+    ],
+  );
+  
+  Widget build(BuildContext context) => Container(
+    margin: EdgeInsets.all(margin),
+    child: ListView(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            _icon(),
+            _name(),
+          ],
+        ),
+        _status(),
+        _palette,
+        Container(height: margin),
+        _qr,
+      ],
+    ),
+  );
 }
