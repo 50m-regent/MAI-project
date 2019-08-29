@@ -1,76 +1,61 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'todo.dart';
 import '../constants.dart';
 
 class Task extends StatefulWidget {
-  final String tag, title;
-  final int deadline, priority;
+  final String tag;
+  String title;
 
-  Task({this.tag, this.title, this.deadline, this.priority});
+  Task(this.tag, this.title);
 
   @override
-  State createState() => _TaskState(
-    title: title,
-    priority: priority,
-  );
+  State createState() => _TaskState();
 }
 
 class _TaskState extends State<Task> {
-  String title;
-  int priority;
-
-  _TaskState({this.title, this.priority});
-
   TextEditingController _titleController = TextEditingController();
 
-  _getList() => setState(() {
-    mainReference.once().then((DataSnapshot snapshot) {
-      todo = snapshot.value;
-    });
-  });
-
-  Widget _title() {
+  initState() {
+    super.initState();
     _titleController.text = widget.title;
-    return Container(
-      child: TextFormField(
-        controller: _titleController,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-        ),
-        style: MyTextStyle().largeBold,
-        onEditingComplete: () {
-          mainReference.child(widget.tag).child(_titleController.text).update({'deadline': widget.deadline, 'priority': widget.priority});
-          mainReference.child(widget.tag).child(widget.title).remove();
-          title = _titleController.text;
-          _getList();
-        },
-      ),
-    );
   }
 
-  Widget _deadline() {
-    return Row(
-      children: <Widget>[
-        Text(
-          DateFormat('M/d').format(
-            DateTime.parse(widget.deadline.toString())
-          ).toString(),
-          style: MyTextStyle().large,
-        ),
-        Text(
-          'まで',
-          style: MyTextStyle().normal,
-        ),
-      ],
-    );
-  }
+  Widget _title() => Container(
+    child: TextFormField(
+      controller: _titleController,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+      ),
+      style: MyTextStyle().largeBold,
+      onEditingComplete: () => setState(() {
+        todo[widget.tag][_titleController.text] = todo[widget.tag][widget.title];
+        todo[widget.tag].remove(widget.title);
+        widget.title = _titleController.text;
+        saveTodo();
+      }),
+    ),
+  );
+
+  Widget _deadline() => Row(
+    children: <Widget>[
+      Text(
+        DateFormat('M/d').format(
+          DateTime.parse(todo[widget.tag][widget.title]['deadline'].toString())
+        ).toString(),
+        style: MyTextStyle().large,
+      ),
+      Text(
+        'まで',
+        style: MyTextStyle().normal,
+      ),
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
-    var colors = [MyColors.box, Colors.yellow, Colors.orange, Colors.red];
-    var color = colors[widget.priority];
+    final List<Color> colors = [MyColors.box, Colors.yellow, Colors.orange, Colors.red];
+    final Color color = colors[todo[widget.tag][widget.title]['priority']];
     return Container(
       width: displaySize.width / 2,
       margin: EdgeInsets.only(right: margin, bottom: margin),
@@ -82,11 +67,10 @@ class _TaskState extends State<Task> {
         ),
       ),
       child: FlatButton(
-        onPressed: () {
-          priority = (widget.priority + 1) % 4;
-          mainReference.child(widget.tag).child(widget.title).child('priority').set(widget.priority);
-          _getList();
-        },
+        onPressed: () => setState(() {
+          todo[widget.tag][widget.title]['priority'] = (todo[widget.tag][widget.title]['priority'] + 1) % 4;
+          saveTodo();
+        }),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

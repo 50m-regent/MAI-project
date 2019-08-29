@@ -1,3 +1,5 @@
+// Format Verified 1
+
 import 'package:flutter/material.dart';
 
 Size displaySize;
@@ -5,10 +7,10 @@ double iconSize;
 double margin;
 
 class MyColors {
-  static final Color background = Colors.white;
   static final Color icon       = Colors.grey;
   static final Color box        = Colors.grey[350];
-  static       Color theme      = Colors.orange;
+  static       Color theme;
+  static       Color background;
 }
 
 class MyTextStyle {

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+
+import 'package:video_player/video_player.dart';
+
 import '../constants.dart';
 import 'date.dart';
 import 'items.dart';
@@ -8,7 +12,18 @@ class Home extends StatefulWidget {
   State createState() => _HomeState();
 }
 
-class _HomeState extends State {
+class _HomeState extends State<Home> {
+  VideoPlayerController _videoController = VideoPlayerController.asset('assets/MAI.mp4');
+  VoidCallback _listener;
+
+  initState() {
+    super.initState();
+    _listener = () => mounted ? setState(() {}) : null;
+    _videoController..addListener(_listener)..setVolume(0)..initialize();
+    _videoController.setLooping(true);
+    _videoController.play();
+  }
+
   bool _isUIVisible = true;
 
   Widget _showUI() => IconButton(
@@ -37,31 +52,29 @@ class _HomeState extends State {
     ),
   );
 
-  Widget _maiTemp = Align(
-    alignment: Alignment.center,
-    child: Text(
-      'MAIさん(仮)',
-      style: MyTextStyle(color: Colors.white). bigBold,
-    ),
-  );
-
-  Widget build(BuildContext context) => Container(
-    color: Colors.transparent,
-    margin: EdgeInsets.all(margin),
-    child: _isUIVisible ? Stack(
+  Widget build(BuildContext context) => Scaffold(
+    backgroundColor: Colors.white,
+    body: Stack(
       children: <Widget>[
-        notice,
-        Date(),
-        _icons(),
-        _maiTemp,
-      ],
-    ) : Stack(
-      children: <Widget>[
-        Align(
-          alignment: Alignment.bottomRight,
-          child: _showUI(),
+        Center(
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: VideoPlayer(_videoController),
+          ),
         ),
-        _maiTemp,
+        Container(
+          margin: EdgeInsets.all(margin),
+          child: Stack(
+            children: <Widget>[
+              _isUIVisible ? notice : Container(),
+              _isUIVisible ? Date() : Container(),
+              _isUIVisible ? _icons() : Align(
+                alignment: Alignment.bottomRight,
+                child: _showUI(),
+              ),
+            ],
+          ),
+        ),
       ],
     ),
   );

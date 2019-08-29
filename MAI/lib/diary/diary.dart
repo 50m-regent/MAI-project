@@ -4,7 +4,7 @@ import 'opened_diary/main.dart';
 
 class Diary extends StatefulWidget {
   final String date, name, text;
-  final image;
+  final AssetImage image;
   Diary({this.date, this.name, this.image, this.text});
 
   @override
@@ -17,7 +17,7 @@ class _DiaryState extends State<Diary> {
 
   Widget _name() => Text(
     widget.name,
-    style: MyTextStyle().normalBold,
+    style: MyTextStyle(color: Colors.white).normalBold,
   );
 
   @override
@@ -25,6 +25,10 @@ class _DiaryState extends State<Diary> {
     margin: EdgeInsets.only(right: margin),
     width: 200,
     decoration: BoxDecoration(
+      image: DecorationImage(
+        image: widget.image,
+        fit: BoxFit.fill
+      ),
       borderRadius: BorderRadius.all(Radius.circular(10)),
       border: Border.all(
         color: _read ? _readColor : MyColors.theme,

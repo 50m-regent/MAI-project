@@ -6,6 +6,7 @@ import 'items.dart';
 class FriendsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
+    backgroundColor: Colors.transparent,
     floatingActionButton: Column(
       children: <Widget>[
         Container(height: margin, width: 0),

@@ -1,11 +1,36 @@
 import 'dart:io';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
-import '../constants.dart';
+
 import 'package:flutter/material.dart';
+
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+
+import '../constants.dart';
 import '../main.dart';
-//import 'package:image_picker/image_picker.dart';
-//TODO: あん
+import 'items.dart';
+
+Future<File> profileImage;
+Map<dynamic, dynamic> _profile = {'name': '', 'message': ''};
+
+final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('profile');
+final _storageReference = FirebaseStorage.instance.ref().child('icons/' + user.uid + '.jpg');
+
+getProfile() {
+  _mainReference.once().then((DataSnapshot snapshot) {
+    if(snapshot.value != null) {
+      _profile = snapshot.value;
+    }
+  });
+  /*
+  _storageReference.getData(1000000).then((data) {
+    if(data != null) {
+      //profileImage = (Image.memory(data));
+    }
+  });
+  */
+}
 
 class Profile extends StatefulWidget {
   @override
@@ -13,32 +38,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final _mainReference = FirebaseDatabase.instance.reference().child(user.uid).child('profile');
-  Future<File> _profileImage;
-  Map<dynamic, dynamic> _profile = {'name': '', 'message': ''};
-
-  _getProfile() => setState(() {
-    _mainReference.once().then((DataSnapshot snapshot) {
-      _profile = snapshot.value;
-    });
-  });
-
-  @override
-  initState() {
-    super.initState();
-    _mainReference.once().then((DataSnapshot snapshot) {
-      setState(() {
-        if(snapshot.value == null) {
-          _mainReference.update({
-            'name': '名前',
-            'message': '',
-          });
-        }
-        _getProfile();
-      });
-    });
-  }
-
   TextEditingController _nameController = TextEditingController(), _messageController = TextEditingController();
 
   Widget _defaultIcon = Icon(
@@ -48,12 +47,12 @@ class _ProfileState extends State<Profile> {
   );
 
   Widget _icon() => FutureBuilder<File>(
-    future: _profileImage,
+    future: profileImage,
     builder: (BuildContext context, AsyncSnapshot<File> snapshot) => Container(
       height: iconSize * 4,
       width: iconSize * 4,
       child: FlatButton(
-        //onPressed: () => setState(() => _profileImage = ImagePicker.pickImage(source: ImageSource.gallery)),
+        onPressed: () => setState(() => profileImage = ImagePicker.pickImage(source: ImageSource.gallery)),
         child: snapshot.connectionState == ConnectionState.done && snapshot.data != null ? Container(
           child: CircleAvatar(
             backgroundImage: FileImage(
@@ -88,7 +87,6 @@ class _ProfileState extends State<Profile> {
     return Container(
       child: TextField(
         controller: _messageController,
-        //maxLines: 3,
         maxLength: 40,
         style: MyTextStyle().normal,
         onEditingComplete: () => setState(() {
@@ -99,47 +97,75 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget _coloricon(Color iconcolor){
-    return FlatButton(
-      onPressed: (){},
-    );
-  }
+  static Widget _paletteTitle = Row(
+    children: <Widget>[
+      Text(
+        'テーマカラー',
+        style: MyTextStyle().largeBold,
+      ),
+    ],
+  );
 
-  Widget _pallete(){
-    return Container(
-      height: displaySize.height/3.0,
-      child:ListView(
-        scrollDirection: Axis.horizontal,
+  static Widget _palette = Container(
+    height: displaySize.height / 5,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        _paletteTitle,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            palette[0],
+            palette[1],
+            palette[2],
+            palette[3],
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            palette[4],
+            palette[5],
+            palette[6],
+            palette[7],
+          ],
+        ),
+      ],
+    ),
+  );
+
+  static final Widget _qr = Column(
+    children: <Widget>[
+      Row(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              _coloricon(Colors.red),
-              _coloricon(Colors.orange),
-              _coloricon(Colors.yellow),
-              _coloricon(Colors.lightGreen),
-            ],
+          Text(
+            'My QRコード',
+            style: MyTextStyle().largeBold,
           ),
         ],
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(margin),
-      child: ListView(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              _icon(),
-              _name(),
-            ],
-          ),
-          _status(),
-          _pallete(),
-        ],
+      QrImage(
+        data: user.uid,
+        size: displaySize.height / 3,
       ),
-    );
-  }
+    ],
+  );
+  
+  Widget build(BuildContext context) => Container(
+    margin: EdgeInsets.all(margin),
+    child: ListView(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            _icon(),
+            _name(),
+          ],
+        ),
+        _status(),
+        _palette,
+        Container(height: margin),
+        _qr,
+      ],
+    ),
+  );
 }

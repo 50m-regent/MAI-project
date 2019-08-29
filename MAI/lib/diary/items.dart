@@ -5,6 +5,7 @@ import 'new_diary/main.dart';
 class NewDiaryIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) => FloatingActionButton(
+    backgroundColor: MyColors.theme,
     onPressed: () {
       showDialog(
         context: context,
