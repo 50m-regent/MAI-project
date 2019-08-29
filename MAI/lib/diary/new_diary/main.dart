@@ -90,7 +90,7 @@ class _NewDiaryState extends State<NewDiaryPage> {
   );
 
   Widget _textField() => Container( // 文章
-    height: displaySize.height / 3,
+    height: displaySize.height / 5,
     child: TextField(
       keyboardType: TextInputType.multiline,
       maxLines: 100,
