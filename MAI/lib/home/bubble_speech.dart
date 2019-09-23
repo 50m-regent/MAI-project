@@ -14,32 +14,13 @@ class SpeechBubble extends StatelessWidget {
     this.padding
   }) : super(key: key);
 
-  /// The [child] contained by the [SpeechBubble]
   final Widget child;
-
-  /// The location of the nip of the speech bubble.
-  ///
-  /// Use [NipLocation] enum, either [TOP], [RIGHT], [BOTTOM], or [LEFT].
-  /// The nip will automatically center to the side that it is assigned.
   final NipLocation nipLocation;
-
-  /// The color of the body of the [SpeechBubble] and nip.
-  /// Defaultly red.
   final Color color;
-
-  /// The [borderRadius] of the [SpeechBubble].
-  /// The [SpeechBubble] is built with a circular border radius on all 4 corners.
   final double borderRadius;
-
-  /// The explicitly defined height of the [SpeechBubble].
-  /// The [SpeechBubble] will defaultly enclose its [child].
   final double height;
-
-  /// The explicitly defined width of the [SpeechBubble].
-  /// The [SpeechBubble] will defaultly enclose its [child].
   final double width;
 
-  /// The padding widget between the child and the edges of the [SpeechBubble].
   final Widget padding;
 
   Widget build(BuildContext context) {

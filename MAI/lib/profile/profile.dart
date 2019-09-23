@@ -23,13 +23,11 @@ getProfile() {
       _profile = snapshot.value;
     }
   });
-  /*
   _storageReference.getData(1000000).then((data) {
     if(data != null) {
       //profileImage = (Image.memory(data));
     }
   });
-  */
 }
 
 class Profile extends StatefulWidget {

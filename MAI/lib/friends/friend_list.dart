@@ -13,40 +13,11 @@ class _FriendListState extends State {
   final _mainReference = FirebaseDatabase.instance.reference().child(user.uid);
   List<Friend> _sortedFriendList = [];
 
-  List<Friend> _list = [
-    Friend(
-      name: 'ゆうま',
-      message: 'よろしくお願いします。',
-      iconImage: null,
-      isBestFriend: true,
-    ),
-    Friend(
-      name: 'りきや',
-      message: 'よろしくお願いします。',
-      iconImage: null,
-      isBestFriend: true,
-    ),
-    Friend(
-      name: '福田',
-      message: 'よろしくお願いします。',
-      iconImage: null,
-    ),
-    Friend(
-      name: '山田',
-      message: 'よろしくお願いします。',
-      iconImage: null,
-    ),
-    Friend(
-      name: '平田',
-      message: 'よろしくお願いします。',
-      iconImage: null,
-    ),
-  ];
+  List<Friend> _list = [];
 
   @override
   void initState() {
     super.initState();
-    /*
     _mainReference.once().then((DataSnapshot snapshot) {
       setState(() {
         if(snapshot.value == null) {
@@ -64,7 +35,6 @@ class _FriendListState extends State {
         });
       });
     });
-    */
     _sortedFriendList = _list;
   }
 

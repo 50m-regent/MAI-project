@@ -6,48 +6,10 @@ import '../main.dart';
 import 'diary.dart';
 
 class DiaryList extends StatelessWidget {
-  final List<Diary> _list = [
-    Diary(
-      date: '0808',
-      image: AssetImage('assets/diary6.jpeg'),
-      text: 'わかるかなあ',
-      name: '山田',
-    ),
-    Diary(
-      date: '0809',
-      image: AssetImage('assets/diary1.jpg'),
-      text: '今日から夏休みですね。',
-      name: 'ゆうま',
-    ),
-    Diary(
-      date: '0810',
-      image: AssetImage('assets/diary2.jpg'),
-      text: '夏休み飽きたンゴwww',
-      name: 'りきや',
-    ),
-    Diary(
-      date: '0810',
-      image: AssetImage('assets/diary3.jpg'),
-      text: '夏休み飽きたンゴwww',
-      name: '山田',
-    ),
-    Diary(
-      date: '0810',
-      image: AssetImage('assets/diary4.jpg'),
-      text: '夏休み飽きたンゴwww',
-      name: '平田',
-    ),
-    Diary(
-      date: '0811',
-      image: AssetImage('assets/diary5.jpeg'),
-      text: 'わかるなあ',
-      name: '山田',
-    ),
-  ];
+  final List<Diary> _list = [];
   final Map<String, List<Diary>> _newList = {};
   List<DiaryRow> _rowList = [];
 
-/*
   _getDiary() {
     final _friendReference = FirebaseDatabase.instance.reference().child('friends');
     _friendReference.once().then((DataSnapshot friendSnapshot) {
@@ -93,10 +55,9 @@ class DiaryList extends StatelessWidget {
     });
     print(_list);
   }
-*/
 
   DiaryList() {
-    //_getDiary();
+    _getDiary();
 
     _list.forEach((_d) {
       if(_newList[_d.date] == null) {

@@ -10,7 +10,7 @@ Widget notice = Align(
   child: SpeechBubble(
     color: MyColors.box,
     child: Text(
-      '今日は3時から\n睡眠の予定です！',
+      '',
       style: MyTextStyle().normalBold,
     ),
   ),
