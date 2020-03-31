@@ -32,4 +32,9 @@ flutter:
   assets:
     - assets/MAI.mp4
     - assets/MAI.jpg
-    - assets/MAI.svg
+    - assets/diary1.jpg
+    - assets/diary2.jpg
+    - assets/diary3.jpg
+    - assets/diary4.jpg
+    - assets/diary5.jpeg
+    - assets/diary6.jpeg
