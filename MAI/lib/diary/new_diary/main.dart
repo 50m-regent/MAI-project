@@ -78,7 +78,7 @@ class _NewDiaryState extends State<NewDiaryPage> {
   Widget _picture() => FutureBuilder<File>( // 写真
     future:  _imageFile,
     builder: (BuildContext context, AsyncSnapshot<File> snapshot) => FlatButton(
-      onPressed: () {}, //() => setState(() => _galleryFile = ImagePicker.pickImage(source: ImageSource.gallery)), // TODO: あん
+      onPressed: () {}, //() => setState(() => _galleryFile = ImagePicker.pickImage(source: ImageSource.gallery)), //
       child: Container(
         height: displaySize.height / 4,
         child:  snapshot.connectionState == ConnectionState.done && snapshot.data != null ? Image.file(
